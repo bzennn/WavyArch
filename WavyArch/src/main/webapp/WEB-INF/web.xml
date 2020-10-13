@@ -39,10 +39,19 @@
 			<param-value>xyz.bzennn.wavyarch.config.WebContextConfig</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<multipart-config>
+			<location>C:\Java\apache-tomcat-8.5.57\temp</location>
+			<max-file-size>50000000</max-file-size>
+			<max-request-size>50000000</max-request-size>
+		</multipart-config>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	<error-page>
+		<location>/error</location>
+	</error-page>
 </web-app>
