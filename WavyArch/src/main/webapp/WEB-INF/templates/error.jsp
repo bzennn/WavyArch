@@ -12,5 +12,6 @@
 <body>
 	<h1>Error ${errorCode}</h1>
 	<h3>${errorMessage}</h3>
+	<h3>${datetime}</h3>
 </body>
 </html>
