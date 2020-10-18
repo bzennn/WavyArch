@@ -1,13 +1,7 @@
-<%@ page
-	language="java"
-	contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ taglib
-	prefix="c"
-	uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib
-	prefix="t"
-	tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <%@ page session="false"%>
 
 <t:base_page>
@@ -18,9 +12,7 @@
 			<div class="error">
 				<div class="error-title">Error ${errorCode}</div>
 				<div class="error-note">${errorMessage}!</div>
-				<a
-					href="<c:url value="/"/>"
-					class="btn mt-4">Back to main page</a>
+				<a href="<c:url value="/"/>" class="btn mt-4">Back to main page</a>
 			</div>
 
 		</div>
