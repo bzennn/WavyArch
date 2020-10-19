@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<Properties>
+		<Property name="appName">WavyArch</Property>
+        <Property name="logDirectory">C:\\logs</Property>
+        <Property name="logPattern">%level: %d{yyyy-MM-dd HH:mm:ss.SSS} %c - %msg%n</Property>
+    </Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${logPattern}" />
+			<LevelRangeFilter minLevel="ERROR" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+		</Console>
+		<RollingFile name="errorLog" fileName="${logDirectory}/${appName}-error.log"
+            filePattern="${logDirectory}/${appName}-error-%d{yyyy-MM-dd}-%i.log.gz">
+            <LevelRangeFilter minLevel="ERROR" maxLevel="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${logPattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        <RollingFile name="infoLog" fileName="${logDirectory}/${appName}-info.log"
+            filePattern="${logDirectory}/${appName}-info-%d{yyyy-MM-dd}-%i.log.gz">
+            <LevelRangeFilter minLevel="ERROR" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${logPattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        <RollingFile name="debugLog" fileName="${logDirectory}/${appName}-debug.log"
+            filePattern="${logDirectory}/${appName}-debug-%d{yyyy-MM-dd}-%i.log.gz">
+            <LevelRangeFilter minLevel="ERROR" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${logPattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        <RollingFile name="traceLog" fileName="${logDirectory}/${appName}-trace.log"
+            filePattern="${logDirectory}/${appName}-trace-%d{yyyy-MM-dd}-%i.log.gz" >
+            <PatternLayout pattern="${logPattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="1"/>
+        </RollingFile>
+        <RollingFile name="frameworkLog" fileName="${logDirectory}/${appName}-framework.log"
+            filePattern="${logDirectory}/${appName}-framework-%d{yyyy-MM-dd}-%i.log.gz" >
+            <PatternLayout pattern="${logPattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="1"/>
+        </RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="xyz.bzennn.wavyarch" level="trace">
+			<AppenderRef ref="infoLog" />
+			<AppenderRef ref="errorLog" />
+			<AppenderRef ref="debugLog" />
+			<AppenderRef ref="traceLog" />
+		</Logger>
+		
+		<Logger name="org.springframework" level="info">
+			<AppenderRef ref="infoLog" />
+			<AppenderRef ref="errorLog" />
+			<AppenderRef ref="frameworkLog" />
+		</Logger>
+		
+		<Logger name="org.hibernate" level="info">
+			<AppenderRef ref="infoLog" />
+			<AppenderRef ref="errorLog" />
+			<AppenderRef ref="frameworkLog" />
+		</Logger>
+
+		<Root level="warn">
+			<AppenderRef ref="Console" />
+		</Root>
+	</Loggers>
+</Configuration>
