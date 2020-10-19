@@ -6,6 +6,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
+/**
+ * Controller that redirects from '/'
+ *
+ * @author bzennn
+ * @version 1.0
+ */
 @Controller
 @RequestMapping("/")
 public class RootController {

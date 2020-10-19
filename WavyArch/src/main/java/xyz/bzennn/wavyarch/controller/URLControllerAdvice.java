@@ -6,6 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+/**
+ * Advice Controller that adds uri, url and viewName to other controllers {@link Model} 
+ *
+ * @author bzennn
+ * @version 1.0
+ */
 @ControllerAdvice
 public class URLControllerAdvice {
 

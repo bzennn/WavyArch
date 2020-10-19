@@ -3,6 +3,12 @@ package xyz.bzennn.wavyarch.util;
 import java.io.File;
 import java.util.UUID;
 
+/**
+ * File utility class
+ *
+ * @author bzennn
+ * @version 1.0
+ */
 public class FileUtils {
 	
 	public static File getUniqueFile(String prefix, String suffix, File directory) {

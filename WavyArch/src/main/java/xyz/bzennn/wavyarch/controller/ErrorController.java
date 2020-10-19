@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Controller for error-code handling
+ *
+ * @author bzennn
+ * @version 1.0
+ */
 @Controller
 @RequestMapping("/error")
 public class ErrorController {
@@ -21,6 +27,7 @@ public class ErrorController {
 	{
 			put(400, "Bad Request");
 			put(401, "Unauthorized");
+			put(403, "Access Denied");
 			put(404, "Page Not Found");
 			put(500, "Internal Server Error");
 	}};

@@ -10,6 +10,12 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+/**
+ * Web Spring application context configuration file.
+ * 
+ * @author bzennn
+ * @version 1.0
+ */
 @Configuration
 @EnableWebMvc
 @ComponentScan("xyz.bzennn.wavyarch.controller")

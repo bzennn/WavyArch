@@ -1,5 +1,11 @@
 package xyz.bzennn.wavyarch.exception;
 
+/**
+ * Data Access Object layer exception
+ *
+ * @author bzennn
+ * @version 1.0
+ */
 public class DaoLayerException extends RuntimeException {
 
 	private static final long serialVersionUID = -5412441459125684814L;
