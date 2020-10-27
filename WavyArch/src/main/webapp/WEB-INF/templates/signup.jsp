@@ -19,23 +19,24 @@
 
 					<div class="base-form-control">
 						<label for="inputLogin">Login</label>
-						<input type="text" class="form-control" id="inputLogin" name="login"
-							placeholder="Enter login" maxlength="20" required>
+						<input type="text" class="form-control" id="inputLogin"
+							name="login" placeholder="Enter login" maxlength="20" required>
 						<div class="invalid-feedback" id="inputLoginFeedback"></div>
 					</div>
 
 					<div class="base-form-control">
 						<label for="inputPassword">Password</label>
-						<input type="password" class="form-control" id="inputPassword" name="password"
-							placeholder="Enter password" maxlength="20" required>
+						<input type="password" class="form-control" id="inputPassword"
+							name="password" placeholder="Enter password" maxlength="20"
+							required>
 						<div class="invalid-feedback" id="inputPasswordFeedback"></div>
 					</div>
 
 					<div class="base-form-control">
 						<label for="inputRepeatPassword">Repeat password</label>
-						<input type="password" class="form-control" 
-							id="inputRepeatPassword" name="passwordRepeat" placeholder="Repeat password"
-							maxlength="20" required>
+						<input type="password" class="form-control"
+							id="inputRepeatPassword" name="passwordRepeat"
+							placeholder="Repeat password" maxlength="20" required>
 						<div class="invalid-feedback" id="inputRepeatPasswordFeedback"></div>
 					</div>
 
