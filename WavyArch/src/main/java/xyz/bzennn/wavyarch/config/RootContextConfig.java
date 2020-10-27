@@ -2,10 +2,8 @@ package xyz.bzennn.wavyarch.config;
 
 import java.util.Properties;
 
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,10 +13,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.zaxxer.hikari.HikariDataSource;
@@ -62,26 +57,6 @@ public class RootContextConfig {
 
 		return sessionFactory;
 	}
-//
-//	@Bean
-//	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
-//		LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
-//		entityManagerFactory.setDataSource(dataSource);
-//		entityManagerFactory.setPackagesToScan("xyz.bzennn.wavyarch");
-//
-//		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-//		entityManagerFactory.setJpaVendorAdapter(vendorAdapter);
-//		entityManagerFactory.setJpaProperties(getJpaProperties());
-//
-//		return entityManagerFactory;
-//	}
-//
-//	@Bean
-//	public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-//		JpaTransactionManager transactionManager = new JpaTransactionManager(entityManagerFactory);
-//
-//		return transactionManager;
-//	}
 
 	private Properties getJpaProperties() {
 		final Properties hibernateProperties = new Properties();
@@ -98,5 +73,10 @@ public class RootContextConfig {
 				env.getProperty("hibernate.hikari.idleTimeout"));
 
 		return hibernateProperties;
+	}
+	
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder(11);
 	}
 }
