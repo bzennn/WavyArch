@@ -1,8 +1,7 @@
 package xyz.bzennn.wavyarch.data.dao;
 
-import org.springframework.stereotype.Repository;
-
 import xyz.bzennn.wavyarch.data.model.AccountRole;
+import xyz.bzennn.wavyarch.exception.DaoLayerException;
 
 /**
  * DAO interface for {@link AccountRole}
@@ -11,5 +10,5 @@ import xyz.bzennn.wavyarch.data.model.AccountRole;
  * @version 1.0
  */
 public interface AccountRoleDao {
-	AccountRole getById(int id);
+	AccountRole getById(int id) throws DaoLayerException;
 }
