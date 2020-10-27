@@ -1,8 +1,7 @@
 package xyz.bzennn.wavyarch.data.dao;
 
-import org.springframework.stereotype.Repository;
-
 import xyz.bzennn.wavyarch.data.model.Account;
+import xyz.bzennn.wavyarch.exception.DaoLayerException;
 
 /**
  * DAO interface for {@link Account}
@@ -11,6 +10,9 @@ import xyz.bzennn.wavyarch.data.model.Account;
  * @version 1.0
  */
 public interface AccountDao {
-	void save(Account account);
-	Account findByLogin(String login);
+	void save(Account account) throws DaoLayerException;
+	void update(Account account) throws DaoLayerException;
+	void delete(Account account) throws DaoLayerException;
+	Account findByLogin(String login) throws DaoLayerException;
+	boolean isLoginExists(String login) throws DaoLayerException;
 }

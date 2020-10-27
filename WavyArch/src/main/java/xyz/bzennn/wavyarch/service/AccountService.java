@@ -1,6 +1,7 @@
 package xyz.bzennn.wavyarch.service;
 
 import xyz.bzennn.wavyarch.data.model.Account;
+import xyz.bzennn.wavyarch.exception.ServiceLayerException;
 
 /**
  * Service class for {@link Account}
@@ -9,6 +10,7 @@ import xyz.bzennn.wavyarch.data.model.Account;
  * @version 1.0
  */
 public interface AccountService {
-	void save(Account account);
-	Account findByLogin(String login);
+	void save(Account account) throws ServiceLayerException;
+	Account findByLogin(String login) throws ServiceLayerException;
+	boolean isLoginExists(String login) throws ServiceLayerException;
 }
