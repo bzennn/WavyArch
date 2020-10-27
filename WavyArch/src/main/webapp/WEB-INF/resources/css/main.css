@@ -709,3 +709,13 @@ th + th, td + td {
     width: 100%;
 }
 /* Error  end */
+
+/* Error message */
+.error-message {
+    text-align: center;
+    color: #ffffff;
+    padding: 5px;
+    background-color: #dc3545;
+    border-radius: 5px;
+}
+/* Error message end */
