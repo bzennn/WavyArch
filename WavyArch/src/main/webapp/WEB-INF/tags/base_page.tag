@@ -169,6 +169,17 @@
 
 			<!-- Content -->
 			<div class="col content">
+				<div class="row">
+					<div class="col">
+						<c:if test="${not empty errors}">
+							<c:forEach items="${errors}" var="error">
+								<div class="error-message mt-3">
+									<span>${error.getDefaultMessage()}</span>
+								</div>
+							</c:forEach>
+						</c:if>
+					</div>
+				</div>
 
 				<jsp:doBody />
 
