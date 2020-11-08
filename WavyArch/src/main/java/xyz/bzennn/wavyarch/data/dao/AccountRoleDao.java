@@ -11,4 +11,5 @@ import xyz.bzennn.wavyarch.exception.DaoLayerException;
  */
 public interface AccountRoleDao {
 	AccountRole getById(int id) throws DaoLayerException;
+	AccountRole findByRoleName(String roleName) throws DaoLayerException;
 }
