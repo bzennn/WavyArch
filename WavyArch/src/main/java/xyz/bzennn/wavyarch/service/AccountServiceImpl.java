@@ -1,7 +1,7 @@
 package xyz.bzennn.wavyarch.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import xyz.bzennn.wavyarch.data.dao.AccountDao;
@@ -26,12 +26,12 @@ public class AccountServiceImpl implements AccountService {
 	private AccountRoleDao accountRoleDao;
 	
 	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public void save(Account account) throws ServiceLayerException {
-		account.setPasswordHash(bCryptPasswordEncoder.encode(account.getRawPassword()));
-		AccountRole role = accountRoleDao.getById(2);
+		account.setPasswordHash(passwordEncoder.encode(account.getRawPassword()));
+		AccountRole role = accountRoleDao.findByRoleName("user");
 		account.setRole(role);
 		accountDao.save(account);
 	}
@@ -44,5 +44,17 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public boolean isLoginExists(String login) throws ServiceLayerException {
 		return accountDao.isLoginExists(login);
+	}
+
+	@Override
+	public boolean canAuthenticate(String login, String password) throws ServiceLayerException {
+		Account account = findByLogin(login);
+		if (account != null) {
+			if (passwordEncoder.matches(password, account.getPasswordHash())) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

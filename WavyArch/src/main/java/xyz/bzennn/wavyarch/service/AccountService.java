@@ -13,4 +13,5 @@ public interface AccountService {
 	void save(Account account) throws ServiceLayerException;
 	Account findByLogin(String login) throws ServiceLayerException;
 	boolean isLoginExists(String login) throws ServiceLayerException;
+	boolean canAuthenticate(String login, String password) throws ServiceLayerException;
 }
