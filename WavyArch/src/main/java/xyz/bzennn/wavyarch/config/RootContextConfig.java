@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -26,8 +27,9 @@ import com.zaxxer.hikari.HikariDataSource;
  */
 @Configuration
 @ComponentScan(basePackages = { "xyz.bzennn.wavyarch" }, excludeFilters = {
-		@Filter(type = FilterType.ANNOTATION, classes = EnableWebMvc.class) })
+		@Filter(type = FilterType.ANNOTATION, classes = { EnableWebMvc.class }) })
 @PropertySource(value = "classpath:database.properties", ignoreResourceNotFound = true)
+@Import({ WebSecurityConfig.class })
 public class RootContextConfig {
 
 	@Autowired
@@ -74,9 +76,5 @@ public class RootContextConfig {
 
 		return hibernateProperties;
 	}
-	
-	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder(11);
-	}
+
 }
