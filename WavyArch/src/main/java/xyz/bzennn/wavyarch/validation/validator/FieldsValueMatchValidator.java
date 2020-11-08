@@ -10,7 +10,7 @@ import xyz.bzennn.wavyarch.validation.annotation.FieldsValueMatch;
 
 
 /**
- * Validator class {@link FieldsValueMatch} 
+ * Validator class for {@link FieldsValueMatch} 
  *
  * @author bzennn
  * @version 1.0
