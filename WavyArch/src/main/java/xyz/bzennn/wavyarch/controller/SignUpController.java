@@ -44,6 +44,6 @@ public class SignUpController {
 		
 		accountService.save(account);
 		
-		return "redirect:/";
+		return "redirect:/signin";
 	}
 }
