@@ -20,14 +20,14 @@
 					<div class="base-form-control">
 						<label for="inputLogin">Login</label>
 						<input type="text" class="form-control" id="inputLogin"
-							placeholder="Enter login" maxlength="20" required>
+							name="login" placeholder="Enter login" maxlength="20" required>
 						<div class="invalid-feedback" id="inputLoginFeedback"></div>
 					</div>
 
 					<div class="base-form-control">
 						<label for="inputPassword">Password</label>
 						<input type="password" class="form-control" id="inputPassword"
-							placeholder="Enter password" maxlength="20" required>
+							name="password" placeholder="Enter password" maxlength="20" required>
 						<div class="invalid-feedback" id="inputPasswordFeedback"></div>
 					</div>
 
