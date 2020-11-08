@@ -1,6 +1,7 @@
 package xyz.bzennn.wavyarch.data.model;
 
-import javax.persistence.CascadeType;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,11 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 
 /**
  * POJO that represents user account
@@ -36,12 +35,18 @@ public class Account {
 	@Column(name = "password_hash")
 	private String passwordHash;
 	
-	@Column(name = "image_path")
+	@Column(name = "image_path", nullable = true)
 	private String imagePath;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "role_id")
 	private AccountRole role;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "account")
+	private Set<AccountPlaylist> playlists;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "audio")
+	private Set<AccountAudio> audios;
 	
 	@Transient
 	private String rawPassword;
@@ -107,19 +112,62 @@ public class Account {
 		this.rawPasswordConfirm = rawPasswordConfirm;
 	}
 
+	public Set<AccountPlaylist> getPlaylists() {
+		return playlists;
+	}
+
+	public void setPlaylists(Set<AccountPlaylist> playlists) {
+		this.playlists = playlists;
+	}
+
+	public Set<AccountAudio> getAudios() {
+		return audios;
+	}
+
+	public void setAudios(Set<AccountAudio> audios) {
+		this.audios = audios;
+	}
+
 	@Override
 	public String toString() {
 		return "Account [id=" + id + ", login=" + login + ", passwordHash=" + passwordHash + ", imagePath=" + imagePath
-				+ ", role=" + role + "]";
+				+ "]";
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj, new String[] { "id", "rawPassword", "rawPasswordConfirm" });
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Account other = (Account) obj;
+		if (imagePath == null) {
+			if (other.imagePath != null)
+				return false;
+		} else if (!imagePath.equals(other.imagePath))
+			return false;
+		if (login == null) {
+			if (other.login != null)
+				return false;
+		} else if (!login.equals(other.login))
+			return false;
+		if (passwordHash == null) {
+			if (other.passwordHash != null)
+				return false;
+		} else if (!passwordHash.equals(other.passwordHash))
+			return false;
+		return true;
 	}
 	
 	@Override
 	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this, new String[] { "id", "rawPassword", "rawPasswordConfirm" });
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((imagePath == null) ? 0 : imagePath.hashCode());
+		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result + ((passwordHash == null) ? 0 : passwordHash.hashCode());
+		return result;
 	}
 }

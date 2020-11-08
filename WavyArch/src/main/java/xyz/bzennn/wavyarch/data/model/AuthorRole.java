@@ -9,17 +9,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 /**
- * POJO that represents role of {@link Account}
+ * POJO that represents author role
  *
  * @author bzennn
  * @version 1.0
  */
 @Entity
-@Table(schema = "music_library", name = "AccountRoles")
-public class AccountRole {
+@Table(schema = "music_library", name = "AuthorRoles")
+public class AuthorRole {
 	
 	@Id
 	@Column(name = "role_id")
@@ -30,10 +31,17 @@ public class AccountRole {
 	private String name;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "role")
-	private Set<Account> accounts;
+	private Set<Author> authors;
+	
+	public AuthorRole() {}
 
-	public AccountRole() {}
-
+	@PreRemove
+	private void preRemove() {
+	    for (Author author : authors) {
+	        author.setRole(null);
+	    }
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -49,20 +57,20 @@ public class AccountRole {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public Set<Account> getAccounts() {
-		return accounts;
+
+	public Set<Author> getAuthors() {
+		return authors;
 	}
 
-	public void setAccounts(Set<Account> accounts) {
-		this.accounts = accounts;
+	public void setAuthors(Set<Author> authors) {
+		this.authors = authors;
 	}
 
 	@Override
 	public String toString() {
-		return "AccountRole [id=" + id + ", name=" + name + "]";
+		return "AuthorRole [id=" + id + ", name=" + name + "]";
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -71,7 +79,7 @@ public class AccountRole {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AccountRole other = (AccountRole) obj;
+		AuthorRole other = (AuthorRole) obj;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -79,7 +87,7 @@ public class AccountRole {
 			return false;
 		return true;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
