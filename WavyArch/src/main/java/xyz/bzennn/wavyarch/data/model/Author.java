@@ -1,5 +1,7 @@
 package xyz.bzennn.wavyarch.data.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -17,7 +19,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(schema = "music_library", name = "Authors")
-public class Author {
+public class Author implements Serializable {
+
+	private static final long serialVersionUID = 5477767850130281848L;
 
 	@EmbeddedId
 	private AuthorPK id;

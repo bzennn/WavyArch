@@ -1,5 +1,6 @@
 package xyz.bzennn.wavyarch.data.model;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -19,8 +20,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(schema = "music_library", name = "AccountRoles")
-public class AccountRole {
+public class AccountRole implements Serializable {
 	
+	private static final long serialVersionUID = 488292673401793355L;
+
 	@Id
 	@Column(name = "role_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

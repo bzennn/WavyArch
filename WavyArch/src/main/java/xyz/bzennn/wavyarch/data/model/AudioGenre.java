@@ -1,5 +1,6 @@
 package xyz.bzennn.wavyarch.data.model;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -20,8 +21,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(schema = "music_library", name = "Genres")
-public class AudioGenre {
+public class AudioGenre implements Serializable {
 	
+	private static final long serialVersionUID = 6739761052943929791L;
+
 	@Id
 	@Column(name = "genre_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

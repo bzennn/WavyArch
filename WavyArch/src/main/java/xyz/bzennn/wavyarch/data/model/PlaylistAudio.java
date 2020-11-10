@@ -1,5 +1,6 @@
 package xyz.bzennn.wavyarch.data.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -20,7 +21,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(schema = "music_library", name = "PlaylistAudios")
-public class PlaylistAudio {
+public class PlaylistAudio implements Serializable {
+
+	private static final long serialVersionUID = -4630430073616644444L;
 
 	@EmbeddedId
 	private PlaylistAudioPK id;
