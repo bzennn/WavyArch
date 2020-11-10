@@ -8,8 +8,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import xyz.bzennn.wavyarch.service.WavyArchUserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -21,6 +24,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Bean
+	public UserDetailsService wavyArchUserDetailsService() {
+		return new WavyArchUserDetailsServiceImpl();
+	}
+	
+	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
@@ -28,9 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("1").password(passwordEncoder().encode("1")).roles("USER");
-		auth.inMemoryAuthentication().withUser("admin").password("harnetly365").roles("ADMIN");
-		auth.inMemoryAuthentication().withUser("dba").password("harnetly365").roles("DBA");
+		auth.userDetailsService(wavyArchUserDetailsService()).passwordEncoder(passwordEncoder());
 	}
 	
 	@Override
@@ -39,21 +45,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.csrf()
 				.disable()
 			.authorizeRequests()
-				.antMatchers("/signin", "/signup").anonymous()
-				.antMatchers("/", "/resources/**").permitAll()
+				.antMatchers("/signin").anonymous()
+				.antMatchers("/signup").anonymous()
+				.antMatchers("/resources/**").permitAll()
 			.anyRequest()
 				.authenticated()
-//			.and()
-//				.formLogin()
-//				.loginPage("/signin");
-//				.defaultSuccessUrl("/signin");
-//				.permitAll();
 			.and()
 				.logout()
 				.deleteCookies("JSESSIONID")
 				.logoutUrl("/signout")
-				.permitAll()
 				.logoutSuccessUrl("/signin")
+				.permitAll()
 			.and()
 				.rememberMe()
 				.key("verySecretKey");
