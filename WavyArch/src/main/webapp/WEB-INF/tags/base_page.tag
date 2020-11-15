@@ -75,11 +75,11 @@
 								<div class="list-group-account container">
 									<div class="row">
 										<div class="col-4">
-											<img src="<c:url value="resources/img/avatar.png"/>"
+											<img src="<c:url value="${ user.getImagePath() }"/>"
 												alt="avatar" class="rounded-circle">
 										</div>
 										<div class="col-8">
-											<span class="login">Login</span>
+											<span class="login">${ user.getLogin() }</span>
 										</div>
 									</div>
 									<div class="row">
