@@ -17,13 +17,13 @@ import xyz.bzennn.wavyarch.data.model.Account;
  * @author bzennn
  * @version 1.0
  */
-public class WavyArchUserPrinciple implements UserDetails {
+public class WavyArchUserDetails implements UserDetails {
 
 	private static final long serialVersionUID = 822446611534651757L;
 
 	private Account account;
 	
-	public WavyArchUserPrinciple(Account account) {
+	public WavyArchUserDetails(Account account) {
 		this.account = account;
 	}
 
