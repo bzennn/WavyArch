@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
  */
 @ControllerAdvice
 public class URLControllerAdvice {
-
+	
 	@ModelAttribute
 	public void addURIAttribute(HttpServletRequest request, Model model) {
 		model.addAttribute("uri", request.getRequestURI());
