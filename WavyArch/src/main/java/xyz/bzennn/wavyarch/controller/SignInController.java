@@ -1,18 +1,13 @@
 package xyz.bzennn.wavyarch.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -20,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import xyz.bzennn.wavyarch.form.UserSignInForm;
+import xyz.bzennn.wavyarch.util.AuthenticationUtils;
 
 /**
  * User Sign In controller
@@ -33,7 +29,7 @@ public class SignInController {
 	private static Logger log = LogManager.getLogger(SignInController.class);
 	
 	@Autowired
-	private AuthenticationManager authManager;
+	private AuthenticationUtils authenticationUtils;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String showSignUpPage() {
@@ -41,8 +37,7 @@ public class SignInController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String handleSignIn(@Valid UserSignInForm form, Errors errors, Model model, HttpServletRequest request) {
-		
+	public String handleSignIn(@Valid UserSignInForm form, Errors errors, Model model, HttpServletRequest request, HttpServletResponse response) {
 		if (errors.getAllErrors() != null && !errors.getAllErrors().isEmpty()) {
 			model.addAttribute("errors", errors.getAllErrors());
 			model.addAttribute("formData", form);
@@ -50,15 +45,11 @@ public class SignInController {
 			return "signin";
 		}
 		
-		UsernamePasswordAuthenticationToken authReq =
-				new UsernamePasswordAuthenticationToken(form.getLogin(), form.getPassword());
-		
 		try {
-			Authentication auth = authManager.authenticate(authReq);
-			SecurityContext securityContext = SecurityContextHolder.getContext();
-			securityContext.setAuthentication(auth);
-			HttpSession httpSession = request.getSession(true);
-			httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, securityContext);
+			Authentication auth = authenticationUtils.authenticate(request, form.getLogin(), form.getPassword());
+			if (auth != null) {
+				authenticationUtils.rememberMe(request, response, auth);
+			}
 		} catch (Exception e) {
 			log.error("Authentication error!", e);
 		}	
