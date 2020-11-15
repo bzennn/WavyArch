@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import xyz.bzennn.wavyarch.data.dao.AccountDao;
 import xyz.bzennn.wavyarch.data.model.Account;
-import xyz.bzennn.wavyarch.service.model.WavyArchUserPrinciple;
+import xyz.bzennn.wavyarch.service.model.WavyArchUserDetails;
 
 /**
  * Custom implementation of {@link UserDetailsService} 
@@ -29,7 +29,7 @@ public class WavyArchUserDetailsServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException("Account with login " + username + " not exists!");
 		}
 		
-		return new WavyArchUserPrinciple(account);
+		return new WavyArchUserDetails(account);
 	}
 	
 }
