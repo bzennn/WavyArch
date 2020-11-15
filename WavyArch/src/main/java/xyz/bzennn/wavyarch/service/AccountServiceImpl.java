@@ -33,6 +33,7 @@ public class AccountServiceImpl implements AccountService {
 		account.setPasswordHash(passwordEncoder.encode(account.getRawPassword()));
 		AccountRole role = accountRoleDao.findByRoleName("user");
 		account.setRole(role);
+		account.setImagePath("/resources/img/avatar.png");
 		accountDao.save(account);
 	}
 
