@@ -1,8 +1,6 @@
 package xyz.bzennn.wavyarch.data.dao;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,64 +14,14 @@ import xyz.bzennn.wavyarch.exception.DaoLayerException;
  * @version 1.0
  */
 @Repository
-public class AccountDaoImpl implements AccountDao {
+public class AccountDaoImpl extends BaseDaoImpl<Account> implements AccountDao {
 
 	@Autowired
 	SessionFactory sessionFactory;
 
 	@Override
-	public void save(Account account) throws DaoLayerException {
-		try {
-			Session session = sessionFactory.openSession();
-			Transaction transaction = session.beginTransaction();
-			session.save(account);
-			transaction.commit();
-			session.close();
-		} catch (Exception e) {
-			throw new DaoLayerException("Failed to save account!", e);
-		}
-	}
-
-	@Override
-	public void update(Account account) throws DaoLayerException {
-		try {
-			Session session = sessionFactory.openSession();
-			Transaction transaction = session.beginTransaction();
-			session.update(account);
-			transaction.commit();
-			session.close();
-		} catch (Exception e) {
-			throw new DaoLayerException("Failed to update account!", e);
-		}
-	}
-
-	@Override
 	public Account findByLogin(String login) throws DaoLayerException {
-		try {
-			Session session = sessionFactory.openSession();
-			Transaction transaction = session.beginTransaction();
-			Account account = (Account) session.createQuery("from Account where login=:login").setParameter("login", login)
-					.uniqueResult();
-			transaction.commit();
-			session.close();
-
-			return account;
-		} catch (Exception e) {
-			throw new DaoLayerException("Failed to find account!", e);
-		}
-	}
-
-	@Override
-	public void delete(Account account) throws DaoLayerException {
-		try {
-			Session session = sessionFactory.openSession();
-			Transaction transaction = session.beginTransaction();
-			session.delete(account);
-			transaction.commit();
-			session.close();
-		} catch (Exception e) {
-			throw new DaoLayerException("Failed to delete account!", e);
-		}
+		return findByAttribute(Account.class, "login", login);
 	}
 
 	@Override
@@ -85,15 +33,5 @@ public class AccountDaoImpl implements AccountDao {
 			throw new DaoLayerException(e);
 		}
 	}
-
-	@Override
-	public void refresh(Account account) throws DaoLayerException {
-		try {
-			Session session = sessionFactory.openSession();
-			session.refresh(account);
-			session.close();
-		} catch (Exception e) {
-			throw new DaoLayerException("Failed to delete account!", e);
-		}
-	}
+	
 }
