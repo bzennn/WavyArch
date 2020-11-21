@@ -15,4 +15,5 @@ public interface AccountDao {
 	void delete(Account account) throws DaoLayerException;
 	Account findByLogin(String login) throws DaoLayerException;
 	boolean isLoginExists(String login) throws DaoLayerException;
+	void refresh(Account account) throws DaoLayerException;
 }

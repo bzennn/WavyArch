@@ -14,25 +14,37 @@ import org.springframework.stereotype.Component;
 @Component
 public class FileUtils {
 	
-	public File getUniqueFile(String prefix, String suffix, File directory) {
-		return new File(directory, getUniqueFileName(prefix, suffix, directory));
-	}
-	
-	public String getUniqueFileName(String prefix, String suffix, File directory) {
-		String fileName = getFileName(prefix, suffix);
-		while (new File(directory, fileName).exists()) {
-			fileName = getFileName(prefix, suffix);
+	public File getUniqueFile(String prefix, String directoryPath) {
+		File directory = new File(directoryPath);
+		
+		if (!directory.exists()) {
+			directory.mkdirs();
 		}
 		
-		return directory.getPath() + fileName;
+		if (!directory.isDirectory()) {
+			directory = new File("");
+		}
+		
+		return getUniqueFile(prefix, directory);
 	}
 	
-	public String getFileName(String prefix, String suffix) {
+	public File getUniqueFile(String prefix, File directory) {
+		return new File(directory, getUniqueFileName(prefix, directory));
+	}
+	
+	public String getUniqueFileName(String prefix, File directory) {
+		String fileName = getFileName(prefix);
+		while (new File(directory, fileName).exists()) {
+			fileName = getFileName(prefix);
+		}
+		
+		return fileName;
+	}
+	
+	public String getFileName(String prefix) {
 		StringBuffer sb = new StringBuffer(prefix);
 		sb.append("-")
-			.append(UUID.randomUUID())
-			.append(".")
-			.append(suffix);
+			.append(UUID.randomUUID());
 		
 		return sb.toString();
 	}

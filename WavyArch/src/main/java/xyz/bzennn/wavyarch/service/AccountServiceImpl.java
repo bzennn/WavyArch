@@ -33,7 +33,6 @@ public class AccountServiceImpl implements AccountService {
 		account.setPasswordHash(passwordEncoder.encode(account.getRawPassword()));
 		AccountRole role = accountRoleDao.findByRoleName("user");
 		account.setRole(role);
-		account.setImagePath("/resources/img/avatar.png");
 		accountDao.save(account);
 	}
 
@@ -57,5 +56,29 @@ public class AccountServiceImpl implements AccountService {
 		}
 		
 		return false;
+	}
+
+	@Override
+	public void update(Account account) throws ServiceLayerException {
+		Account currentAccount = findByLogin(account.getLogin());
+		
+		if (account.getRawPassword() != null && !account.getRawPassword().isEmpty()) {
+			currentAccount.setPasswordHash(passwordEncoder.encode(account.getRawPassword()));
+		}
+		
+		if (account.getImagePath() != null && !account.getImagePath().isEmpty() ) {
+			currentAccount.setImagePath(account.getImagePath());
+		}
+		
+		if (account.getRole() != null) {
+			currentAccount.setRole(account.getRole());
+		}
+		
+		accountDao.update(currentAccount);
+	}
+
+	@Override
+	public void refresh(Account account) throws ServiceLayerException {
+		accountDao.refresh(account);
 	}
 }

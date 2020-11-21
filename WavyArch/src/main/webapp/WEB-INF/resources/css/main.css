@@ -288,6 +288,7 @@ th + th, td + td {
 
 .sidebar-container .list-group-account img {
     width: 4rem;
+    height: 4rem;
     border: 2px solid #f3da00;
     margin-left: 1vw;
 }

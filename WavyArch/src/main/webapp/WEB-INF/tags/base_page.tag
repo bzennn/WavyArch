@@ -75,8 +75,15 @@
 								<div class="list-group-account container">
 									<div class="row">
 										<div class="col-4">
-											<img src="<c:url value="${ user.getImagePath() }"/>"
-												alt="avatar" class="rounded-circle">
+											<c:if test="${not empty user.getImagePath() }">
+												<img src="<c:url value="/files/images/${ user.getImagePath() }"/>"
+													alt="avatar" class="rounded-circle">
+											</c:if>
+											
+											<c:if test="${empty user.getImagePath() }">
+												<img src="<c:url value="/resources/img/avatar.png"/>"
+													alt="avatar" class="rounded-circle">
+											</c:if>
 										</div>
 										<div class="col-8">
 											<span class="login">${ user.getLogin() }</span>
@@ -84,7 +91,7 @@
 									</div>
 									<div class="row">
 										<div class="col-6">
-											<a href="<c:url value="/edit"/>" class="btn">Edit</a>
+											<a href="<c:url value="/account-edit"/>" class="btn">Edit</a>
 										</div>
 										<div class="col-6">
 											<a href="<c:url value="/signout"/>" class="btn">Exit</a>

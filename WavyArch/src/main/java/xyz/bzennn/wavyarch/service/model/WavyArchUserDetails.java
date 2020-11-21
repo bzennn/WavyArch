@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import xyz.bzennn.wavyarch.data.model.Account;
+import xyz.bzennn.wavyarch.exception.ServiceLayerException;
 
 
 /**
@@ -20,7 +21,7 @@ import xyz.bzennn.wavyarch.data.model.Account;
 public class WavyArchUserDetails implements UserDetails {
 
 	private static final long serialVersionUID = 822446611534651757L;
-
+	
 	private Account account;
 	
 	public WavyArchUserDetails(Account account) {

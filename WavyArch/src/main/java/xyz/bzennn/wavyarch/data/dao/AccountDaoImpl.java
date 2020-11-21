@@ -85,4 +85,15 @@ public class AccountDaoImpl implements AccountDao {
 			throw new DaoLayerException(e);
 		}
 	}
+
+	@Override
+	public void refresh(Account account) throws DaoLayerException {
+		try {
+			Session session = sessionFactory.openSession();
+			session.refresh(account);
+			session.close();
+		} catch (Exception e) {
+			throw new DaoLayerException("Failed to delete account!", e);
+		}
+	}
 }

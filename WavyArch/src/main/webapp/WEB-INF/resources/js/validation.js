@@ -80,6 +80,22 @@ function validateSignUpForm() {
         isPasswordMatchValid;
 }
 
+function validateAccountEditForm() {
+    const isOldPasswordValid = validateInputNameById(20, 'inputOldPassword', true);
+    const isNewPasswordValid = validateInputNameById(20, 'inputNewPassword', false);
+    const isNewPasswordRepValid = validateInputNameById(20, 'inputRepeatNewPassword', false);
+    
+    const isNewPasswordMatchValid = validatePasswordsMatch('inputNewPassword', 'inputRepeatNewPassword', 20);
+
+    const isAvatarImageValid = validateInputFileImage();
+
+    return isOldPasswordValid &&
+        isNewPasswordValid &&
+        isNewPasswordRepValid &&
+        isNewPasswordMatchValid &&
+        isAvatarImageValid
+}
+
 function validateInputName(maxLen) {
     return validateInputNameById(maxLen, 'inputName');
 };
@@ -230,7 +246,7 @@ function validatePasswordsMatch(passFieldId, passRepeatFieldId) {
     let passRepValue = passRepInput.val();
     let isValid = false;
 
-    if (passValue.length > 0 && passValue.length == passRepValue.length) {
+    if (passValue.length == passRepValue.length) {
         if (passValue === passRepValue) {
             isValid = true;
         }
