@@ -93,12 +93,20 @@ a:hover {
     border-radius: 0;
 }
 
+
+
  .form-control-file:focus,.form-control-file:active {
     background-color: #1a1a1a; 
     border-color: #f3da00;
     outline: none !important;
     box-shadow: none !important;
 } 
+
+input[type=file] {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .custom-file {
     height: inherit;
