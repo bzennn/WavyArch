@@ -18,7 +18,7 @@ public class RootController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public View handleRootMapping() {
-		RedirectView redirect = new RedirectView("signin");
+		RedirectView redirect = new RedirectView("audios");
 		redirect.setExposeModelAttributes(false);
 		
 		return redirect;
