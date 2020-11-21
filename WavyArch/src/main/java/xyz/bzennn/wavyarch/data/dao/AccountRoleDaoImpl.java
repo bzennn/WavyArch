@@ -17,7 +17,7 @@ public class AccountRoleDaoImpl extends BaseDaoImpl<AccountRole> implements Acco
 	
 	@Override
 	public AccountRole getById(int id) throws DaoLayerException {
-		return findByAttribute(AccountRole.class, "id", id);
+		return findByAttribute(AccountRole.class, "role_id", id);
 	}
 
 	@Override
