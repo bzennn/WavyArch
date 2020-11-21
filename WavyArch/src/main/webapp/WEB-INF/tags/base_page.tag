@@ -10,7 +10,7 @@
 			<!-- Logo -->
 			<div class="navbar-brand">
 				<a href="<c:url value="/"/>">
-					<img class="logo-img" src="<c:url value="resources/img/logo.svg"/>"
+					<img class="logo-img" src="<c:url value="/resources/img/logo.svg"/>"
 						height="25" alt="Logo">
 					<span class="logo-name">WavyArch</span>
 				</a>
