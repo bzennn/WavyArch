@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -37,9 +37,9 @@ public class SignInController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String handleSignIn(@Valid UserSignInForm form, Errors errors, Model model, HttpServletRequest request, HttpServletResponse response) {
-		if (errors.getAllErrors() != null && !errors.getAllErrors().isEmpty()) {
-			model.addAttribute("errors", errors.getAllErrors());
+	public String handleSignIn(@Valid UserSignInForm form, BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
+		if (result.hasErrors()) {
+			model.addAttribute("errors", result.getAllErrors());
 			model.addAttribute("formData", form);
 			
 			return "signin";
