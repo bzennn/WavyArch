@@ -188,7 +188,7 @@ public class AudiosController {
 		if (result.hasErrors()) {
 			model.addAttribute("errors", result.getAllErrors());
 			
-			return "audio_upload";	
+			return "audio_edit";	
 		}
 		
 		Audio audio = audioService.findByName(audioName);
@@ -203,7 +203,7 @@ public class AudiosController {
 					file.transferTo(audioFile);
 				} catch (Exception e) {
 					e.printStackTrace();
-					return "account_edit";
+					return "audio_edit";
 				}
 				
 				form.setDuration(audioUtils.getAudioDuration(audioFile, file.getContentType()));
@@ -219,7 +219,7 @@ public class AudiosController {
 			}
 		}
 		
-		if (currentFile != null && currentFile.exists()) {
+		if (audioFile != null && currentFile != null && currentFile.exists()) {
 			currentFile.delete();
 		}
 

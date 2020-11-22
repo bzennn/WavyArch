@@ -255,8 +255,6 @@ public class AudioServiceImpl implements AudioService {
 		try {
 			Audio audio = findByName(form.getName());
 			
-			audio.setName(form.getName());
-			
 			String filePath = form.getFilePath();
 			if (filePath != null && !filePath.isEmpty()) {
 				audio.setFilePath(form.getFilePath());

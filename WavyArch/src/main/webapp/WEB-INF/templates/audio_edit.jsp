@@ -31,7 +31,7 @@
 					<table class="table table-borderless">
 						<tr>
 							<td style="width: 50%;">
-								<div class="base-form-control">
+								<div class="base-form-control d-none">
 									<label for="inputName">Name</label>
 									<input type="text" class="form-control" id="inputName"
 										name="name" placeholder="Enter name" maxlength="60"
@@ -60,10 +60,7 @@
 										value="${genre}">
 									<div class="invalid-feedback" id="inputGenreFeedback"></div>
 								</div>
-							</td>
-							<td style="width: 50%;">
-
-
+								
 								<div class="base-form-control">
 									<label for="inputAlbum">Album</label>
 									<input type="text" class="form-control" id="inputAlbum"
@@ -71,6 +68,8 @@
 										value="${album}">
 									<div class="invalid-feedback" id="inputAlbumFeedback"></div>
 								</div>
+							</td>
+							<td style="width: 50%;">
 
 								<div class="base-form-control">
 									<label for="inputPerformers">Performers</label>

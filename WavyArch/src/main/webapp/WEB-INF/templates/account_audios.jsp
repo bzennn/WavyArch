@@ -80,11 +80,11 @@
 							value="${audio.getPerformers()}" />
 						<c:set var="authors" scope="page" value="${audio.getAuthors()}" />
 						<c:set var="tags" scope="page" value="${audio.getTags()}" />
-
+						
 						<tr>
 							<td>${index}</td>
-							<td>${ audio.getName() }</td>
-							<td>5:55</td>
+							<td>${audio.getName()}</td>
+							<td>${audio.getDuration()}</td>
 							<td>
 								<c:forEach var="audioPerformer" items="${performers}">
 									<c:set var="performer" scope="page"
