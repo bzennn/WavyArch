@@ -1,8 +1,6 @@
 package xyz.bzennn.wavyarch.controller;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.net.URLConnection;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,22 +33,34 @@ public class FileController {
 	
 	@RequestMapping(path = "images/{avatarName}", method = RequestMethod.GET)
 	@ResponseBody
-	public HttpEntity<byte[]> getAvatarUrl(@PathVariable String avatarName) throws NotFoundException {
+	public HttpEntity<byte[]> getAvatar(@PathVariable String avatarName) throws NotFoundException {
 		File imgFile = new File(uploadPath + CommonProperties.AVATAR_FILE_PATH, avatarName);
-		byte[] img;
+		
+		return createFileResponseBody(imgFile);
+	}
+	
+	@RequestMapping(path = "audios/{audioName}", method = RequestMethod.GET)
+	@ResponseBody
+	public HttpEntity<byte[]> getAudio(@PathVariable String audioName) throws NotFoundException {
+		File audioFile = new File(uploadPath + CommonProperties.AUDIO_FILE_PATH, audioName);
+		
+		return createFileResponseBody(audioFile);
+	}
+	
+	private HttpEntity<byte[]> createFileResponseBody(File file) throws NotFoundException {
+		byte[] fileBytes;
 		String[] contentType;
 		try {
-			img = FileUtils.readFileToByteArray(imgFile);
-			String contentTypeFull = URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(img));
-			contentType = contentTypeFull.split("/");
+			fileBytes = FileUtils.readFileToByteArray(file);
+			contentType = file.getName().split("_")[0].split("-");
 		} catch (Exception e) {
 			throw new NotFoundException("File not found on server!", e);
 		}
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType(contentType[0], contentType[1]));
-		headers.setContentLength(img.length);
-		return new HttpEntity<byte[]>(img, headers);
+		headers.setContentLength(fileBytes.length);
+		return new HttpEntity<byte[]>(fileBytes, headers);
 	}
 
 }

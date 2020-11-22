@@ -22,7 +22,11 @@ public class AccountRoleServiceImpl implements AccountRoleService {
 	
 	@Override
 	public AccountRole getById(int id) throws ServiceLayerException {
-		return accountRoleDao.getById(id);
+		try {
+			return accountRoleDao.getById(id);	
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to get account role by id!", e);
+		}
 	}
 
 }

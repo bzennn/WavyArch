@@ -10,7 +10,6 @@ import xyz.bzennn.wavyarch.data.model.Audio;
 import xyz.bzennn.wavyarch.data.model.AudioMaker;
 import xyz.bzennn.wavyarch.data.model.Performer;
 import xyz.bzennn.wavyarch.exception.DaoLayerException;
-import xyz.bzennn.wavyarch.exception.ServiceLayerException;
 
 /**
  * Implementation for {@link Performer}
@@ -22,12 +21,12 @@ import xyz.bzennn.wavyarch.exception.ServiceLayerException;
 public class PerformerDaoImpl extends BaseDaoImpl<Performer> implements PerformerDao {
 
 	@Override
-	public List<Performer> findByAudioId(Long audioId) throws ServiceLayerException {
+	public List<Performer> findByAudioId(Long audioId) throws DaoLayerException {
 		try {
 			Session session = sessionFactory.openSession();
 			Transaction transaction = session.beginTransaction();
 			@SuppressWarnings("unchecked")
-			List<Performer> list = session.createQuery("from Performer where audio_id=:audio_id").setParameter("audio_id", audioId.toString()).getResultList();
+			List<Performer> list = session.createQuery("from Performer where audio_id=:audio_id").setParameter("audio_id", audioId).getResultList();
 			transaction.commit();
 			session.close();
 
@@ -38,7 +37,7 @@ public class PerformerDaoImpl extends BaseDaoImpl<Performer> implements Performe
 	}
 
 	@Override
-	public Performer findByAudioAndAudioMaker(Audio audio, AudioMaker audioMaker) throws ServiceLayerException {
+	public Performer findByAudioAndAudioMaker(Audio audio, AudioMaker audioMaker) throws DaoLayerException {
 		Long audioId = audio.getId();
 		Long audioMakerId = audioMaker.getId();
 		
@@ -46,7 +45,7 @@ public class PerformerDaoImpl extends BaseDaoImpl<Performer> implements Performe
 			Session session = sessionFactory.openSession();
 			Transaction transaction = session.beginTransaction();
 			String query = "from Performer where audio_id=:audio_id and audio_maker_id=:audio_maker_id";
-			Performer performer = (Performer) session.createQuery(query).setParameter("audio_id", audioId.toString()).setParameter("audio_maker_id", audioMakerId.toString()).uniqueResult();
+			Performer performer = (Performer) session.createQuery(query).setParameter("audio_id", audioId).setParameter("audio_maker_id", audioMakerId).uniqueResult();
 			transaction.commit();
 			session.close();
 
@@ -57,7 +56,7 @@ public class PerformerDaoImpl extends BaseDaoImpl<Performer> implements Performe
 	}
 
 	@Override
-	public boolean isPerformerExists(Audio audio, AudioMaker audioMaker) throws ServiceLayerException {
+	public boolean isPerformerExists(Audio audio, AudioMaker audioMaker) throws DaoLayerException {
 		try {
 			Performer performer = findByAudioAndAudioMaker(audio, audioMaker);
 			return performer != null;

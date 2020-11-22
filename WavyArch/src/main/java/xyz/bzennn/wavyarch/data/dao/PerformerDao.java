@@ -5,7 +5,7 @@ import java.util.List;
 import xyz.bzennn.wavyarch.data.model.Audio;
 import xyz.bzennn.wavyarch.data.model.AudioMaker;
 import xyz.bzennn.wavyarch.data.model.Performer;
-import xyz.bzennn.wavyarch.exception.ServiceLayerException;
+import xyz.bzennn.wavyarch.exception.DaoLayerException;
 
 /**
  * DAO interface for {@link Performer} 
@@ -14,10 +14,11 @@ import xyz.bzennn.wavyarch.exception.ServiceLayerException;
  * @version 1.0
  */
 public interface PerformerDao {
-	void save(Performer performer) throws ServiceLayerException;
-	void update(Performer performer) throws ServiceLayerException;
-	void refresh(Performer performer) throws ServiceLayerException;
-	List<Performer> findByAudioId(Long audioId) throws ServiceLayerException;
-	Performer findByAudioAndAudioMaker(Audio audio, AudioMaker audioMaker) throws ServiceLayerException;
-	boolean isPerformerExists(Audio audio, AudioMaker audioMaker) throws ServiceLayerException;
+	void save(Performer performer) throws DaoLayerException;
+	void update(Performer performer) throws DaoLayerException;
+	void refresh(Performer performer) throws DaoLayerException;
+	void delete(Performer performer) throws DaoLayerException;
+	List<Performer> findByAudioId(Long audioId) throws DaoLayerException;
+	Performer findByAudioAndAudioMaker(Audio audio, AudioMaker audioMaker) throws DaoLayerException;
+	boolean isPerformerExists(Audio audio, AudioMaker audioMaker) throws DaoLayerException;
 }

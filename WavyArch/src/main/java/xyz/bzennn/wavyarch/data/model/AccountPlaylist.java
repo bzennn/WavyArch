@@ -46,7 +46,7 @@ public class AccountPlaylist implements Serializable {
 	@JoinColumn(name = "account_id")
 	private Account account;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "audio")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "playlist")
 	private Set<PlaylistAudio> audios;
 	
 	public AccountPlaylist() {}

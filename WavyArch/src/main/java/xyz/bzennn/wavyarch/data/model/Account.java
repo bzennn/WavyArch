@@ -48,7 +48,7 @@ public class Account implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "account")
 	private Set<AccountPlaylist> playlists;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "audio")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "account")
 	private Set<AccountAudio> audios;
 	
 	@Transient

@@ -8,6 +8,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import xyz.bzennn.wavyarch.data.dao.AccountAudioDao;
+import xyz.bzennn.wavyarch.data.dao.AccountDao;
 import xyz.bzennn.wavyarch.data.dao.AlbumDao;
 import xyz.bzennn.wavyarch.data.dao.AudioDao;
 import xyz.bzennn.wavyarch.data.dao.AudioMakerDao;
@@ -16,6 +18,10 @@ import xyz.bzennn.wavyarch.data.dao.AuthorRoleDao;
 import xyz.bzennn.wavyarch.data.dao.GenreDao;
 import xyz.bzennn.wavyarch.data.dao.PerformerDao;
 import xyz.bzennn.wavyarch.data.dao.TagDao;
+import xyz.bzennn.wavyarch.data.model.Account;
+import xyz.bzennn.wavyarch.data.model.AccountAudio;
+import xyz.bzennn.wavyarch.data.model.AccountAudioPK;
+import xyz.bzennn.wavyarch.data.model.AccountPlaylist;
 import xyz.bzennn.wavyarch.data.model.Audio;
 import xyz.bzennn.wavyarch.data.model.AudioAlbum;
 import xyz.bzennn.wavyarch.data.model.AudioGenre;
@@ -43,6 +49,12 @@ public class AudioServiceImpl implements AudioService {
 	private AudioDao audioDao;
 	
 	@Autowired
+	private AccountAudioDao accountAudioDao;
+	
+	@Autowired
+	private AccountDao accountDao;
+	
+	@Autowired
 	private AlbumDao albumDao;
 	
 	@Autowired
@@ -65,111 +77,202 @@ public class AudioServiceImpl implements AudioService {
 	
 	@Override
 	public void save(Audio audio) throws ServiceLayerException {
-		Set<Performer> performers = audio.getPerformers();
-		Set<Author> authors = audio.getAuthors();
-		
-		audioDao.save(audio);
-		refresh(audio);
-		
-		if (performers != null && !performers.isEmpty()) {
-			for (Performer performer : performers) {
-				PerformerPK performerPK = new PerformerPK();
-				performerPK.setAudioId(audio.getId());
-				performerPK.setAudioMakerId(performer.getAudioMaker().getId());
-				performer.setId(performerPK);
-				performerDao.save(performer);
+		try {
+			Set<Performer> performers = audio.getPerformers();
+			Set<Author> authors = audio.getAuthors();
+			
+			audioDao.save(audio);
+			refresh(audio);
+			
+			if (performers != null && !performers.isEmpty()) {
+				for (Performer performer : performers) {
+					PerformerPK performerPK = new PerformerPK();
+					performerPK.setAudioId(audio.getId());
+					performerPK.setAudioMakerId(performer.getAudioMaker().getId());
+					performer.setId(performerPK);
+					performerDao.save(performer);
+				}
 			}
-		}
-		
-		
-		if (authors != null && !authors.isEmpty()) {
-			for (Author author : authors) {
-				AuthorPK authorPK = new AuthorPK();
-				authorPK.setAudioId(audio.getId());
-				authorPK.setAudioMakerId(author.getAudioMaker().getId());
-				author.setId(authorPK);
-				authorDao.save(author);
+			
+			
+			if (authors != null && !authors.isEmpty()) {
+				for (Author author : authors) {
+					AuthorPK authorPK = new AuthorPK();
+					authorPK.setAudioId(audio.getId());
+					authorPK.setAudioMakerId(author.getAudioMaker().getId());
+					author.setId(authorPK);
+					authorDao.save(author);
+				}
 			}
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to save audio!", e);
 		}
 	}
 
 	@Override
 	public Audio findByName(String name) throws ServiceLayerException {
-		return audioDao.findByName(name);
+		try {
+			return audioDao.findByName(name);
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to find audio!", e);
+		}
 	}
 
 	@Override
 	public boolean isAudioExists(String name) throws ServiceLayerException {
-		return audioDao.isAudioExists(name);
+		try {
+			return audioDao.isAudioExists(name);
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to check if audio exists!", e);
+		}
 	}
 
 	@Override
 	public void update(Audio audio) throws ServiceLayerException {
-		audioDao.update(audio);
+		try {
+			audioDao.update(audio);
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to update audio!", e);
+		}
 	}
 
 	@Override
 	public void delete(Audio audio) throws ServiceLayerException {
-		audioDao.delete(audio);
+		try {
+			audioDao.delete(audio);
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to delete audio!", e);
+		}
 	}
 	
 	@Override
 	public void refresh(Audio audio) throws ServiceLayerException {
-		audioDao.refresh(audio);
+		try {
+			audioDao.refresh(audio);
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to refresh audio!", e);
+		}
 	}
 
 	@Override
-	public Audio buildAudioFromUploadForm(AudioUploadForm form) {
-		Audio audio = new Audio();
-		
-		audio.setName(form.getName());
-		audio.setFilePath(form.getFilePath());
-		
-		Date creationDate = form.getCreationDate();
-		if (creationDate != null) {
-			audio.setCreationDate(creationDate);
-		}
-		
-		String genre = form.getGenre();
-		if (genre != null && !genre.isEmpty()) {
-			audio.setGenre(findOrCreateGenre(genre));
-		}
-		
-		String album = form.getAlbum();
-		if (album != null && !album.isEmpty()) {
-			audio.setAlbum(findOrCreateAlbum(album));
-		}
-		
-		List<String> performersStr = form.getPerformers();
-		if (performersStr != null && !performersStr.isEmpty()) {
-			Set<Performer> performers = new HashSet<Performer>();
-			for (String performerStr : performersStr) {
-				AudioMaker audioMaker = findOrCreateAudioMaker(performerStr);
-				performers.add(buildPerformer(audio, audioMaker));
+	public Audio buildAudioFromUploadForm(AudioUploadForm form) throws ServiceLayerException {
+		try {
+			Audio audio = new Audio();
+			
+			audio.setName(form.getName());
+			audio.setFilePath(form.getFilePath());
+			
+			Integer duration = form.getDuration();
+			if (duration != null) {
+				audio.setDuration(duration);
 			}
-			audio.setPerformers(performers);
-		}
-		
-		List<AuthorAndRole> authorsStr = form.getAuthors();
-		if (authorsStr != null && !authorsStr.isEmpty()) {
-			Set<Author> authors = new HashSet<Author>();
-			for (AuthorAndRole authorAndRole : authorsStr) {
-				AudioMaker audioMaker = findOrCreateAudioMaker(authorAndRole.getAuthor());
-				authors.add(buildAuthor(audio, audioMaker, authorAndRole.getRole()));
+			
+			Date creationDate = form.getCreationDate();
+			if (creationDate != null) {
+				audio.setCreationDate(creationDate);
 			}
-			audio.setAuthors(authors);
-		}
-		
-		List<String> tagsStr = form.getTags();
-		if (tagsStr != null && !tagsStr.isEmpty()) {
-			Set<AudioTag> tags = new HashSet<AudioTag>();
-			for (String tagStr : tagsStr) {
-				tags.add(findOrCreateTag(tagStr));
+			
+			String genre = form.getGenre();
+			if (genre != null && !genre.isEmpty()) {
+				audio.setGenre(findOrCreateGenre(genre));
 			}
-			audio.setTags(tags);
+			
+			String album = form.getAlbum();
+			if (album != null && !album.isEmpty()) {
+				audio.setAlbum(findOrCreateAlbum(album));
+			}
+			
+			List<String> performersStr = form.getPerformers();
+			if (performersStr != null && !performersStr.isEmpty()) {
+				Set<Performer> performers = new HashSet<Performer>();
+				for (String performerStr : performersStr) {
+					AudioMaker audioMaker = findOrCreateAudioMaker(performerStr);
+					performers.add(buildPerformer(audio, audioMaker));
+				}
+				audio.setPerformers(performers);
+			}
+			
+			List<AuthorAndRole> authorsStr = form.getAuthors();
+			if (authorsStr != null && !authorsStr.isEmpty()) {
+				Set<Author> authors = new HashSet<Author>();
+				for (AuthorAndRole authorAndRole : authorsStr) {
+					AudioMaker audioMaker = findOrCreateAudioMaker(authorAndRole.getAuthor());
+					authors.add(buildAuthor(audio, audioMaker, authorAndRole.getRole()));
+				}
+				audio.setAuthors(authors);
+			}
+			
+			List<String> tagsStr = form.getTags();
+			if (tagsStr != null && !tagsStr.isEmpty()) {
+				Set<AudioTag> tags = new HashSet<AudioTag>();
+				for (String tagStr : tagsStr) {
+					tags.add(findOrCreateTag(tagStr));
+				}
+				audio.setTags(tags);
+			}
+			
+			return audio;
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to built audio object!", e);
 		}
-		
-		return audio;
+	}
+	
+	@Override
+	public void deleteFromAccount(Audio audio, Account account) throws ServiceLayerException {
+		try {
+			AccountAudio accountAudio = accountAudioDao.findByAudioAndAccount(audio, account);
+			if (accountAudio != null) {
+				accountAudioDao.delete(accountAudio);
+			}
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to delete audio from account!", e);
+		}
+	}
+	
+	@Override
+	public void addAudioToAccount(Audio audio, Account account) throws ServiceLayerException {
+		try {
+			AccountAudio accountAudio = new AccountAudio();
+			accountAudio.setAudio(audio);
+			accountAudio.setAccount(account);
+			
+			AccountAudioPK accountAudioPK = new AccountAudioPK();
+			accountAudioPK.setAudioId(audio.getId());
+			accountAudioPK.setAccountId(account.getId());
+			
+			accountAudio.setId(accountAudioPK);
+			
+			accountAudioDao.save(accountAudio);
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to add audio to account!", e);
+		}
+	}
+	
+	@Override
+		public boolean isAudioExistsOnAccount(Audio audio, Account account) throws ServiceLayerException {
+			try {
+				return accountAudioDao.isAccountAudioExists(audio, account);
+			} catch (Exception e) {
+				throw new ServiceLayerException("Failed to check if audio exists on account!", e);
+			}
+		}
+
+	@Override
+	public Set<AccountAudio> loadAudios(Account account) throws ServiceLayerException {
+		try {
+			return accountDao.loadAudios(account);
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to lazily load audios from account!", e);
+		}
+	}
+	
+	@Override
+	public Set<AccountPlaylist> loadPlaylists(Account account) throws ServiceLayerException {
+		try {
+			return accountDao.loadPlaylists(account);
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to lazily load palylists from account!", e);
+		}
 	}
 	
 	public AudioGenre findOrCreateGenre(String name) {
@@ -207,6 +310,12 @@ public class AudioServiceImpl implements AudioService {
 		performer.setAudio(audio);
 		performer.setAudioMaker(audioMaker);
 		
+		PerformerPK mockPK = new PerformerPK();
+		mockPK.setAudioId(new Long(0));
+		mockPK.setAudioMakerId(audioMaker.getId());
+		
+		performer.setId(mockPK);
+		
 		return performer;
 	}
 	
@@ -232,7 +341,18 @@ public class AudioServiceImpl implements AudioService {
 		Author author = new Author();
 		author.setAudio(audio);
 		author.setAudioMaker(audioMaker);
-		author.setRole(findOrCreateAuthorRole(role));
+		
+		if (role != null && !role.isEmpty()) {
+			author.setRole(findOrCreateAuthorRole(role));
+		} else {
+			author.setRole(findOrCreateAuthorRole("Author"));
+		}
+		
+		AuthorPK mockPK = new AuthorPK();
+		mockPK.setAudioId(new Long(0));
+		mockPK.setAudioMakerId(audioMaker.getId());
+		
+		author.setId(mockPK);
 		
 		return author;
 	}

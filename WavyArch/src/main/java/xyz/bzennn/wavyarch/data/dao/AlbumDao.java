@@ -1,7 +1,7 @@
 package xyz.bzennn.wavyarch.data.dao;
 
 import xyz.bzennn.wavyarch.data.model.AudioAlbum;
-import xyz.bzennn.wavyarch.exception.ServiceLayerException;
+import xyz.bzennn.wavyarch.exception.DaoLayerException;
 
 /**
  * DAO interface for {@link AudioAlbum} 
@@ -10,9 +10,9 @@ import xyz.bzennn.wavyarch.exception.ServiceLayerException;
  * @version 1.0
  */
 public interface AlbumDao {
-	void save(AudioAlbum album) throws ServiceLayerException;
-	AudioAlbum findByName(String name) throws ServiceLayerException;
-	boolean isAlbumExists(String name) throws ServiceLayerException;
-	void update(AudioAlbum album) throws ServiceLayerException;
-	void refresh(AudioAlbum album) throws ServiceLayerException;
+	void save(AudioAlbum album) throws DaoLayerException;
+	AudioAlbum findByName(String name) throws DaoLayerException;
+	boolean isAlbumExists(String name) throws DaoLayerException;
+	void update(AudioAlbum album) throws DaoLayerException;
+	void refresh(AudioAlbum album) throws DaoLayerException;
 }

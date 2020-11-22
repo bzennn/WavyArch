@@ -319,6 +319,10 @@ th + th, td + td {
     color: #ffffff;
     /* padding-top: 2vh; */
 }
+
+.sidebar-container .role-name {
+    color: #aaaaaa;
+}
 /* Sidebar end */
 
 /* Content */

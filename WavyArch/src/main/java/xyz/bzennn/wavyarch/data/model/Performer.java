@@ -2,7 +2,6 @@ package xyz.bzennn.wavyarch.data.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,12 +25,12 @@ public class Performer implements Serializable {
 	@EmbeddedId
 	private PerformerPK id;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@MapsId("audioId")
 	@JoinColumn(name = "audio_id")
 	private Audio audio;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@MapsId("audioMakerId")
 	@JoinColumn(name = "audio_maker_id")
 	private AudioMaker audioMaker;

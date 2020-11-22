@@ -1,5 +1,10 @@
 package xyz.bzennn.wavyarch.service;
 
+import java.util.Set;
+
+import xyz.bzennn.wavyarch.data.model.Account;
+import xyz.bzennn.wavyarch.data.model.AccountAudio;
+import xyz.bzennn.wavyarch.data.model.AccountPlaylist;
 import xyz.bzennn.wavyarch.data.model.Audio;
 import xyz.bzennn.wavyarch.exception.ServiceLayerException;
 import xyz.bzennn.wavyarch.form.AudioUploadForm;
@@ -17,5 +22,10 @@ public interface AudioService {
 	void update(Audio audio) throws ServiceLayerException;
 	void refresh(Audio audio) throws ServiceLayerException;
 	void delete(Audio audio) throws ServiceLayerException;
+	void deleteFromAccount(Audio audio, Account account) throws ServiceLayerException;
+	void addAudioToAccount(Audio audio, Account account) throws ServiceLayerException;
+	boolean isAudioExistsOnAccount(Audio audio, Account account) throws ServiceLayerException;
 	Audio buildAudioFromUploadForm(AudioUploadForm form) throws ServiceLayerException;
+	Set<AccountAudio> loadAudios(Account account) throws ServiceLayerException;
+	Set<AccountPlaylist> loadPlaylists(Account account) throws ServiceLayerException;
 }

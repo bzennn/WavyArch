@@ -30,55 +30,79 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Override
 	public void save(Account account) throws ServiceLayerException {
-		account.setPasswordHash(passwordEncoder.encode(account.getRawPassword()));
-		AccountRole role = accountRoleDao.findByRoleName("user");
-		account.setRole(role);
-		accountDao.save(account);
+		try {
+			account.setPasswordHash(passwordEncoder.encode(account.getRawPassword()));
+			AccountRole role = accountRoleDao.findByRoleName("user");
+			account.setRole(role);
+			accountDao.save(account);
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to save account!", e);
+		}
 	}
 
 	@Override
 	public Account findByLogin(String login) throws ServiceLayerException {
-		return accountDao.findByLogin(login);
+		try {
+			return accountDao.findByLogin(login);
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to find account by login!", e);
+		}
 	}
 
 	@Override
 	public boolean isLoginExists(String login) throws ServiceLayerException {
-		return accountDao.isLoginExists(login);
+		try {
+			return accountDao.isLoginExists(login);
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to check if account exists!", e);
+		}
 	}
 
 	@Override
 	public boolean canAuthenticate(String login, String password) throws ServiceLayerException {
-		Account account = findByLogin(login);
-		if (account != null) {
-			if (passwordEncoder.matches(password, account.getPasswordHash())) {
-				return true;
+		try {
+			Account account = findByLogin(login);
+			if (account != null) {
+				if (passwordEncoder.matches(password, account.getPasswordHash())) {
+					return true;
+				}
 			}
+			
+			return false;
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to check if user can be authenticated!", e);
 		}
-		
-		return false;
 	}
 
 	@Override
 	public void update(Account account) throws ServiceLayerException {
-		Account currentAccount = findByLogin(account.getLogin());
-		
-		if (account.getRawPassword() != null && !account.getRawPassword().isEmpty()) {
-			currentAccount.setPasswordHash(passwordEncoder.encode(account.getRawPassword()));
+		try {
+			Account currentAccount = findByLogin(account.getLogin());
+			
+			if (account.getRawPassword() != null && !account.getRawPassword().isEmpty()) {
+				currentAccount.setPasswordHash(passwordEncoder.encode(account.getRawPassword()));
+			}
+			
+			if (account.getImagePath() != null && !account.getImagePath().isEmpty() ) {
+				currentAccount.setImagePath(account.getImagePath());
+			}
+			
+			if (account.getRole() != null) {
+				currentAccount.setRole(account.getRole());
+			}
+			
+			accountDao.update(currentAccount);
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to update account!", e);
 		}
-		
-		if (account.getImagePath() != null && !account.getImagePath().isEmpty() ) {
-			currentAccount.setImagePath(account.getImagePath());
-		}
-		
-		if (account.getRole() != null) {
-			currentAccount.setRole(account.getRole());
-		}
-		
-		accountDao.update(currentAccount);
 	}
 
 	@Override
 	public void refresh(Account account) throws ServiceLayerException {
-		accountDao.refresh(account);
+		try {
+			accountDao.refresh(account);
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to refresh account!", e);
+		}
 	}
 }

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FileUtils {
 	
-	public File getUniqueFile(String prefix, String directoryPath) {
+	public File getUniqueFile(String directoryPath, String contentType) {
 		File directory = new File(directoryPath);
 		
 		if (!directory.exists()) {
@@ -25,27 +25,37 @@ public class FileUtils {
 			directory = new File("");
 		}
 		
-		return getUniqueFile(prefix, directory);
+		return getUniqueFile(directory, contentType);
 	}
 	
-	public File getUniqueFile(String prefix, File directory) {
-		return new File(directory, getUniqueFileName(prefix, directory));
+	public File getUniqueFile( File directory, String contentType) {
+		return new File(directory, getUniqueFileName(directory, contentType));
 	}
 	
-	public String getUniqueFileName(String prefix, File directory) {
-		String fileName = getFileName(prefix);
+	public String getUniqueFileName(File directory, String contentType) {
+		String fileName = getFileName(contentType);
 		while (new File(directory, fileName).exists()) {
-			fileName = getFileName(prefix);
+			fileName = getFileName(contentType);
 		}
 		
 		return fileName;
 	}
 	
-	public String getFileName(String prefix) {
-		StringBuffer sb = new StringBuffer(prefix);
+	public String getFileName(String contentType) {
+		String[] type = contentType.split("/");
+		StringBuffer sb = new StringBuffer(type[0]);
 		sb.append("-")
+			.append(type[1])
+			.append("_")
 			.append(UUID.randomUUID());
 		
 		return sb.toString();
+	}
+	
+	public void deleteFile(String directory, String fileName) {
+		File file = new File(directory + fileName);
+		if (file.exists() && file.isFile()) {
+			file.delete();
+		}
 	}
 }

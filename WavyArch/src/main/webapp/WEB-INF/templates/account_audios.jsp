@@ -16,9 +16,9 @@
 		<div class="col d-flex justify-content-end">
 
 			<div class="btn-group mr-4">
-				<button class="btn dropdown-toggle" type="button"
-					id="sortMenu" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false">SORT LIST</button>
+				<button class="btn dropdown-toggle" type="button" id="sortMenu"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SORT
+					LIST</button>
 				<div class="dropdown-menu" aria-labelledby="sortMenu">
 					<a href="#" class="dropdown-item">
 						CRITERIA 1
@@ -65,68 +65,75 @@
 					</tr>
 				</thead>
 				<tbody>
+					<c:set var="index" scope="page" value="0" />
+					<c:forEach var="accountAudio" items="${user.getAudios()}">
+						<c:set var="index" scope="page" value="${index + 1}" />
+						<c:set var="audio" scope="page"
+							value="${accountAudio.getAudio()}" />
+						<c:set var="genre" scope="page"
+							value="${audio.getGenre().getName()}" />
+						<c:set var="filePath" scope="page"
+							value="${audio.getFilePath()}" />
+						<c:set var="album" scope="page"
+							value="${audio.getAlbum().getName()}" />
+						<c:set var="performers" scope="page"
+							value="${audio.getPerformers()}" />
+						<c:set var="authors" scope="page" value="${audio.getAuthors()}" />
+						<c:set var="tags" scope="page" value="${audio.getTags()}" />
 
-					<tr>
-						<td>1</td>
-						<td>
-							Bohemian Rhapsody
-						</td>
-						<td>5:55</td>
-						<td>
-							<a href="#">Queen</a>
-						</td>
-						<td>
-							<a href="#">Freddie Mercury</a>
-							<a href="#">Brian May</a>
-							<a href="#">Roger Taylor</a>
-							<a href="#">John Deacon</a>
-						</td>
-						<td>
-							<a href="#">A Night at the Opera</a>
-						</td>
-						<td>
-							<a href="#">Rock</a>
-						</td>
-						<td>
-							<a href="#">
-								<span class="badge">Rock</span>
-							</a>
-							<a href="#">
-								<span class="badge">Glam</span>
-							</a>
-							<a href="#">
-								<span class="badge">Vocal</span>
-							</a>
-							<a href="#">
-								<span class="badge">Instumental</span>
-							</a>
-							<a href="#">
-								<span class="badge">Classic</span>
-							</a>
-						</td>
-						<td>
-							<div class="row">
-								<div class="col-4">
-									<a href="#" class="">
-										<i class="fas fa-download"></i>
+						<tr>
+							<td>${index}</td>
+							<td>${ audio.getName() }</td>
+							<td>5:55</td>
+							<td>
+								<c:forEach var="audioPerformer" items="${performers}">
+									<c:set var="performer" scope="page"
+										value="${audioPerformer.getAudioMaker().getName()}" />
+									<a href="${performer}">${performer}</a>
+								</c:forEach>
+							</td>
+							<td>
+								<c:forEach var="audioAuthor" items="${authors}">
+									<c:set var="author" scope="page"
+										value="${audioAuthor.getAudioMaker().getName()}" />
+									<a href="${author}">${author}</a>
+								</c:forEach>
+							</td>
+							<td>
+								<a href="#">${album}</a>
+							</td>
+							<td>
+								<a href="#">${genre}</a>
+							</td>
+							<td>
+								<c:forEach var="tag" items="${tags}">
+									<a href="#">
+										<span class="badge">${tag.getName()}</span>
 									</a>
+								</c:forEach>
+							</td>
+							<td>
+								<div class="row">
+									<div class="col-4">
+										<a href="<c:url value="/files/audios/${filePath}" />" class="">
+											<i class="fas fa-download"></i>
+										</a>
+									</div>
+									<div class="col-4">
+										<a href="<c:url value="/audios/edit/${audio.getName()}" />" class="">
+											<i class="far fa-edit"></i>
+										</a>
+									</div>
+									<div class="col-4">
+										<a href="<c:url value="/audios/delete/${audio.getName()}" />" class="">
+											<i class="fas fa-times"></i>
+										</a>
+									</div>
 								</div>
-								<div class="col-4">
-									<a href="#" class="">
-										<i class="far fa-edit"></i>
-									</a>
-								</div>
-								<div class="col-4">
-									<a href="#" class="">
-										<i class="fas fa-times"></i>
-									</a>
-								</div>
-							</div>
-						</td>
-					</tr>
+							</td>
+						</tr>
 
-
-
+					</c:forEach>
 
 					<tr class="emptyRow"></tr>
 

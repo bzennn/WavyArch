@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 
 import xyz.bzennn.wavyarch.data.model.AudioMaker;
 import xyz.bzennn.wavyarch.exception.DaoLayerException;
-import xyz.bzennn.wavyarch.exception.ServiceLayerException;
 
 /**
  * Implementation for {@link AudioMaker}
@@ -16,12 +15,12 @@ import xyz.bzennn.wavyarch.exception.ServiceLayerException;
 public class AudioMakerDaoImpl extends BaseDaoImpl<AudioMaker> implements AudioMakerDao {
 
 	@Override
-	public AudioMaker findByName(String name) throws ServiceLayerException {
+	public AudioMaker findByName(String name) throws DaoLayerException {
 		return findByAttribute(AudioMaker.class, "name", name);
 	}
 
 	@Override
-	public boolean isAudioMakerExists(String name) throws ServiceLayerException {
+	public boolean isAudioMakerExists(String name) throws DaoLayerException {
 		try {
 			AudioMaker audioMaker = findByName(name);
 			return audioMaker != null;

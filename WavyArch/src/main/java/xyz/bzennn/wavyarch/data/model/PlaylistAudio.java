@@ -3,7 +3,6 @@ package xyz.bzennn.wavyarch.data.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -28,12 +27,12 @@ public class PlaylistAudio implements Serializable {
 	@EmbeddedId
 	private PlaylistAudioPK id;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@MapsId("playlistId")
 	@JoinColumn(name = "playlist_id")
 	private AccountPlaylist playlist;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@MapsId("audioId")
 	@JoinColumn(name = "audio_id")
 	private Audio audio;

@@ -10,7 +10,6 @@ import xyz.bzennn.wavyarch.data.model.Audio;
 import xyz.bzennn.wavyarch.data.model.AudioMaker;
 import xyz.bzennn.wavyarch.data.model.Author;
 import xyz.bzennn.wavyarch.exception.DaoLayerException;
-import xyz.bzennn.wavyarch.exception.ServiceLayerException;
 
 /**
  * Implementation for {@link Author} 
@@ -22,12 +21,12 @@ import xyz.bzennn.wavyarch.exception.ServiceLayerException;
 public class AuthorDaoImpl extends BaseDaoImpl<Author> implements AuthorDao {
 
 	@Override
-	public List<Author> findByAudioId(Long audioId) throws ServiceLayerException {
+	public List<Author> findByAudioId(Long audioId) throws DaoLayerException {
 		try {
 			Session session = sessionFactory.openSession();
 			Transaction transaction = session.beginTransaction();
 			@SuppressWarnings("unchecked")
-			List<Author> list = session.createQuery("from Author where audio_id=:audio_id").setParameter("audio_id", audioId.toString()).getResultList();
+			List<Author> list = session.createQuery("from Author where audio_id=:audio_id").setParameter("audio_id", audioId).getResultList();
 			transaction.commit();
 			session.close();
 
@@ -38,7 +37,7 @@ public class AuthorDaoImpl extends BaseDaoImpl<Author> implements AuthorDao {
 	}
 
 	@Override
-	public Author findByAudioAndAudioMaker(Audio audio, AudioMaker audioMaker) throws ServiceLayerException {
+	public Author findByAudioAndAudioMaker(Audio audio, AudioMaker audioMaker) throws DaoLayerException {
 		Long audioId = audio.getId();
 		Long audioMakerId = audioMaker.getId();
 		
@@ -46,7 +45,7 @@ public class AuthorDaoImpl extends BaseDaoImpl<Author> implements AuthorDao {
 			Session session = sessionFactory.openSession();
 			Transaction transaction = session.beginTransaction();
 			String query = "from Author where audio_id=:audio_id and audio_maker_id=:audio_maker_id";
-			Author author = (Author) session.createQuery(query).setParameter("audio_id", audioId.toString()).setParameter("audio_maker_id", audioMakerId.toString()).uniqueResult();
+			Author author = (Author) session.createQuery(query).setParameter("audio_id", audioId).setParameter("audio_maker_id", audioMakerId).uniqueResult();
 			transaction.commit();
 			session.close();
 
@@ -57,7 +56,7 @@ public class AuthorDaoImpl extends BaseDaoImpl<Author> implements AuthorDao {
 	}
 
 	@Override
-	public boolean isAuthorExists(Audio audio, AudioMaker audioMaker) throws ServiceLayerException {
+	public boolean isAuthorExists(Audio audio, AudioMaker audioMaker) throws DaoLayerException {
 		try {
 			Author author = findByAudioAndAudioMaker(audio, audioMaker);
 			return author != null;

@@ -63,14 +63,18 @@ public class AccountEditController {
 		
 		if (file != null && file.getSize() != 0 && file.getContentType().contains("image/")) {
 			String avatarPath = uploadPath + CommonProperties.AVATAR_FILE_PATH;
-			String prefix = "avatar";
-			File avatarFile = fileUtils.getUniqueFile(prefix, avatarPath);
+			File avatarFile = fileUtils.getUniqueFile(avatarPath, file.getContentType());
 			
 			try {
 				file.transferTo(avatarFile);
 			} catch (Exception e) {
 				e.printStackTrace();
 				return "account_edit";
+			}
+			
+			String currentAvatarPath = ((Account) model.getAttribute("user")).getImagePath();
+			if (currentAvatarPath != null && !currentAvatarPath.isEmpty()) {
+				fileUtils.deleteFile(uploadPath + CommonProperties.AVATAR_FILE_PATH, currentAvatarPath);
 			}
 			
 			account.setImagePath(avatarFile.getName());

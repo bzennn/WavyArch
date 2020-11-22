@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 
 import xyz.bzennn.wavyarch.data.model.AudioAlbum;
 import xyz.bzennn.wavyarch.exception.DaoLayerException;
-import xyz.bzennn.wavyarch.exception.ServiceLayerException;
 
 /**
  * Implementation for {@link AlbumDao}
@@ -16,12 +15,12 @@ import xyz.bzennn.wavyarch.exception.ServiceLayerException;
 public class AlbumDaoImpl extends BaseDaoImpl<AudioAlbum> implements AlbumDao {
 
 	@Override
-	public AudioAlbum findByName(String name) throws ServiceLayerException {
+	public AudioAlbum findByName(String name) throws DaoLayerException {
 		return findByAttribute(AudioAlbum.class, "name", name);
 	}
 
 	@Override
-	public boolean isAlbumExists(String name) throws ServiceLayerException {
+	public boolean isAlbumExists(String name) throws DaoLayerException {
 		try {
 			AudioAlbum album = findByName(name);
 			return album != null;

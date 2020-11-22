@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 
 import xyz.bzennn.wavyarch.data.model.AudioGenre;
 import xyz.bzennn.wavyarch.exception.DaoLayerException;
-import xyz.bzennn.wavyarch.exception.ServiceLayerException;
 
 /**
  * Implementation for {@link GenreDao} 
@@ -16,12 +15,12 @@ import xyz.bzennn.wavyarch.exception.ServiceLayerException;
 public class GenreDaoImpl extends BaseDaoImpl<AudioGenre> implements GenreDao {
 
 	@Override
-	public AudioGenre findByName(String name) throws ServiceLayerException {
+	public AudioGenre findByName(String name) throws DaoLayerException {
 		return findByAttribute(AudioGenre.class, "name", name);
 	}
 
 	@Override
-	public boolean isGenreExists(String name) throws ServiceLayerException {
+	public boolean isGenreExists(String name) throws DaoLayerException {
 		try {
 			AudioGenre genre = findByName(name);
 			return genre != null;

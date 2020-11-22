@@ -39,6 +39,8 @@ public class AudioUploadForm {
 
 	private String filePath;
 	
+	private Integer duration;
+	
 	public AudioUploadForm(
 			String name, 
 			String creationDate, 
@@ -65,11 +67,14 @@ public class AudioUploadForm {
 			return Collections.emptyList();
 		}
 		
-		String[] list = listStr.split(";");
-		for (String part : list) {
+		String[] listArr = listStr.split(";");
+		for (String part : listArr) {
 			part = part.trim();
 		}
-		return Arrays.asList(list);
+		List<String> list = Arrays.asList(listArr);
+		list.removeIf(s -> s.isEmpty());
+		
+		return list;
 	}
 
 	private List<AuthorAndRole> processAuthorsList(String listStr) {
@@ -85,18 +90,26 @@ public class AudioUploadForm {
 
 			AuthorAndRole authorRole;
 			if (authorAndRole.length < 2) {
+				if (authorAndRole[0].isEmpty()) {
+					continue;
+				}
 				authorRole = new AuthorAndRole(authorAndRole[0], null);
 			} else {
 				authorRole = new AuthorAndRole(authorAndRole[0], authorAndRole[1]);
 			}
 			resultList.add(authorRole);
 		}
+		
 
 		return resultList;
 	}
 
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
+	}
+	
+	public void setDuration(Integer duration) {
+		this.duration = duration;
 	}
 	
 	public String getName() {
@@ -129,6 +142,10 @@ public class AudioUploadForm {
 	
 	public String getFilePath() {
 		return filePath;
+	}
+	
+	public Integer getDuration() {
+		return duration;
 	}
 
 	public class AuthorAndRole {

@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 
 import xyz.bzennn.wavyarch.data.model.AudioTag;
 import xyz.bzennn.wavyarch.exception.DaoLayerException;
-import xyz.bzennn.wavyarch.exception.ServiceLayerException;
 
 /**
  * Implementation for {@link TagDao}
@@ -16,12 +15,12 @@ import xyz.bzennn.wavyarch.exception.ServiceLayerException;
 public class TagDaoImpl extends BaseDaoImpl<AudioTag> implements TagDao {
 
 	@Override
-	public AudioTag findByName(String name) throws ServiceLayerException {
+	public AudioTag findByName(String name) throws DaoLayerException {
 		return findByAttribute(AudioTag.class, "name", name);
 	}
 
 	@Override
-	public boolean isTagExists(String name) throws ServiceLayerException {
+	public boolean isTagExists(String name) throws DaoLayerException {
 		try {
 			AudioTag tag = findByName(name);
 			return tag != null;

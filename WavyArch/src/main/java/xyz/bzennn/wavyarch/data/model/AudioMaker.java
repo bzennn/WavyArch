@@ -42,10 +42,10 @@ public class AudioMaker implements Serializable {
 	@Column(name = "description", nullable = true)
 	private String description;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "audio")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "audioMaker")
 	private Set<Performer> audiosPerformed;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "audio")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "audioMaker")
 	private Set<Author> audiosCreated;
 	
 	public AudioMaker() {}

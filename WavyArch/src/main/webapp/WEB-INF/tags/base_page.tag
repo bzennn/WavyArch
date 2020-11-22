@@ -10,8 +10,9 @@
 			<!-- Logo -->
 			<div class="navbar-brand">
 				<a href="<c:url value="/"/>">
-					<img class="logo-img" src="<c:url value="/resources/img/logo.svg"/>"
-						height="25" alt="Logo">
+					<img class="logo-img"
+						src="<c:url value="/resources/img/logo.svg"/>" height="25"
+						alt="Logo">
 					<span class="logo-name">WavyArch</span>
 				</a>
 			</div>
@@ -76,10 +77,11 @@
 									<div class="row">
 										<div class="col-4">
 											<c:if test="${not empty user.getImagePath() }">
-												<img src="<c:url value="/files/images/${ user.getImagePath() }"/>"
+												<img
+													src="<c:url value="/files/images/${ user.getImagePath() }"/>"
 													alt="avatar" class="rounded-circle">
 											</c:if>
-											
+
 											<c:if test="${empty user.getImagePath() }">
 												<img src="<c:url value="/resources/img/avatar.png"/>"
 													alt="avatar" class="rounded-circle">
@@ -87,6 +89,7 @@
 										</div>
 										<div class="col-8">
 											<span class="login">${ user.getLogin() }</span>
+											<div class="role-name">${ user.getRole().getName() }</div>
 										</div>
 									</div>
 									<div class="row">

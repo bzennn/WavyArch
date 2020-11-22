@@ -39,6 +39,9 @@ public class Audio implements Serializable {
 	@Column(name = "file_path")
 	private String filePath;
 	
+	@Column(name = "duration")
+	private Integer duration;
+	
 	@Column(name = "creation_date", nullable = true)
 	private Date creationDate;
 	
@@ -50,10 +53,10 @@ public class Audio implements Serializable {
 	@JoinColumn(name = "album_id")
 	private AudioAlbum album;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "audioMaker")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "audio")
 	private Set<Performer> performers;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "audioMaker")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "audio")
 	private Set<Author> authors;
 	
 	@OneToMany(fetch = FetchType.EAGER)
@@ -62,10 +65,10 @@ public class Audio implements Serializable {
 			inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "tag_id"))
 	private Set<AudioTag> tags;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "account")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "audio")
 	private Set<AccountAudio> accounts;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "playlist")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "audio")
 	private Set<PlaylistAudio> playlists;
 	
 	public Audio() {}
@@ -94,6 +97,14 @@ public class Audio implements Serializable {
 		this.filePath = filePath;
 	}
 
+	public Integer getDuration() {
+		return duration;
+	}
+	
+	public void setDuration(Integer duration) {
+		this.duration = duration;
+	}
+	
 	public Date getCreationDate() {
 		return creationDate;
 	}
@@ -144,7 +155,8 @@ public class Audio implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Audio [id=" + id + ", name=" + name + ", filePath=" + filePath + ", creationDate=" + creationDate + "]";
+		return "Audio [id=" + id + ", name=" + name + ", filePath=" + filePath + ", duration=" + duration
+				+ ", creationDate=" + creationDate + "]";
 	}
 	
 	@Override
@@ -160,6 +172,11 @@ public class Audio implements Serializable {
 			if (other.creationDate != null)
 				return false;
 		} else if (!creationDate.equals(other.creationDate))
+			return false;
+		if (duration == null) {
+			if (other.duration != null)
+				return false;
+		} else if (!duration.equals(other.duration))
 			return false;
 		if (filePath == null) {
 			if (other.filePath != null)
@@ -179,6 +196,7 @@ public class Audio implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((creationDate == null) ? 0 : creationDate.hashCode());
+		result = prime * result + ((duration == null) ? 0 : duration.hashCode());
 		result = prime * result + ((filePath == null) ? 0 : filePath.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
