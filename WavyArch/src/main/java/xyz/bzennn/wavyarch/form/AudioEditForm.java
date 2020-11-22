@@ -14,14 +14,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import xyz.bzennn.wavyarch.form.model.AuthorAndRole;
-import xyz.bzennn.wavyarch.validation.annotation.AudioUnique;
 
-public class AudioUploadForm {
+public class AudioEditForm {
 	
 	@NotNull(message = "{field.audioName.required}")
 	@NotBlank(message = "{field.audioName.required}")
 	@Size(min = 1, max = 60, message = "{field.audioName.size}")
-	@AudioUnique(message = "{field.audioName.unique}")
 	private String name;
 
 	private Date creationDate;
@@ -42,7 +40,7 @@ public class AudioUploadForm {
 	
 	private Integer duration;
 	
-	public AudioUploadForm(
+	public AudioEditForm(
 			String name, 
 			String creationDate, 
 			String genre, 
@@ -148,5 +146,5 @@ public class AudioUploadForm {
 	public Integer getDuration() {
 		return duration;
 	}
-
+	
 }

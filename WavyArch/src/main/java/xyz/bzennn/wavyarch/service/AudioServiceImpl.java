@@ -33,8 +33,9 @@ import xyz.bzennn.wavyarch.data.model.AuthorRole;
 import xyz.bzennn.wavyarch.data.model.Performer;
 import xyz.bzennn.wavyarch.data.model.PerformerPK;
 import xyz.bzennn.wavyarch.exception.ServiceLayerException;
+import xyz.bzennn.wavyarch.form.AudioEditForm;
 import xyz.bzennn.wavyarch.form.AudioUploadForm;
-import xyz.bzennn.wavyarch.form.AudioUploadForm.AuthorAndRole;
+import xyz.bzennn.wavyarch.form.model.AuthorAndRole;
 
 /**
  * Implementation of {@link AudioService}
@@ -130,7 +131,39 @@ public class AudioServiceImpl implements AudioService {
 	@Override
 	public void update(Audio audio) throws ServiceLayerException {
 		try {
+			Audio currentAudio = findByName(audio.getName());
+			
+			for (Performer performer : currentAudio.getPerformers()) {
+				performerDao.delete(performer);
+			}
+			
+			for (Author author : currentAudio.getAuthors()) {
+				authorDao.delete(author);
+			}
+			
 			audioDao.update(audio);
+			
+			Set<Performer> performers = audio.getPerformers();
+			if (performers != null && !performers.isEmpty()) {
+				for (Performer performer : performers) {
+					PerformerPK performerPK = new PerformerPK();
+					performerPK.setAudioId(audio.getId());
+					performerPK.setAudioMakerId(performer.getAudioMaker().getId());
+					performer.setId(performerPK);
+					performerDao.save(performer);
+				}
+			}
+			
+			Set<Author> authors = audio.getAuthors();
+			if (authors != null && !authors.isEmpty()) {
+				for (Author author : authors) {
+					AuthorPK authorPK = new AuthorPK();
+					authorPK.setAudioId(audio.getId());
+					authorPK.setAudioMakerId(author.getAudioMaker().getId());
+					author.setId(authorPK);
+					authorDao.save(author);
+				}
+			}
 		} catch (Exception e) {
 			throw new ServiceLayerException("Failed to update audio!", e);
 		}
@@ -161,6 +194,73 @@ public class AudioServiceImpl implements AudioService {
 			
 			audio.setName(form.getName());
 			audio.setFilePath(form.getFilePath());
+			
+			Integer duration = form.getDuration();
+			if (duration != null) {
+				audio.setDuration(duration);
+			}
+			
+			Date creationDate = form.getCreationDate();
+			if (creationDate != null) {
+				audio.setCreationDate(creationDate);
+			}
+			
+			String genre = form.getGenre();
+			if (genre != null && !genre.isEmpty()) {
+				audio.setGenre(findOrCreateGenre(genre));
+			}
+			
+			String album = form.getAlbum();
+			if (album != null && !album.isEmpty()) {
+				audio.setAlbum(findOrCreateAlbum(album));
+			}
+			
+			List<String> performersStr = form.getPerformers();
+			if (performersStr != null && !performersStr.isEmpty()) {
+				Set<Performer> performers = new HashSet<Performer>();
+				for (String performerStr : performersStr) {
+					AudioMaker audioMaker = findOrCreateAudioMaker(performerStr);
+					performers.add(buildPerformer(audio, audioMaker));
+				}
+				audio.setPerformers(performers);
+			}
+			
+			List<AuthorAndRole> authorsStr = form.getAuthors();
+			if (authorsStr != null && !authorsStr.isEmpty()) {
+				Set<Author> authors = new HashSet<Author>();
+				for (AuthorAndRole authorAndRole : authorsStr) {
+					AudioMaker audioMaker = findOrCreateAudioMaker(authorAndRole.getAuthor());
+					authors.add(buildAuthor(audio, audioMaker, authorAndRole.getRole()));
+				}
+				audio.setAuthors(authors);
+			}
+			
+			List<String> tagsStr = form.getTags();
+			if (tagsStr != null && !tagsStr.isEmpty()) {
+				Set<AudioTag> tags = new HashSet<AudioTag>();
+				for (String tagStr : tagsStr) {
+					tags.add(findOrCreateTag(tagStr));
+				}
+				audio.setTags(tags);
+			}
+			
+			return audio;
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to built audio object!", e);
+		}
+	}
+	
+	@Override
+	public Audio buildAudioFromEditForm(AudioEditForm form) throws ServiceLayerException {
+		try {
+			Audio audio = findByName(form.getName());
+			
+			audio.setName(form.getName());
+			
+			String filePath = form.getFilePath();
+			if (filePath != null && !filePath.isEmpty()) {
+				audio.setFilePath(form.getFilePath());
+			}
 			
 			Integer duration = form.getDuration();
 			if (duration != null) {
