@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
@@ -84,7 +84,7 @@
 						<tr>
 							<td>${index}</td>
 							<td>${audio.getName()}</td>
-							<td>${audio.getDuration()}</td>
+							<td>${audio.formatDuration()}</td>
 							<td>
 								<c:forEach var="audioPerformer" items="${performers}">
 									<c:set var="performer" scope="page"

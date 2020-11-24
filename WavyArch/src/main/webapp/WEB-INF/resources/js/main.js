@@ -25,6 +25,10 @@ function getNodeMouseOffset(node, e) {
     return result;
 };
 
+// function fixEncoding() {
+//     jQuery("form").attr("accept-charset", "UTF-8");
+// }
+
 // function parseAudioLengthString(lengthStr) {
 //     let lengthData = lengthStr.split(':', 3);
     
@@ -64,5 +68,6 @@ jQuery((e) => {
     removeHorizontalScrollbar();
     handleAudioPlayerTimelineClick();
     updateDateInputRange();
+    //fixEncoding();
 });
 

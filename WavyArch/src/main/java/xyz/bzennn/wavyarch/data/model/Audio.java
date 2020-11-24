@@ -1,6 +1,9 @@
 package xyz.bzennn.wavyarch.data.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Set;
 
@@ -15,6 +18,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.format.datetime.joda.DateTimeFormatterFactory;
 
 /**
  * POJO that represents audio record
@@ -151,6 +156,12 @@ public class Audio implements Serializable {
 
 	public void setTags(Set<AudioTag> tags) {
 		this.tags = tags;
+	}
+	
+	public String formatDuration() {
+		LocalTime localTime = LocalTime.ofSecondOfDay(duration);
+		
+		return localTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 	}
 
 	@Override
