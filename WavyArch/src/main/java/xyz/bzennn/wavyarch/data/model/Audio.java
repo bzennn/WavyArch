@@ -1,7 +1,6 @@
 package xyz.bzennn.wavyarch.data.model;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -18,8 +17,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.springframework.format.datetime.joda.DateTimeFormatterFactory;
 
 /**
  * POJO that represents audio record

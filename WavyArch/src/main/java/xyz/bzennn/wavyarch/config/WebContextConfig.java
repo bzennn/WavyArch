@@ -21,7 +21,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 @ComponentScan("xyz.bzennn.wavyarch.controller")
 public class WebContextConfig implements WebMvcConfigurer {
-
+	
 	@Bean(name = "multipartResolver")
 	public CommonsMultipartResolver createMultipartResolver() {
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
@@ -35,7 +35,8 @@ public class WebContextConfig implements WebMvcConfigurer {
 		resolver.setPrefix("/WEB-INF/templates/");
 		resolver.setSuffix(".jsp");
 		resolver.setExposeContextBeansAsAttributes(true);
-
+		resolver.setContentType("text/html;charset=UTF-8");
+		
 		return resolver;
 	}
 

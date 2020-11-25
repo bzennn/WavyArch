@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Component;
 
@@ -26,9 +25,6 @@ public class AuthenticationUtils {
 	
 	@Autowired
 	private AuthenticationManager authManager;
-	
-	@Autowired
-	private PersistentTokenRepository tokenRepository;
 	
 	@Autowired
 	private PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices;

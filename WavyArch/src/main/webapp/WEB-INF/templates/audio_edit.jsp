@@ -19,7 +19,7 @@
 			<div class="col">
 				<div class="form-group">
 					<span class="edit-type">AUDIO:</span>
-					<span class="edit-target">Bohemian Rhapsody</span>
+					<span class="edit-target">${audioName}</span>
 
 					<c:if test="${displayDeleteButton == true}">
 						<a href="<c:url value="/audios/deleteFromServer/${audioName}" />"

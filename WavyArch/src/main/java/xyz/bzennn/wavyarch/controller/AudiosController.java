@@ -1,6 +1,8 @@
 package xyz.bzennn.wavyarch.controller;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
@@ -183,8 +185,8 @@ public class AudiosController {
 		return "audio_edit";
 	}
 	
-	@RequestMapping(path = "/edit/{audioName}", method = RequestMethod.POST)
-	public String handleEditAudio(@Valid AudioEditForm form, BindingResult result, @RequestParam("audio") MultipartFile file, @PathVariable String audioName, Model model) {
+	@RequestMapping(path = "/edit/{audioName}", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
+	public String handleEditAudio(@Valid AudioEditForm form, BindingResult result, @RequestParam("audio") MultipartFile file, @PathVariable String audioName, Model model) throws UnsupportedEncodingException {
 		if (result.hasErrors()) {
 			model.addAttribute("errors", result.getAllErrors());
 			
@@ -224,7 +226,7 @@ public class AudiosController {
 		}
 
 		model.asMap().clear();
-		return "redirect:/audios/edit/" + audioName;
+		return "redirect:/audios/edit/" + URLEncoder.encode(audioName, "UTF-8");
 	}
 	
 	@RequestMapping(path = "/delete/{audioName}", method = RequestMethod.GET)
