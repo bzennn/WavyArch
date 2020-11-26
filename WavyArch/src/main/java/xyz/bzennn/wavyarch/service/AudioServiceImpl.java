@@ -1,5 +1,7 @@
 package xyz.bzennn.wavyarch.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -210,11 +212,6 @@ public class AudioServiceImpl implements AudioService {
 				audio.setGenre(findOrCreateGenre(genre));
 			}
 			
-			String album = form.getAlbum();
-			if (album != null && !album.isEmpty()) {
-				audio.setAlbum(findOrCreateAlbum(album));
-			}
-			
 			List<String> performersStr = form.getPerformers();
 			if (performersStr != null && !performersStr.isEmpty()) {
 				Set<Performer> performers = new HashSet<Performer>();
@@ -223,6 +220,15 @@ public class AudioServiceImpl implements AudioService {
 					performers.add(buildPerformer(audio, audioMaker));
 				}
 				audio.setPerformers(performers);
+			}
+			
+			String album = form.getAlbum();
+			if (album != null && !album.isEmpty()) {
+				Performer performer = null;
+				if (audio.getPerformers() != null && !audio.getPerformers().isEmpty()) {
+					performer = audio.getPerformers().stream().findFirst().get();
+				}
+				audio.setAlbum(findOrCreateAlbum(album, performer));
 			}
 			
 			List<AuthorAndRole> authorsStr = form.getAuthors();
@@ -257,7 +263,7 @@ public class AudioServiceImpl implements AudioService {
 			
 			String filePath = form.getFilePath();
 			if (filePath != null && !filePath.isEmpty()) {
-				audio.setFilePath(form.getFilePath());
+				audio.setFilePath(filePath);
 			}
 			
 			Integer duration = form.getDuration();
@@ -266,18 +272,13 @@ public class AudioServiceImpl implements AudioService {
 			}
 			
 			Date creationDate = form.getCreationDate();
-			if (creationDate != null) {
-				audio.setCreationDate(creationDate);
-			}
+			audio.setCreationDate(creationDate);
 			
 			String genre = form.getGenre();
 			if (genre != null && !genre.isEmpty()) {
 				audio.setGenre(findOrCreateGenre(genre));
-			}
-			
-			String album = form.getAlbum();
-			if (album != null && !album.isEmpty()) {
-				audio.setAlbum(findOrCreateAlbum(album));
+			} else {
+				audio.setGenre(null);
 			}
 			
 			List<String> performersStr = form.getPerformers();
@@ -288,6 +289,19 @@ public class AudioServiceImpl implements AudioService {
 					performers.add(buildPerformer(audio, audioMaker));
 				}
 				audio.setPerformers(performers);
+			} else {
+				audio.setPerformers(Collections.emptySet());
+			}
+			
+			String album = form.getAlbum();
+			if (album != null && !album.isEmpty()) {
+				Performer performer = null;
+				if (audio.getPerformers() != null && !audio.getPerformers().isEmpty()) {
+					performer = audio.getPerformers().stream().findFirst().get();
+				}
+				audio.setAlbum(findOrCreateAlbum(album, performer));
+			} else {
+				audio.setAlbum(null);
 			}
 			
 			List<AuthorAndRole> authorsStr = form.getAuthors();
@@ -298,6 +312,8 @@ public class AudioServiceImpl implements AudioService {
 					authors.add(buildAuthor(audio, audioMaker, authorAndRole.getRole()));
 				}
 				audio.setAuthors(authors);
+			} else {
+				audio.setAuthors(Collections.emptySet());
 			}
 			
 			List<String> tagsStr = form.getTags();
@@ -307,6 +323,8 @@ public class AudioServiceImpl implements AudioService {
 					tags.add(findOrCreateTag(tagStr));
 				}
 				audio.setTags(tags);
+			} else {
+				audio.setTags(Collections.emptySet());
 			}
 			
 			return audio;
@@ -369,6 +387,17 @@ public class AudioServiceImpl implements AudioService {
 		try {
 			return accountDao.loadPlaylists(account);
 		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to lazily load playlists from account!", e);
+		}
+	}
+	
+	@Override
+	public List<Audio> findByAccount(Account account) throws ServiceLayerException {
+		try {
+			List<Audio> result = new ArrayList<Audio>();
+			accountAudioDao.findByAccountId(account.getId()).forEach(accountAudio -> result.add(accountAudio.getAudio()));
+			return result;
+		} catch (Exception e) {
 			throw new ServiceLayerException("Failed to lazily load palylists from account!", e);
 		}
 	}
@@ -383,10 +412,13 @@ public class AudioServiceImpl implements AudioService {
 		return genreDao.findByName(name);
 	}
 	
-	public AudioAlbum findOrCreateAlbum(String name) {
+	public AudioAlbum findOrCreateAlbum(String name, Performer performer) {
 		if (!albumDao.isAlbumExists(name)) {
 			AudioAlbum album = new AudioAlbum();
 			album.setName(name);
+			if (performer != null) {
+				album.setAudioMaker(performer.getAudioMaker());
+			}
 			albumDao.save(album);
 		}
 		

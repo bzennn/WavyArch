@@ -28,7 +28,7 @@ public class FileUtils {
 		return getUniqueFile(directory, contentType);
 	}
 	
-	public File getUniqueFile( File directory, String contentType) {
+	public File getUniqueFile(File directory, String contentType) {
 		return new File(directory, getUniqueFileName(directory, contentType));
 	}
 	

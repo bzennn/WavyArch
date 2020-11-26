@@ -14,5 +14,6 @@ public interface AudioMakerDao {
 	AudioMaker findByName(String name) throws DaoLayerException;
 	boolean isAudioMakerExists(String name) throws DaoLayerException;
 	void update(AudioMaker audioMaker) throws DaoLayerException;
+	void delete(AudioMaker audioMaker) throws DaoLayerException;
 	void refresh(AudioMaker audioMaker) throws DaoLayerException;
 }

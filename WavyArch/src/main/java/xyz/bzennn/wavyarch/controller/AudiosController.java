@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -57,6 +58,11 @@ public class AudiosController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String showAccountAudiosPage(Model model) {
+		Account account = (Account) model.getAttribute("user");
+		List<Audio> audios = audioService.findByAccount(account);
+		
+		model.addAttribute("accountAudios", audios);
+		
 		return "account_audios";
 	}
 

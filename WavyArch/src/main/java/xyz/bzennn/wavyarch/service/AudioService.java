@@ -1,5 +1,6 @@
 package xyz.bzennn.wavyarch.service;
 
+import java.util.List;
 import java.util.Set;
 
 import xyz.bzennn.wavyarch.data.model.Account;
@@ -30,4 +31,5 @@ public interface AudioService {
 	Audio buildAudioFromEditForm(AudioEditForm form) throws ServiceLayerException;
 	Set<AccountAudio> loadAudios(Account account) throws ServiceLayerException;
 	Set<AccountPlaylist> loadPlaylists(Account account) throws ServiceLayerException;
+	List<Audio> findByAccount(Account account) throws ServiceLayerException;
 }

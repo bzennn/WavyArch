@@ -47,6 +47,22 @@ public class FileController {
 		return createFileResponseBody(audioFile);
 	}
 	
+	@RequestMapping(path = "albums/{albumCoverName}", method = RequestMethod.GET)
+	@ResponseBody
+	public HttpEntity<byte[]> getAlbumCover(@PathVariable String albumCoverName) throws NotFoundException {
+		File albumCoverFile = new File(uploadPath + CommonProperties.ALBUM_COVER_FILE_PATH, albumCoverName);
+		
+		return createFileResponseBody(albumCoverFile);
+	}
+	
+	@RequestMapping(path = "performers/{performerImageName}", method = RequestMethod.GET)
+	@ResponseBody
+	public HttpEntity<byte[]> getPerformerImage(@PathVariable String performerImageName) throws NotFoundException {
+		File performerImageFile = new File(uploadPath + CommonProperties.AUTHOR_COVER_FILE_PATH, performerImageName);
+		
+		return createFileResponseBody(performerImageFile);
+	}
+	
 	private HttpEntity<byte[]> createFileResponseBody(File file) throws NotFoundException {
 		byte[] fileBytes;
 		String[] contentType;

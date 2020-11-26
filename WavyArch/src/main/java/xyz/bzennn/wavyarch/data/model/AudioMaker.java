@@ -48,6 +48,9 @@ public class AudioMaker implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "audioMaker")
 	private Set<Author> audiosCreated;
 	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "audioMaker")
+	private Set<AudioAlbum> albums;
+	
 	public AudioMaker() {}
 
 	public Long getId() {

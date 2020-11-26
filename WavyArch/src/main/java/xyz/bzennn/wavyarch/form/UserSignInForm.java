@@ -22,8 +22,8 @@ public class UserSignInForm {
 	private String password;
 
 	public UserSignInForm(String login, String password) {
-		this.login = login;
-		this.password = password;
+		this.login = login.trim();
+		this.password = password.trim();
 	}
 
 	public String getLogin() {

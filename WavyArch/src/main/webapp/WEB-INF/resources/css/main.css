@@ -622,12 +622,12 @@ th + th, td + td {
 }
 
 .card {
-    background-color: #ffffff;
+    background-color: #000;
 }
 
 .collection-cards .card {
     position: relative;
-    background-color: #fff;
+    background-color: #000;
     border: 1px solid #000000;
 }
 

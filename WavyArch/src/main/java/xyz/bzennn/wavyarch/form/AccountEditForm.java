@@ -27,10 +27,10 @@ public class AccountEditForm {
 	private String newPasswordRepeat;
 	
 	public AccountEditForm(String login, String oldPassword, String newPassword, String newPasswordRepeat) {
-		this.login = login;
-		this.oldPassword = oldPassword;
-		this.newPassword = newPassword;
-		this.newPasswordRepeat = newPasswordRepeat;
+		this.login = login.trim();
+		this.oldPassword = oldPassword.trim();
+		this.newPassword = newPassword.trim();
+		this.newPasswordRepeat = newPasswordRepeat.trim();
 	}
 
 	public String getLogin() {

@@ -48,17 +48,17 @@ public class AudioEditForm {
 			@Size(min = 0, max = 1000, message = "{field.performers.size}") String performers,
 			@Size(min = 0, max = 1000, message = "{field.authors.size}") String authors,
 			@Size(min = 0, max = 400, message = "{field.tags.size}") String tags) {
-		this.name = name;
+		this.name = name.trim();
 		try {
-			this.creationDate = new SimpleDateFormat("yyyy-MM").parse(creationDate);
+			this.creationDate = new SimpleDateFormat("yyyy-MM").parse(creationDate.trim());
 		} catch (ParseException e) {
 			this.creationDate = null;
 		}
-		this.genre = genre;
-		this.album = album;
-		this.performers = processStringList(performers);
-		this.authors = processAuthorsList(authors);
-		this.tags = processStringList(tags);
+		this.genre = genre.trim();
+		this.album = album.trim();
+		this.performers = processStringList(performers.trim());
+		this.authors = processAuthorsList(authors.trim());
+		this.tags = processStringList(tags.trim());
 	}
 
 	private List<String> processStringList(String listStr) {

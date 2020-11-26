@@ -28,9 +28,9 @@ public class UserSignUpForm {
 	private String passwordRepeat;
 
 	public UserSignUpForm(String login, String password, String passwordRepeat) {
-		this.login = login;
-		this.password = password;
-		this.passwordRepeat = passwordRepeat;
+		this.login = login.trim();
+		this.password = password.trim();
+		this.passwordRepeat = passwordRepeat.trim();
 	}
 
 	public String getLogin() {

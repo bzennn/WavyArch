@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PreRemove;
 import javax.persistence.Table;
@@ -43,6 +45,10 @@ public class AudioAlbum implements Serializable {
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "album")
 	private Set<Audio> audios;
+	
+	@ManyToOne(fetch = FetchType.EAGER, optional = true)
+	@JoinColumn(name = "audio_maker_id")
+	private AudioMaker audioMaker;
 	
 	public AudioAlbum() {}
 
@@ -83,6 +89,22 @@ public class AudioAlbum implements Serializable {
 
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+	
+	public AudioMaker getAudioMaker() {
+		return audioMaker;
+	}
+	
+	public void setAudioMaker(AudioMaker audioMaker) {
+		this.audioMaker = audioMaker;
+	}
+	
+	public Set<Audio> getAudios() {
+		return audios;
+	}
+	
+	public void setAudios(Set<Audio> audios) {
+		this.audios = audios;
 	}
 
 	@Override

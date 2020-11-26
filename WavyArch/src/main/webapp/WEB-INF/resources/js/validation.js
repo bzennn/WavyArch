@@ -28,10 +28,12 @@ function validateAlbumEditForm() {
     const isNameValid = validateInputName(200);
     const isImageValid = validateInputFileImage();
     const isDateValid = validateInputDate();
+    const isAuthorValid = validateInputNameById(60, "inputAuthor", false);
 
     return isNameValid &&
         isImageValid &&
-        isDateValid;
+        isDateValid &&
+        isAuthorValid;
 };
 
 function validateAudioUploadEditForm(audioRequired) {

@@ -65,4 +65,20 @@ public class AccountAudioDaoImpl extends BaseDaoImpl<AccountAudio> implements Ac
 		}
 	}
 
+	@Override
+	public List<AccountAudio> findByAccountId(Long accountId) throws DaoLayerException {
+		try {
+			Session session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			@SuppressWarnings("unchecked")
+			List<AccountAudio> list = session.createQuery("from AccountAudio where account_id=:account_id").setParameter("account_id", accountId).getResultList();
+			transaction.commit();
+			session.close();
+
+			return list;
+		} catch (Exception e) {
+			throw new DaoLayerException("Failed to find account audios!", e);
+		}
+	}
+
 }

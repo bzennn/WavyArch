@@ -21,6 +21,7 @@ import xyz.bzennn.wavyarch.data.model.Account;
 import xyz.bzennn.wavyarch.form.AccountEditForm;
 import xyz.bzennn.wavyarch.service.AccountService;
 import xyz.bzennn.wavyarch.util.FileUtils;
+import xyz.bzennn.wavyarch.util.ImageUtils;
 
 /**
  * User account edit controller 
@@ -38,6 +39,9 @@ public class AccountEditController {
 	
 	@Autowired
 	private FileUtils fileUtils;
+	
+	@Autowired
+	private ImageUtils imageUtils;
 	
 	@Autowired
 	private AccountService accountService;
@@ -70,6 +74,12 @@ public class AccountEditController {
 			} catch (Exception e) {
 				e.printStackTrace();
 				return "account_edit";
+			}
+			
+			try {
+				imageUtils.cropImageToSquare(avatarFile);
+			} catch (Exception e1) {
+				e1.printStackTrace();
 			}
 			
 			String currentAvatarPath = ((Account) model.getAttribute("user")).getImagePath();

@@ -66,10 +66,8 @@
 				</thead>
 				<tbody>
 					<c:set var="index" scope="page" value="0" />
-					<c:forEach var="accountAudio" items="${user.getAudios()}">
+					<c:forEach var="audio" items="${accountAudios}">
 						<c:set var="index" scope="page" value="${index + 1}" />
-						<c:set var="audio" scope="page"
-							value="${accountAudio.getAudio()}" />
 						<c:set var="genre" scope="page"
 							value="${audio.getGenre().getName()}" />
 						<c:set var="filePath" scope="page"
@@ -89,18 +87,18 @@
 								<c:forEach var="audioPerformer" items="${performers}">
 									<c:set var="performer" scope="page"
 										value="${audioPerformer.getAudioMaker().getName()}" />
-									<a href="${performer}">${performer}</a>
+									<a href="<c:url value="/performers/performer/${performer}"/>">${performer}</a>
 								</c:forEach>
 							</td>
 							<td>
 								<c:forEach var="audioAuthor" items="${authors}">
 									<c:set var="author" scope="page"
 										value="${audioAuthor.getAudioMaker().getName()}" />
-									<a href="${author}">${author}</a>
+									<a href="<c:url value="/performers/performer/${author}"/>">${author}</a>
 								</c:forEach>
 							</td>
 							<td>
-								<a href="#">${album}</a>
+								<a href="<c:url value="/albums/album/${album}" />">${album}</a>
 							</td>
 							<td>
 								<a href="#">${genre}</a>

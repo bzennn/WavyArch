@@ -19,6 +19,7 @@ public interface AccountAudioDao {
 	void refresh(AccountAudio accountAudio) throws DaoLayerException;
 	void delete(AccountAudio accountAudio) throws DaoLayerException;
 	List<AccountAudio> findByAudioId(Long audioId) throws DaoLayerException;
+	List<AccountAudio> findByAccountId(Long accountId) throws DaoLayerException;
 	AccountAudio findByAudioAndAccount(Audio audio, Account account) throws DaoLayerException;
 	boolean isAccountAudioExists(Audio audio, Account account) throws DaoLayerException;
 }
