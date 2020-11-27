@@ -1,5 +1,7 @@
 package xyz.bzennn.wavyarch.data.dao;
 
+import java.util.List;
+
 import xyz.bzennn.wavyarch.data.model.AudioTag;
 import xyz.bzennn.wavyarch.exception.DaoLayerException;
 
@@ -14,5 +16,7 @@ public interface TagDao {
 	AudioTag findByName(String name) throws DaoLayerException;
 	boolean isTagExists(String name) throws DaoLayerException;
 	void update(AudioTag tag) throws DaoLayerException;
+	void delete(AudioTag tag) throws DaoLayerException;
 	void refresh(AudioTag tag) throws DaoLayerException;
+	List<AudioTag> findAll() throws DaoLayerException;
 }

@@ -1,5 +1,7 @@
 package xyz.bzennn.wavyarch.data.dao;
 
+import java.util.List;
+
 import xyz.bzennn.wavyarch.data.model.AudioMaker;
 import xyz.bzennn.wavyarch.exception.DaoLayerException;
 
@@ -16,4 +18,5 @@ public interface AudioMakerDao {
 	void update(AudioMaker audioMaker) throws DaoLayerException;
 	void delete(AudioMaker audioMaker) throws DaoLayerException;
 	void refresh(AudioMaker audioMaker) throws DaoLayerException;
+	List<AudioMaker> findAll() throws DaoLayerException;
 }

@@ -1,12 +1,17 @@
 package xyz.bzennn.wavyarch.data.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -29,6 +34,12 @@ public class AudioTag implements Serializable {
 	@Column(name = "name")
 	private String name;
 	
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinTable(schema = "music_library", name = "AudioTags",
+			joinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "tag_id"),
+			inverseJoinColumns = @JoinColumn(name = "audio_id", referencedColumnName = "audio_id"))
+	private Set<Audio> audios;
+	
 	public AudioTag() {}
 
 	public Long getId() {
@@ -47,6 +58,14 @@ public class AudioTag implements Serializable {
 		this.name = name;
 	}
 
+	public Set<Audio> getAudios() {
+		return audios;
+	}
+	
+	public void setAudios(Set<Audio> audios) {
+		this.audios = audios;
+	}
+	
 	@Override
 	public String toString() {
 		return "AudioTag [id=" + id + ", name=" + name + "]";

@@ -1,5 +1,7 @@
 package xyz.bzennn.wavyarch.data.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import xyz.bzennn.wavyarch.data.model.AudioGenre;
@@ -24,6 +26,15 @@ public class GenreDaoImpl extends BaseDaoImpl<AudioGenre> implements GenreDao {
 		try {
 			AudioGenre genre = findByName(name);
 			return genre != null;
+		} catch (Exception e) {
+			throw new DaoLayerException(e);
+		}
+	}
+
+	@Override
+	public List<AudioGenre> findAll() throws DaoLayerException {
+		try {
+			return findAll(AudioGenre.class);
 		} catch (Exception e) {
 			throw new DaoLayerException(e);
 		}

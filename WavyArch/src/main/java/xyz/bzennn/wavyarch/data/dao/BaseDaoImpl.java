@@ -1,5 +1,7 @@
 package xyz.bzennn.wavyarch.data.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -81,6 +83,23 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 			session.close();
 
 			return object;
+		} catch (Exception e) {
+			throw new DaoLayerException("Failed to find account!", e);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> findAll(Class<T> entityClass) throws DaoLayerException {
+		try {
+			Session session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			String query = "from " + entityClass.getSimpleName();
+			List<?> object = (List<?>) session.createQuery(query).getResultList();
+			transaction.commit();
+			session.close();
+
+			return (List<T>) object;
 		} catch (Exception e) {
 			throw new DaoLayerException("Failed to find account!", e);
 		}

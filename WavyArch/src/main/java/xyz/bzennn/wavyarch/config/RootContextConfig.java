@@ -35,6 +35,11 @@ public class RootContextConfig {
 	private Environment env;
 
 	@Bean
+	public DatabaseCleanUp dbCleanUpBean() {
+		return new DatabaseCleanUp();
+	}
+	
+	@Bean
 	public DataSource dataSource() {
 		HikariDataSource dataSource = new HikariDataSource();
 

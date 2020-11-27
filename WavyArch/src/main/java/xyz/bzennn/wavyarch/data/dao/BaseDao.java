@@ -1,5 +1,7 @@
 package xyz.bzennn.wavyarch.data.dao;
 
+import java.util.List;
+
 import xyz.bzennn.wavyarch.exception.DaoLayerException;
 
 /**
@@ -15,4 +17,5 @@ public interface BaseDao<T> {
 	void delete(T object) throws DaoLayerException;
 	void refresh(T object) throws DaoLayerException;
 	T findByAttribute(Class<T> entityClass, String attributeName, Object attributeValue) throws DaoLayerException;
+	List<T> findAll(Class<T> entityClass) throws DaoLayerException;
 }

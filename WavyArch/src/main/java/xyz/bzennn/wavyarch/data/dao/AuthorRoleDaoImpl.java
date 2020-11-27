@@ -1,5 +1,7 @@
 package xyz.bzennn.wavyarch.data.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import xyz.bzennn.wavyarch.data.model.AuthorRole;
@@ -24,6 +26,15 @@ public class AuthorRoleDaoImpl extends BaseDaoImpl<AuthorRole> implements Author
 		try {
 			AuthorRole authorRole = findByName(name);
 			return authorRole != null;
+		} catch (Exception e) {
+			throw new DaoLayerException(e);
+		}
+	}
+
+	@Override
+	public List<AuthorRole> findAll() throws DaoLayerException {
+		try {
+			return findAll(AuthorRole.class);
 		} catch (Exception e) {
 			throw new DaoLayerException(e);
 		}

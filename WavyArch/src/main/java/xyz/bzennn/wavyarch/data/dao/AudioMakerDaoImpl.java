@@ -1,5 +1,7 @@
 package xyz.bzennn.wavyarch.data.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import xyz.bzennn.wavyarch.data.model.AudioMaker;
@@ -24,6 +26,15 @@ public class AudioMakerDaoImpl extends BaseDaoImpl<AudioMaker> implements AudioM
 		try {
 			AudioMaker audioMaker = findByName(name);
 			return audioMaker != null;
+		} catch (Exception e) {
+			throw new DaoLayerException(e);
+		}
+	}
+
+	@Override
+	public List<AudioMaker> findAll() throws DaoLayerException {
+		try {
+			return findAll(AudioMaker.class);
 		} catch (Exception e) {
 			throw new DaoLayerException(e);
 		}

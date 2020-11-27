@@ -1,5 +1,7 @@
 package xyz.bzennn.wavyarch.data.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import xyz.bzennn.wavyarch.data.model.AudioAlbum;
@@ -24,6 +26,15 @@ public class AlbumDaoImpl extends BaseDaoImpl<AudioAlbum> implements AlbumDao {
 		try {
 			AudioAlbum album = findByName(name);
 			return album != null;
+		} catch (Exception e) {
+			throw new DaoLayerException(e);
+		}
+	}
+
+	@Override
+	public List<AudioAlbum> findAll() throws DaoLayerException {
+		try {
+			return findAll(AudioAlbum.class);
 		} catch (Exception e) {
 			throw new DaoLayerException(e);
 		}

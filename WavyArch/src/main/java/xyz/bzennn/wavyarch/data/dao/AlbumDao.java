@@ -1,5 +1,7 @@
 package xyz.bzennn.wavyarch.data.dao;
 
+import java.util.List;
+
 import xyz.bzennn.wavyarch.data.model.AudioAlbum;
 import xyz.bzennn.wavyarch.exception.DaoLayerException;
 
@@ -15,4 +17,6 @@ public interface AlbumDao {
 	boolean isAlbumExists(String name) throws DaoLayerException;
 	void update(AudioAlbum album) throws DaoLayerException;
 	void refresh(AudioAlbum album) throws DaoLayerException;
+	void delete(AudioAlbum album) throws DaoLayerException;
+	List<AudioAlbum> findAll() throws DaoLayerException;
 }
