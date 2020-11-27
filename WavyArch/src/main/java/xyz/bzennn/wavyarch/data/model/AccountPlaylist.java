@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,10 +38,10 @@ public class AccountPlaylist implements Serializable {
 	@Column(name = "image_path")
 	private String imagePath;
 	
-	@Column(name = "added_date")
+	@Column(name = "added_date", insertable = false)
 	private Date addedDate;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "account_id")
 	private Account account;
 	
@@ -89,6 +88,14 @@ public class AccountPlaylist implements Serializable {
 
 	public void setAccount(Account account) {
 		this.account = account;
+	}
+	
+	public Set<PlaylistAudio> getAudios() {
+		return audios;
+	}
+	
+	public void setAudios(Set<PlaylistAudio> audios) {
+		this.audios = audios;
 	}
 
 	@Override

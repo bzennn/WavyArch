@@ -70,11 +70,13 @@ public class AlbumsController {
 	@RequestMapping(path = "/album/{albumName}", method = RequestMethod.GET)
 	public String showAlbumPage(@PathVariable String albumName, Model model) {
 		if (albumName == null) {
+			model.asMap().clear();
 			return "redirect:/albums";
 		}
 		
 		AudioAlbum album = albumService.findByName(albumName);
 		if (album == null) {
+			model.asMap().clear();
 			return "redirect:/albums";
 		}
 		
@@ -99,11 +101,13 @@ public class AlbumsController {
 	@RequestMapping(path = "/album/edit/{albumName}", method = RequestMethod.GET)
 	public String showEditAlbumPage(@PathVariable String albumName, Model model) {
 		if (albumName == null) {
+			model.asMap().clear();
 			return "redirect:/albums";
 		}
 		
 		AudioAlbum album = albumService.findByName(albumName);
 		if (album == null) {
+			model.asMap().clear();
 			return "redirect:/albums";
 		}
 		

@@ -10,10 +10,10 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import xyz.bzennn.wavyarch.validation.validator.PlaylistUniqueValidator;
+import xyz.bzennn.wavyarch.validation.validator.PlaylistExistsValidator;
 
 /**
- * The annotated types variable playlist name must be unique in database with
+ * The annotated types variable playlist name must exist in database with
  * passed login
  *
  * @author bzennn
@@ -22,10 +22,10 @@ import xyz.bzennn.wavyarch.validation.validator.PlaylistUniqueValidator;
 @Documented
 @Retention(RUNTIME)
 @Target({ ElementType.TYPE })
-@Constraint(validatedBy = PlaylistUniqueValidator.class)
-public @interface PlaylistUnique {
+@Constraint(validatedBy = PlaylistExistsValidator.class)
+public @interface PlaylistExists {
 	
-	String message() default "Playlist with this name already exists!";
+	String message() default "Playlist with this name not exists!";
 
 	Class<?>[] groups() default {};
 

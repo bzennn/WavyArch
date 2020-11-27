@@ -10,7 +10,7 @@
 		<div class="col">
 			<span class="audio-list-title">MY AUDIOS</span>
 			<span>:</span>
-			<span class="audio-list-size">30 tracks</span>
+			<span class="audio-list-size">${accountAudios.size()} tracks</span>
 		</div>
 
 		<div class="col d-flex justify-content-end">

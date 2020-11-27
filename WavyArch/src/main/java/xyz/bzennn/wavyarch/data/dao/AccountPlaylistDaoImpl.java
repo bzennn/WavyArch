@@ -1,5 +1,7 @@
 package xyz.bzennn.wavyarch.data.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
@@ -25,7 +27,7 @@ public class AccountPlaylistDaoImpl extends BaseDaoImpl<AccountPlaylist> impleme
 			Session session = sessionFactory.openSession();
 			Transaction transaction = session.beginTransaction();
 			String query = "from AccountPlaylist where name=:name and account_id=:account_id";
-			AccountPlaylist accountPlaylist = (AccountPlaylist) session.createQuery(query).setParameter("name", name).setParameter("account_id", accountId.toString()).uniqueResult();
+			AccountPlaylist accountPlaylist = (AccountPlaylist) session.createQuery(query).setParameter("name", name).setParameter("account_id", accountId).uniqueResult();
 			transaction.commit();
 			session.close();
 
@@ -40,6 +42,25 @@ public class AccountPlaylistDaoImpl extends BaseDaoImpl<AccountPlaylist> impleme
 		try {
 			AccountPlaylist accountPlaylist = findByNameAndAccount(name, account);
 			return accountPlaylist != null;
+		} catch (Exception e) {
+			throw new DaoLayerException(e);
+		}
+	}
+
+	@Override
+	public List<AccountPlaylist> findByAccount(Account account) throws DaoLayerException {
+		Long accountId = account.getId();
+		
+		try {
+			Session session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			String query = "from AccountPlaylist where account_id=:account_id";
+			@SuppressWarnings("unchecked")
+			List<AccountPlaylist> accountPlaylists = (List<AccountPlaylist>) session.createQuery(query).setParameter("account_id", accountId).getResultList();
+			transaction.commit();
+			session.close();
+			
+			return accountPlaylists;
 		} catch (Exception e) {
 			throw new DaoLayerException(e);
 		}

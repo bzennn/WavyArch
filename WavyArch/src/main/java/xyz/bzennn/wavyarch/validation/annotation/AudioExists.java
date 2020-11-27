@@ -1,38 +1,33 @@
 package xyz.bzennn.wavyarch.validation.annotation;
 
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import xyz.bzennn.wavyarch.validation.validator.PlaylistUniqueValidator;
+import xyz.bzennn.wavyarch.validation.validator.AudioExistsValidator;
+
 
 /**
- * The annotated types variable playlist name must be unique in database with
- * passed login
+ * The annotated login field value must exist in database 
  *
  * @author bzennn
  * @version 1.0
  */
 @Documented
 @Retention(RUNTIME)
-@Target({ ElementType.TYPE })
-@Constraint(validatedBy = PlaylistUniqueValidator.class)
-public @interface PlaylistUnique {
-	
-	String message() default "Playlist with this name already exists!";
+@Target({ FIELD, METHOD })
+@Constraint(validatedBy = AudioExistsValidator.class)
+public @interface AudioExists {
+	String message() default "Audio with this name not exists!";
 
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
-
-	String login();
-
-	String name();
-	
 }

@@ -63,6 +63,14 @@ public class FileController {
 		return createFileResponseBody(performerImageFile);
 	}
 	
+	@RequestMapping(path = "playlists/{playlistCoverName}", method = RequestMethod.GET)
+	@ResponseBody
+	public HttpEntity<byte[]> getPlaylistCover(@PathVariable String playlistCoverName) throws NotFoundException {
+		File playlistCoverFile = new File(uploadPath + CommonProperties.PLAYLIST_COVER_FILE_PATH, playlistCoverName);
+		
+		return createFileResponseBody(playlistCoverFile);
+	}
+	
 	private HttpEntity<byte[]> createFileResponseBody(File file) throws NotFoundException {
 		byte[] fileBytes;
 		String[] contentType;

@@ -43,7 +43,8 @@ public class SignUpController {
 		}
 
 		accountService.save(account);
-
+		
+		model.asMap().clear();
 		return "redirect:/signin";
 	}
 }

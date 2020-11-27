@@ -69,11 +69,13 @@ public class PerformersController {
 	@RequestMapping(path = "/performer/{performerName}", method = RequestMethod.GET)
 	public String showPerformerPage(@PathVariable String performerName, Model model) {
 		if (performerName == null) {
+			model.asMap().clear();
 			return "redirect:/performers";
 		}
 		
 		AudioMaker performer = performerService.findByName(performerName);
 		if (performer == null) {
+			model.asMap().clear();
 			return "redirect:/performers";
 		}
 		
@@ -97,6 +99,7 @@ public class PerformersController {
 	@RequestMapping(path = "/performer/edit/{performerName}", method = RequestMethod.GET)
 	public String showEditPerformerPage(@PathVariable String performerName, Model model) {
 		if (performerName == null) {
+			model.asMap().clear();
 			return "redirect:/performers";
 		}
 		
@@ -138,7 +141,7 @@ public class PerformersController {
 				file.transferTo(imageFile);
 			} catch (Exception e) {
 				e.printStackTrace();
-				return "account_edit";
+				return "playlist_edit";
 			}
 			
 			String currentImagePath = performer.getImagePath();

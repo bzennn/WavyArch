@@ -54,6 +54,7 @@ public class SignInController {
 			log.error("Authentication error!", e);
 		}	
 		
+		model.asMap().clear();
 		return "redirect:/";
 	}
 	

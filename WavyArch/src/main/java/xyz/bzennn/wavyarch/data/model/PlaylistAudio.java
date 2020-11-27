@@ -37,7 +37,7 @@ public class PlaylistAudio implements Serializable {
 	@JoinColumn(name = "audio_id")
 	private Audio audio;
 	
-	@Column(name = "added_date")
+	@Column(name = "added_date", insertable = false)
 	private Date addedDate;
 	
 	public PlaylistAudio() {}

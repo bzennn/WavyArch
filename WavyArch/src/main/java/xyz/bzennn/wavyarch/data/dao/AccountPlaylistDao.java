@@ -1,5 +1,7 @@
 package xyz.bzennn.wavyarch.data.dao;
 
+import java.util.List;
+
 import xyz.bzennn.wavyarch.data.model.Account;
 import xyz.bzennn.wavyarch.data.model.AccountPlaylist;
 import xyz.bzennn.wavyarch.exception.DaoLayerException;
@@ -16,5 +18,6 @@ public interface AccountPlaylistDao {
 	void refresh(AccountPlaylist accountPlaylist) throws DaoLayerException;
 	void delete(AccountPlaylist accountPlaylist) throws DaoLayerException;
 	AccountPlaylist findByNameAndAccount(String name, Account account) throws DaoLayerException;
+	List<AccountPlaylist> findByAccount(Account account) throws DaoLayerException;
 	boolean isAccountPlaylistExists(String name, Account account) throws DaoLayerException;
 }
