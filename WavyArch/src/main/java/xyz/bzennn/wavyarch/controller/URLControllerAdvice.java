@@ -1,5 +1,7 @@
 package xyz.bzennn.wavyarch.controller;
 
+import java.net.URI;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
@@ -23,6 +25,20 @@ public class URLControllerAdvice {
 	@ModelAttribute
 	public void addURLAttribute(HttpServletRequest request, Model model) {
 		model.addAttribute("url", request.getRequestURL());
+	}
+	
+	@ModelAttribute
+	public void addReffererURLAttribute(HttpServletRequest request, Model model) throws Exception {
+		URI uri = new URI(request.getHeader("referer"));
+		String uriStr = uri.getPath();
+		if (uriStr.contains("/WavyArch/")) {
+			uriStr = uriStr.replace("/WavyArch/", "");
+		}
+		if (uri.getQuery() != null && !uri.getQuery().isEmpty()) {
+			uriStr += "?" + uri.getQuery();
+		}
+		
+		model.addAttribute("urlRef", uriStr);
 	}
 	
 	@ModelAttribute

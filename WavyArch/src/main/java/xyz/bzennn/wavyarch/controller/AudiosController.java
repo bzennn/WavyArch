@@ -271,7 +271,7 @@ public class AudiosController {
 	}
 	
 	@RequestMapping(path = "/addToAccount/{audioName}", method = RequestMethod.GET)
-	public String handleAddAudioToAccount(@PathVariable String audioName, Model model) {
+	public String handleAddAudioToAccount(@PathVariable String audioName, Model model) throws UnsupportedEncodingException {
 		Audio audio = audioService.findByName(audioName);
 		Account account = (Account) model.getAttribute("user");
 		
@@ -281,8 +281,15 @@ public class AudiosController {
 			}
 		}
 		
+		String uri = (String) model.getAttribute("urlRef");
+		
+		String encodedURI = uri;
+		if (!stringUtils.isAsciiString(uri)) {
+			encodedURI = stringUtils.encodeToUtf8(uri);
+		}
+		
 		model.asMap().clear();
-		return "redirect:/audios";
+		return "redirect:/" + encodedURI;
 	}
 	
 }
