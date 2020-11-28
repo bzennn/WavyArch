@@ -1,5 +1,6 @@
 package xyz.bzennn.wavyarch.data.dao;
 
+import java.util.List;
 import java.util.Set;
 
 import xyz.bzennn.wavyarch.data.model.Account;
@@ -22,4 +23,5 @@ public interface AccountDao {
 	void refresh(Account account) throws DaoLayerException;
 	Set<AccountAudio> loadAudios(Account account) throws DaoLayerException;
 	Set<AccountPlaylist> loadPlaylists(Account account) throws DaoLayerException;
+	List<Account> findAll() throws DaoLayerException;
 }

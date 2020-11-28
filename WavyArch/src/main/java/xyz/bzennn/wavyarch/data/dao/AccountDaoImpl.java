@@ -1,5 +1,6 @@
 package xyz.bzennn.wavyarch.data.dao;
 
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Session;
@@ -67,6 +68,15 @@ public class AccountDaoImpl extends BaseDaoImpl<Account> implements AccountDao {
 			return playlists;
 		} catch (Exception e) {
 			throw new DaoLayerException("Failed to lazily load playlists!", e);
+		}
+	}
+
+	@Override
+	public List<Account> findAll() throws DaoLayerException {
+		try {
+			return findAll(Account.class);
+		} catch (Exception e) {
+			throw new DaoLayerException("Failed to find all accounts!", e);
 		}
 	}
 	

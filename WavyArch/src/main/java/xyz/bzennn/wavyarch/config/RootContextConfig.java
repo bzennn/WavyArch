@@ -12,7 +12,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -33,10 +35,23 @@ public class RootContextConfig {
 
 	@Autowired
 	private Environment env;
-
+	
 	@Bean
 	public DatabaseCleanUp dbCleanUpBean() {
 		return new DatabaseCleanUp();
+	}
+	
+	@Bean
+	public AccountsRolesSetup accountsRolesSetup() {
+		return new AccountsRolesSetup();
+	}
+	
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
+	    PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
+	    propertySourcesPlaceholderConfigurer.setLocation(new ClassPathResource("admins.properties"));
+	    
+	    return propertySourcesPlaceholderConfigurer;
 	}
 	
 	@Bean
