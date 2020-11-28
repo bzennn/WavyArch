@@ -1,5 +1,7 @@
 package xyz.bzennn.wavyarch.data.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import xyz.bzennn.wavyarch.data.model.Audio;
@@ -24,6 +26,15 @@ public class AudioDaoImpl extends BaseDaoImpl<Audio> implements AudioDao {
 		try {
 			Audio audio = findByName(name);
 			return audio != null;
+		} catch (Exception e) {
+			throw new DaoLayerException(e);
+		}
+	}
+
+	@Override
+	public List<Audio> search(String request) throws DaoLayerException {
+		try {
+			return search(Audio.class, "name", request);
 		} catch (Exception e) {
 			throw new DaoLayerException(e);
 		}

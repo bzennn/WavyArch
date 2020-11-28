@@ -40,4 +40,13 @@ public class AlbumDaoImpl extends BaseDaoImpl<AudioAlbum> implements AlbumDao {
 		}
 	}
 
+	@Override
+	public List<AudioAlbum> search(String request) throws DaoLayerException {
+		try {
+			return search(AudioAlbum.class, "name", request);
+		} catch (Exception e) {
+			throw new DaoLayerException(e);
+		}
+	}
+
 }

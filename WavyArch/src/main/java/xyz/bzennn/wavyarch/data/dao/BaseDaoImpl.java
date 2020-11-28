@@ -95,11 +95,28 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 			Session session = sessionFactory.openSession();
 			Transaction transaction = session.beginTransaction();
 			String query = "from " + entityClass.getSimpleName();
-			List<?> object = (List<?>) session.createQuery(query).getResultList();
+			List<?> object = (List<T>) session.createQuery(query).getResultList();
 			transaction.commit();
 			session.close();
 
 			return (List<T>) object;
+		} catch (Exception e) {
+			throw new DaoLayerException("Failed to find account!", e);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> search(Class<T> entityClass, String attributeName, String searchRequest) throws DaoLayerException {
+		try {
+			Session session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			String query = "from " + entityClass.getSimpleName() + " where similarity(" + attributeName + ", '" + searchRequest + "') >= show_limit()";
+			List<?> objectList = (List<?>) session.createQuery(query).getResultList();
+			transaction.commit();
+			session.close();
+
+			return (List<T>) objectList;
 		} catch (Exception e) {
 			throw new DaoLayerException("Failed to find account!", e);
 		}

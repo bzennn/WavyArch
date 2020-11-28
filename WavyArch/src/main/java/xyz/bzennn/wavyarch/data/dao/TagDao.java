@@ -19,4 +19,5 @@ public interface TagDao {
 	void delete(AudioTag tag) throws DaoLayerException;
 	void refresh(AudioTag tag) throws DaoLayerException;
 	List<AudioTag> findAll() throws DaoLayerException;
+	List<AudioTag> search(String request) throws DaoLayerException;
 }

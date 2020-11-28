@@ -40,4 +40,13 @@ public class AuthorRoleDaoImpl extends BaseDaoImpl<AuthorRole> implements Author
 		}
 	}
 
+	@Override
+	public List<AuthorRole> search(String request) throws DaoLayerException {
+		try {
+			return search(AuthorRole.class, "name", request);
+		} catch (Exception e) {
+			throw new DaoLayerException(e);
+		}
+	}
+
 }

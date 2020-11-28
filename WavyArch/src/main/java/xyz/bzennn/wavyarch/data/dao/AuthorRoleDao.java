@@ -19,4 +19,5 @@ public interface AuthorRoleDao {
 	AuthorRole findByName(String name) throws DaoLayerException;
 	boolean isAuthorRoleExists(String name) throws DaoLayerException;
 	List<AuthorRole> findAll() throws DaoLayerException;
+	List<AuthorRole> search(String request) throws DaoLayerException;
 }

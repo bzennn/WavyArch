@@ -40,4 +40,13 @@ public class AudioMakerDaoImpl extends BaseDaoImpl<AudioMaker> implements AudioM
 		}
 	}
 
+	@Override
+	public List<AudioMaker> search(String request) throws DaoLayerException {
+		try {
+			return search(AudioMaker.class, "name", request);
+		} catch (Exception e) {
+			throw new DaoLayerException(e);
+		}
+	}
+
 }

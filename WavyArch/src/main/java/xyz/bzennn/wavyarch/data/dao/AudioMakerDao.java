@@ -19,4 +19,5 @@ public interface AudioMakerDao {
 	void delete(AudioMaker audioMaker) throws DaoLayerException;
 	void refresh(AudioMaker audioMaker) throws DaoLayerException;
 	List<AudioMaker> findAll() throws DaoLayerException;
+	List<AudioMaker> search(String request) throws DaoLayerException;
 }

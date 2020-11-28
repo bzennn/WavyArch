@@ -40,4 +40,13 @@ public class TagDaoImpl extends BaseDaoImpl<AudioTag> implements TagDao {
 		}
 	}
 
+	@Override
+	public List<AudioTag> search(String request) throws DaoLayerException {
+		try {
+			return search(AudioTag.class, "name", request);
+		} catch (Exception e) {
+			throw new DaoLayerException(e);
+		}
+	}
+
 }

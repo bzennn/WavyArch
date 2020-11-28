@@ -40,4 +40,13 @@ public class GenreDaoImpl extends BaseDaoImpl<AudioGenre> implements GenreDao {
 		}
 	}
 
+	@Override
+	public List<AudioGenre> search(String request) throws DaoLayerException {
+		try {
+			return search(AudioGenre.class, "name", request);
+		} catch (Exception e) {
+			throw new DaoLayerException(e);
+		}
+	}
+
 }

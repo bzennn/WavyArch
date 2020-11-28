@@ -15,7 +15,7 @@
 		<div class="col d-flex justify-content-end">
 
 			<div class="btn-group">
-				<button href="#" class="btn dropdown-toggle" type="button"
+				<button class="btn dropdown-toggle" type="button"
 					id="sortMenu" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false">SORT LIST</button>
 				<div class="dropdown-menu dropdown-menu-right"

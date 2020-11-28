@@ -19,4 +19,5 @@ public interface AlbumDao {
 	void refresh(AudioAlbum album) throws DaoLayerException;
 	void delete(AudioAlbum album) throws DaoLayerException;
 	List<AudioAlbum> findAll() throws DaoLayerException;
+	List<AudioAlbum> search(String request) throws DaoLayerException;
 }

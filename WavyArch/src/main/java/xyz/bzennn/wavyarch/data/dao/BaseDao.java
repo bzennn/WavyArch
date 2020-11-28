@@ -18,4 +18,5 @@ public interface BaseDao<T> {
 	void refresh(T object) throws DaoLayerException;
 	T findByAttribute(Class<T> entityClass, String attributeName, Object attributeValue) throws DaoLayerException;
 	List<T> findAll(Class<T> entityClass) throws DaoLayerException;
+	List<T> search(Class<T> entityClass, String attributeName, String searchRequest) throws DaoLayerException; 
 }

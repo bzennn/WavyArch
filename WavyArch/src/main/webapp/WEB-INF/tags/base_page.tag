@@ -40,9 +40,9 @@
 				<!-- Search form -->
 				<c:if test="${not empty user }">
 					<div class="nav-item ml-auto mr-auto">
-						<form action="#" class="form-inline"
+						<form action="<c:url value="/search"/>" method="get" class="form-inline"
 							onsubmit="return validateSearchRequest();" novalidate>
-							<input class="form-control" type="text" name="search"
+							<input class="form-control" type="text" name="request"
 								placeholder="Search" maxlength="400" id="inputSearch" required>
 							<button class="btn search-btn" type="submit">
 								<i class="fas fa-search"></i>

@@ -223,6 +223,15 @@ th + th, td + td {
 .navbar .search-btn .fas {
     margin-left: 5px;
 }
+
+.search-request {
+	font-size: 20px;
+	font-style: italic;
+}
+
+.search-request-text {
+	color: #f3da00;
+}
 /* Navbar end */
 
 /* Sidebar */

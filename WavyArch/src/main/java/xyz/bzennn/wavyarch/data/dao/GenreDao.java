@@ -19,4 +19,5 @@ public interface GenreDao {
 	void delete(AudioGenre genre) throws DaoLayerException;
 	void refresh(AudioGenre genre) throws DaoLayerException;
 	List<AudioGenre> findAll() throws DaoLayerException;
+	List<AudioGenre> search(String request) throws DaoLayerException;
 }

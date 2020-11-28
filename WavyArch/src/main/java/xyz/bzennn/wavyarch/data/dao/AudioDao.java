@@ -1,5 +1,7 @@
 package xyz.bzennn.wavyarch.data.dao;
 
+import java.util.List;
+
 import xyz.bzennn.wavyarch.data.model.Audio;
 import xyz.bzennn.wavyarch.exception.DaoLayerException;
 
@@ -16,4 +18,5 @@ public interface AudioDao {
 	void update(Audio audio) throws DaoLayerException;
 	void delete(Audio audio) throws DaoLayerException;
 	void refresh(Audio audio) throws DaoLayerException;
+	List<Audio> search(String request) throws DaoLayerException;
 }
