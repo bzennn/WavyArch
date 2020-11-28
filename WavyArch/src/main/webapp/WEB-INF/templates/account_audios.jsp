@@ -101,11 +101,11 @@
 								<a href="<c:url value="/albums/album/${album}" />">${album}</a>
 							</td>
 							<td>
-								<a href="#">${genre}</a>
+								<a href="<c:url value="/search?request=${genre}&category=genres"/>">${genre}</a>
 							</td>
 							<td>
 								<c:forEach var="tag" items="${tags}">
-									<a href="#">
+									<a href="<c:url value="/search?request=${tag.getName()}&category=tags"/>">
 										<span class="badge">${tag.getName()}</span>
 									</a>
 								</c:forEach>

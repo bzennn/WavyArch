@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import xyz.bzennn.wavyarch.data.dao.AlbumDao;
 import xyz.bzennn.wavyarch.data.dao.AudioDao;
 import xyz.bzennn.wavyarch.data.dao.AudioMakerDao;
-import xyz.bzennn.wavyarch.data.dao.AuthorRoleDao;
 import xyz.bzennn.wavyarch.data.dao.GenreDao;
 import xyz.bzennn.wavyarch.data.dao.TagDao;
 import xyz.bzennn.wavyarch.data.model.Audio;
@@ -34,22 +33,19 @@ import xyz.bzennn.wavyarch.exception.ServiceLayerException;
 public class SearchServiceImpl implements SearchService {
 
 	@Autowired
-	AudioDao audioDao;
+	private AudioDao audioDao;
 
 	@Autowired
-	GenreDao genreDao;
+	private GenreDao genreDao;
 
 	@Autowired
-	AlbumDao albumDao;
+	private AlbumDao albumDao;
 
 	@Autowired
-	AudioMakerDao audioMakerDao;
+	private AudioMakerDao audioMakerDao;
 
 	@Autowired
-	AuthorRoleDao authorRoleDao;
-
-	@Autowired
-	TagDao tagDao;
+	private TagDao tagDao;
 
 	@Override
 	public List<Audio> searchAll(String request) throws ServiceLayerException {
@@ -60,13 +56,13 @@ public class SearchServiceImpl implements SearchService {
 			List<Audio> byAudioMakerName = searchByAudioMakerName(request);
 			List<Audio> byTagName = searchByTagName(request);
 
-			List<Audio> result = new ArrayList<Audio>(byAudioName);
+			Set<Audio> result = new LinkedHashSet<Audio>(byAudioName);
 			result.addAll(byGenreName);
 			result.addAll(byAlbumName);
 			result.addAll(byAudioMakerName);
 			result.addAll(byTagName);
 			
-			return result;
+			return new ArrayList<Audio>(result);
 		} catch (Exception e) {
 			throw new ServiceLayerException("Failed to perform search by all fields!", e);
 		}

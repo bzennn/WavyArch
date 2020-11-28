@@ -27,22 +27,20 @@ import xyz.bzennn.wavyarch.service.SearchService;
 public class SearchController {
 
 	@Autowired
-	SearchService searchService;
+	private SearchService searchService;
 	
 	@Autowired
-	AudioService audioService;
+	private AudioService audioService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String showSearchResults(@RequestParam String request, Model model) {
+	public String showSearchResults(@RequestParam(defaultValue = "") String request, @RequestParam(defaultValue = "") String category, Model model) {
 		if (request == null || request.isEmpty()) {
 			model.asMap().clear();
 			return "redirect:/";
 		}
 		
-		
 		Account account = (Account) model.getAttribute("user");
-		
-		List<Audio> foundAudios = searchService.searchAll(request);
+		List<Audio> foundAudios = searchByCategory(request, category);
 		List<Audio> accountAudios = audioService.findByAccount(account);
 		
 		Set<String> audiosNotInAccount = new HashSet<String>(); 
@@ -57,6 +55,21 @@ public class SearchController {
 		model.addAttribute("searchAudios", foundAudios);
 		
 		return "search_audios";
+	}
+	
+	private List<Audio> searchByCategory(String request, String category) {
+		switch (category) {
+			case "audioMakers":
+				return searchService.searchByAudioMakerName(request);
+			case "genres":
+				return searchService.searchByGenreName(request);
+			case "albums":
+				return searchService.searchByAlbumName(request);
+			case "tags":
+				return searchService.searchByTagName(request);
+			default:
+				return searchService.searchAll(request);
+		}
 	}
 	
 }
