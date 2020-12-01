@@ -29,15 +29,18 @@ public class URLControllerAdvice {
 	
 	@ModelAttribute
 	public void addReffererURLAttribute(HttpServletRequest request, Model model) throws Exception {
-		URI uri = new URI(request.getHeader("referer"));
-		String uriStr = uri.getPath();
-		if (uriStr.contains("/WavyArch/")) {
-			uriStr = uriStr.replace("/WavyArch/", "");
+		String refererHeader = request.getHeader("referer");
+		String uriStr = "";
+		if (refererHeader != null && !refererHeader.isEmpty()) {
+			URI uri = new URI(refererHeader);
+			uriStr = uri.getPath();
+			if (uriStr.contains("/WavyArch/")) {
+				uriStr = uriStr.replace("/WavyArch/", "");
+			}
+			if (uri.getQuery() != null && !uri.getQuery().isEmpty()) {
+				uriStr += "?" + uri.getQuery();
+			}
 		}
-		if (uri.getQuery() != null && !uri.getQuery().isEmpty()) {
-			uriStr += "?" + uri.getQuery();
-		}
-		
 		model.addAttribute("urlRef", uriStr);
 	}
 	
