@@ -2,6 +2,8 @@ package xyz.bzennn.wavyarch.data.dao;
 
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
 import xyz.bzennn.wavyarch.data.model.Audio;
@@ -35,6 +37,23 @@ public class AudioDaoImpl extends BaseDaoImpl<Audio> implements AudioDao {
 	public List<Audio> search(String request) throws DaoLayerException {
 		try {
 			return search(Audio.class, "name", request);
+		} catch (Exception e) {
+			throw new DaoLayerException(e);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Audio> recommendations(String audioName, Integer limit) throws DaoLayerException {
+		try {
+			Session session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			String query = "select * from music_library.buildRecommendationsByAudio(?, ?)";
+			List<?> list = (List<?>) session.createSQLQuery(query).setParameter(1, audioName).setParameter(2, limit).addEntity(Audio.class).list();
+			transaction.commit();
+			session.close();
+
+			return (List<Audio> )list;
 		} catch (Exception e) {
 			throw new DaoLayerException(e);
 		}

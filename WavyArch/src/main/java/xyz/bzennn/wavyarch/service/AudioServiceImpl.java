@@ -402,6 +402,15 @@ public class AudioServiceImpl implements AudioService {
 		}
 	}
 	
+	@Override
+	public List<Audio> recommendations(String audioName, Integer limit) throws ServiceLayerException {
+		try {
+			return audioDao.recommendations(audioName, limit);
+		} catch (Exception e) {
+			throw new ServiceLayerException("Failed to build recommendations list!", e);
+		}
+	}
+	
 	public AudioGenre findOrCreateGenre(String name) {
 		if (!genreDao.isGenreExists(name)) {
 			AudioGenre genre = new AudioGenre();

@@ -32,4 +32,5 @@ public interface AudioService {
 	Set<AccountAudio> loadAudios(Account account) throws ServiceLayerException;
 	Set<AccountPlaylist> loadPlaylists(Account account) throws ServiceLayerException;
 	List<Audio> findByAccount(Account account) throws ServiceLayerException;
+	List<Audio> recommendations(String audioName, Integer limit) throws ServiceLayerException;
 }

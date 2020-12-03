@@ -8,14 +8,16 @@
 	<!-- Song List header-->
 	<div class="row audio-list-header">
 		<div class="col">
-			<span class="audio-list-title">MY AUDIOS</span>
+			<span class="audio-list-title">RECOMMENDATIONS</span>
 			<span>:</span>
-			<span class="audio-list-size">${accountAudios.size()} tracks</span>
+			<span class="audio-list-size">found ${recommendationsAudios.size()} tracks</span>
+			
+			<div class="search-request">For audio: "<span class="search-request-text text-wrap">${audioName}</span>"</div>
 		</div>
 
 		<div class="col d-flex justify-content-end">
 
-			<div class="btn-group mr-4">
+			<div class="btn-group">
 				<button class="btn dropdown-toggle" type="button" id="sortMenu"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SORT
 					LIST</button>
@@ -39,8 +41,7 @@
 					</a>
 				</div>
 			</div>
-
-			<a href="audios/upload" class="btn">UPLOAD AUDIO</a>
+			
 		</div>
 	</div>
 	<!-- Song List header-->
@@ -66,19 +67,18 @@
 				</thead>
 				<tbody>
 					<c:set var="index" scope="page" value="0" />
-					<c:forEach var="audio" items="${accountAudios}">
+					<c:forEach var="audio" items="${recommendationsAudios}">
 						<c:set var="index" scope="page" value="${index + 1}" />
 						<c:set var="genre" scope="page"
 							value="${audio.getGenre().getName()}" />
-						<c:set var="filePath" scope="page"
-							value="${audio.getFilePath()}" />
+						<c:set var="filePath" scope="page" value="${audio.getFilePath()}" />
 						<c:set var="album" scope="page"
 							value="${audio.getAlbum().getName()}" />
 						<c:set var="performers" scope="page"
 							value="${audio.getPerformers()}" />
 						<c:set var="authors" scope="page" value="${audio.getAuthors()}" />
 						<c:set var="tags" scope="page" value="${audio.getTags()}" />
-						
+
 						<tr>
 							<td>${index}</td>
 							<td>${audio.getName()}</td>
@@ -123,14 +123,19 @@
 										</a>
 									</div>
 									<div class="col-3">
-										<a href="<c:url value="/audios/edit/${audio.getName()}" />" class="">
+										<a href="<c:url value="/audios/edit/${audio.getName()}" />"
+											class="">
 											<i class="far fa-edit"></i>
 										</a>
 									</div>
 									<div class="col-3">
-										<a href="<c:url value="/audios/delete/${audio.getName()}" />" class="">
-											<i class="fas fa-times"></i>
-										</a>
+										<c:if test="${audiosNotInAccount.contains(audio.getName())}">
+											<a
+												href="<c:url value="/audios/addToAccount/${audio.getName()}" />"
+												class="">
+												<i class="fas fa-plus-circle"></i>
+											</a>
+										</c:if>
 									</div>
 								</div>
 							</td>

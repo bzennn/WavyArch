@@ -19,4 +19,5 @@ public interface AudioDao {
 	void delete(Audio audio) throws DaoLayerException;
 	void refresh(Audio audio) throws DaoLayerException;
 	List<Audio> search(String request) throws DaoLayerException;
+	List<Audio> recommendations(String audioName, Integer limit) throws DaoLayerException;
 }

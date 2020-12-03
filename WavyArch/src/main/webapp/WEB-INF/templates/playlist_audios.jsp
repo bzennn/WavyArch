@@ -129,18 +129,23 @@
 							</td>
 							<td>
 								<div class="row">
-									<div class="col-4">
+									<div class="col-3">
+										<a href="<c:url value="/recommendations/${audio.getName()}" />" class="">
+											<i class="fas fa-star"></i>
+										</a>
+									</div>
+									<div class="col-3">
 										<a href="<c:url value="/files/audios/${filePath}" />" class="">
 											<i class="fas fa-download"></i>
 										</a>
 									</div>
-									<div class="col-4">
+									<div class="col-3">
 										<a href="<c:url value="/audios/edit/${audio.getName()}" />"
 											class="">
 											<i class="far fa-edit"></i>
 										</a>
 									</div>
-									<div class="col-4">
+									<div class="col-3">
 										<a
 												href="<c:url value="/playlists/playlist/removeAudio/${playlist.getName()}/audio/${audio.getName()}" />"
 												class="">
