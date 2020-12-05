@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -28,6 +29,7 @@ import xyz.bzennn.wavyarch.data.model.Audio;
 import xyz.bzennn.wavyarch.data.model.AudioMaker;
 import xyz.bzennn.wavyarch.form.PerformerEditForm;
 import xyz.bzennn.wavyarch.service.AudioService;
+import xyz.bzennn.wavyarch.service.AudioSortingService;
 import xyz.bzennn.wavyarch.service.PerformerService;
 import xyz.bzennn.wavyarch.util.FileUtils;
 import xyz.bzennn.wavyarch.util.ImageUtils;
@@ -56,6 +58,9 @@ public class PerformersController {
 	@Autowired
 	AudioService audioService;
 	
+	@Autowired
+	AudioSortingService sortingService;
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public String showPerformersPage(Model model) {
 		Account account = (Account) model.getAttribute("user");
@@ -67,7 +72,7 @@ public class PerformersController {
 	}
 	
 	@RequestMapping(path = "/performer/{performerName}", method = RequestMethod.GET)
-	public String showPerformerPage(@PathVariable String performerName, Model model) {
+	public String showPerformerPage(@PathVariable String performerName, @RequestParam Map<String, String> params, Model model) {
 		if (performerName == null) {
 			model.asMap().clear();
 			return "redirect:/performers";
@@ -88,6 +93,8 @@ public class PerformersController {
 				audiosNotInAccount.add(audio.getName());
 			}
 		}
+		
+		sortingService.sort(performerAudios, params);
 		
 		model.addAttribute("audiosNotInAccount", audiosNotInAccount);
 		model.addAttribute("performer", performer);

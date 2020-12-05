@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -32,6 +33,7 @@ import xyz.bzennn.wavyarch.data.model.Performer;
 import xyz.bzennn.wavyarch.form.AudioEditForm;
 import xyz.bzennn.wavyarch.form.AudioUploadForm;
 import xyz.bzennn.wavyarch.service.AudioService;
+import xyz.bzennn.wavyarch.service.AudioSortingService;
 import xyz.bzennn.wavyarch.util.AudioUtils;
 import xyz.bzennn.wavyarch.util.FileUtils;
 import xyz.bzennn.wavyarch.util.StringUtils;
@@ -56,10 +58,15 @@ public class AudiosController {
 	@Autowired
 	private AudioService audioService;
 	
+	@Autowired
+	private AudioSortingService sortingService;
+	
 	@RequestMapping(method = RequestMethod.GET)
-	public String showAccountAudiosPage(Model model) {
+	public String showAccountAudiosPage(@RequestParam Map<String, String> params, Model model) {
 		Account account = (Account) model.getAttribute("user");
 		List<Audio> audios = audioService.findByAccount(account);
+		
+		sortingService.sort(audios, params);
 		
 		model.addAttribute("accountAudios", audios);
 		

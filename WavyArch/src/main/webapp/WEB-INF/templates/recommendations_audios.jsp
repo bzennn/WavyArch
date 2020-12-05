@@ -14,35 +14,6 @@
 			
 			<div class="search-request">For audio: "<span class="search-request-text text-wrap">${audioName}</span>"</div>
 		</div>
-
-		<div class="col d-flex justify-content-end">
-
-			<div class="btn-group">
-				<button class="btn dropdown-toggle" type="button" id="sortMenu"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SORT
-					LIST</button>
-				<div class="dropdown-menu" aria-labelledby="sortMenu">
-					<a href="#" class="dropdown-item">
-						CRITERIA 1
-						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
-					</a>
-					<a href="#" class="dropdown-item">
-						CRITERIA 1
-						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
-					</a>
-
-					<a href="#" class="dropdown-item">
-						CRITERIA 2
-						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
-					</a>
-					<a href="#" class="dropdown-item">
-						CRITERIA 2
-						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
-					</a>
-				</div>
-			</div>
-			
-		</div>
 	</div>
 	<!-- Song List header-->
 
@@ -118,7 +89,7 @@
 										</a>
 									</div>
 									<div class="col-3">
-										<a href="<c:url value="/files/audios/${filePath}" />" class="">
+										<a href="<c:url value="/files/audios/${filePath}" />" class="" download>
 											<i class="fas fa-download"></i>
 										</a>
 									</div>

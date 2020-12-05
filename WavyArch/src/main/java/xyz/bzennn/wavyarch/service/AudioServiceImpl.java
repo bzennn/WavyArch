@@ -398,7 +398,7 @@ public class AudioServiceImpl implements AudioService {
 			accountAudioDao.findByAccountId(account.getId()).forEach(accountAudio -> result.add(accountAudio.getAudio()));
 			return result;
 		} catch (Exception e) {
-			throw new ServiceLayerException("Failed to lazily load palylists from account!", e);
+			throw new ServiceLayerException("Failed to find audios by account!", e);
 		}
 	}
 	

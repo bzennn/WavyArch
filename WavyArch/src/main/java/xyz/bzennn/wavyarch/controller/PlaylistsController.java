@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -28,6 +29,7 @@ import xyz.bzennn.wavyarch.form.PlaylistAddAudioForm;
 import xyz.bzennn.wavyarch.form.PlaylistCreateForm;
 import xyz.bzennn.wavyarch.form.PlaylistEditForm;
 import xyz.bzennn.wavyarch.service.AudioService;
+import xyz.bzennn.wavyarch.service.AudioSortingService;
 import xyz.bzennn.wavyarch.service.PlaylistService;
 import xyz.bzennn.wavyarch.util.FileUtils;
 import xyz.bzennn.wavyarch.util.ImageUtils;
@@ -55,6 +57,9 @@ public class PlaylistsController {
 	
 	@Autowired
 	AudioService audioService;
+	
+	@Autowired
+	AudioSortingService sortingService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String showPlaylistsPage(Model model) {
@@ -107,7 +112,7 @@ public class PlaylistsController {
 	}
 	
 	@RequestMapping(path = "/playlist/{playlistName}", method = RequestMethod.GET)
-	public String showPlaylistPage(@PathVariable String playlistName, Model model) {
+	public String showPlaylistPage(@PathVariable String playlistName, @RequestParam Map<String, String> params, Model model) {
 		if (playlistName == null) {
 			model.asMap().clear();
 			return "redirect:/playlists";
@@ -126,6 +131,8 @@ public class PlaylistsController {
 				playlistAudios.add(playlistAudio.getAudio());
 			}
 		}
+		
+		sortingService.sort(playlistAudios, params);
 		
 		model.addAttribute("playlist", playlist);
 		model.addAttribute("playlistAudios", playlistAudios);

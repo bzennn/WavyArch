@@ -71,7 +71,7 @@ public class AccountAudioDaoImpl extends BaseDaoImpl<AccountAudio> implements Ac
 			Session session = sessionFactory.openSession();
 			Transaction transaction = session.beginTransaction();
 			@SuppressWarnings("unchecked")
-			List<AccountAudio> list = session.createQuery("from AccountAudio where account_id=:account_id").setParameter("account_id", accountId).getResultList();
+			List<AccountAudio> list = session.createQuery("from AccountAudio accountAudio where account_id=:account_id").setParameter("account_id", accountId).getResultList();
 			transaction.commit();
 			session.close();
 

@@ -111,8 +111,8 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		try {
 			Session session = sessionFactory.openSession();
 			Transaction transaction = session.beginTransaction();
-			String query = "from " + entityClass.getSimpleName() + " where similarity(" + attributeName + ", '" + searchRequest + "') >= show_limit()";
-			List<?> objectList = (List<?>) session.createQuery(query).getResultList();
+			String query = "from " + entityClass.getSimpleName() + " where similarity(" + attributeName + ", ?1) >= show_limit()";
+			List<?> objectList = (List<?>) session.createQuery(query).setParameter(1, searchRequest).getResultList();
 			transaction.commit();
 			session.close();
 

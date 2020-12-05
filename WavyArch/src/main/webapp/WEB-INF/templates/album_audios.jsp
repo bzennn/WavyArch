@@ -37,21 +37,136 @@
 					id="sortMenu" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false">SORT LIST</button>
 				<div class="dropdown-menu" aria-labelledby="sortMenu">
-					<a href="#" class="dropdown-item">
-						CRITERIA 1
+					<!-- Sort by name -->
+					<c:url var="byNameAsc" value="">
+						<c:param name="sort" value="name" />
+						<c:param name="order" value="asc" />
+					</c:url>
+					<a href="${byNameAsc}" class="dropdown-item">
+						NAME
 						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
 					</a>
-					<a href="#" class="dropdown-item">
-						CRITERIA 1
+					
+					<c:url var="byNameDesc" value="">
+						<c:param name="sort" value="name" />
+						<c:param name="order" value="desc" />
+					</c:url>
+					<a href="${byNameDesc}" class="dropdown-item">
+						NAME
 						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
 					</a>
-
-					<a href="#" class="dropdown-item">
-						CRITERIA 2
+					
+					<!-- Sort by duration -->
+					<c:url var="byDurationAsc" value="">
+						<c:param name="sort" value="duration" />
+						<c:param name="order" value="asc" />
+					</c:url>
+					<a href="${byDurationAsc}" class="dropdown-item">
+						DURATION
 						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
 					</a>
-					<a href="#" class="dropdown-item">
-						CRITERIA 2
+					
+					<c:url var="byDurationDesc" value="">
+						<c:param name="sort" value="duration" />
+						<c:param name="order" value="desc" />
+					</c:url>
+					<a href="${byDurationDesc}" class="dropdown-item">
+						DURATION
+						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
+					</a>
+					
+					<!-- Sort by performers -->
+					<c:url var="byPerformersAsc" value="">
+						<c:param name="sort" value="performers" />
+						<c:param name="order" value="asc" />
+					</c:url>
+					<a href="${byPerformersAsc}" class="dropdown-item">
+						PERFORMERS
+						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
+					</a>
+					
+					<c:url var="byPerformersDesc" value="">
+						<c:param name="sort" value="performers" />
+						<c:param name="order" value="desc" />
+					</c:url>
+					<a href="${byPerformersDesc}" class="dropdown-item">
+						PERFORMERS
+						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
+					</a>
+					
+					<!-- Sort by authors -->
+					<c:url var="byAuthorsAsc" value="">
+						<c:param name="sort" value="authors" />
+						<c:param name="order" value="asc" />
+					</c:url>
+					<a href="${byAuthorsAsc}" class="dropdown-item">
+						AUTHORS
+						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
+					</a>
+					
+					<c:url var="byAuthorsDesc" value="">
+						<c:param name="sort" value="authors" />
+						<c:param name="order" value="desc" />
+					</c:url>
+					<a href="${byAuthorsDesc}" class="dropdown-item">
+						AUTHORS
+						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
+					</a>
+					
+					<!-- Sort by album -->
+					<c:url var="byAlbumAsc" value="">
+						<c:param name="sort" value="album" />
+						<c:param name="order" value="asc" />
+					</c:url>
+					<a href="${byAlbumAsc}" class="dropdown-item">
+						ALBUM
+						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
+					</a>
+					
+					<c:url var="byAlbumDesc" value="">
+						<c:param name="sort" value="album" />
+						<c:param name="order" value="desc" />
+					</c:url>
+					<a href="${byAlbumDesc}" class="dropdown-item">
+						ALBUM
+						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
+					</a>
+					
+					<!-- Sort by genre -->
+					<c:url var="byGenreAsc" value="">
+						<c:param name="sort" value="genre" />
+						<c:param name="order" value="asc" />
+					</c:url>
+					<a href="${byGenreAsc}" class="dropdown-item">
+						GENRE
+						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
+					</a>
+					
+					<c:url var="byGenreDesc" value="">
+						<c:param name="sort" value="genre" />
+						<c:param name="order" value="desc" />
+					</c:url>
+					<a href="${byGenreDesc}" class="dropdown-item">
+						GENRE
+						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
+					</a>
+					
+					<!-- Sort by tags -->
+					<c:url var="byTagsAsc" value="">
+						<c:param name="sort" value="tags" />
+						<c:param name="order" value="asc" />
+					</c:url>
+					<a href="${byTagsAsc}" class="dropdown-item">
+						TAGS
+						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
+					</a>
+					
+					<c:url var="byTagsDesc" value="">
+						<c:param name="sort" value="tags" />
+						<c:param name="order" value="desc" />
+					</c:url>
+					<a href="${byTagsDesc}" class="dropdown-item">
+						TAGS
 						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
 					</a>
 				</div>
@@ -136,7 +251,7 @@
 										</a>
 									</div>
 									<div class="col-3">
-										<a href="<c:url value="/files/audios/${filePath}" />" class="">
+										<a href="<c:url value="/files/audios/${filePath}" />" class="" download>
 											<i class="fas fa-download"></i>
 										</a>
 									</div>

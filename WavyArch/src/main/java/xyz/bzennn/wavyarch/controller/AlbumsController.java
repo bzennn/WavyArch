@@ -3,9 +3,11 @@ package xyz.bzennn.wavyarch.controller;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -30,6 +32,7 @@ import xyz.bzennn.wavyarch.data.model.AudioMaker;
 import xyz.bzennn.wavyarch.form.AlbumEditForm;
 import xyz.bzennn.wavyarch.service.AlbumService;
 import xyz.bzennn.wavyarch.service.AudioService;
+import xyz.bzennn.wavyarch.service.AudioSortingService;
 import xyz.bzennn.wavyarch.util.FileUtils;
 import xyz.bzennn.wavyarch.util.ImageUtils;
 import xyz.bzennn.wavyarch.util.StringUtils;
@@ -57,6 +60,9 @@ public class AlbumsController {
 	@Autowired
 	AudioService audioService;
 	
+	@Autowired
+	AudioSortingService sortingService;
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public String showAlbumsPage(Model model) {
 		Account account = (Account) model.getAttribute("user");
@@ -68,7 +74,7 @@ public class AlbumsController {
 	}
 
 	@RequestMapping(path = "/album/{albumName}", method = RequestMethod.GET)
-	public String showAlbumPage(@PathVariable String albumName, Model model) {
+	public String showAlbumPage(@PathVariable String albumName, @RequestParam Map<String, String> params, Model model) {
 		if (albumName == null) {
 			model.asMap().clear();
 			return "redirect:/albums";
@@ -83,13 +89,15 @@ public class AlbumsController {
 		Account account = (Account) model.getAttribute("user");
 		
 		Set<String> audiosNotInAccount = new HashSet<String>(); 
-		Set<Audio> albumAudios = album.getAudios();
+		List<Audio> albumAudios = new ArrayList<Audio>(album.getAudios());
 		List<Audio> accountAudios = audioService.findByAccount(account);
 		for (Audio audio : albumAudios) {
 			if (!accountAudios.contains(audio)) {
 				audiosNotInAccount.add(audio.getName());
 			}
 		}
+		
+		sortingService.sort(albumAudios, params);
 		
 		model.addAttribute("audiosNotInAccount", audiosNotInAccount);
 		model.addAttribute("album", album);
