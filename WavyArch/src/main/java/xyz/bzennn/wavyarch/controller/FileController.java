@@ -84,6 +84,10 @@ public class FileController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType(contentType[0], contentType[1]));
 		headers.setContentLength(fileBytes.length);
+		if (contentType[0].equals("audio")) {
+			headers.add("accept-ranges", "bytes");
+			headers.add("Content-Range", "bytes 0-" + (fileBytes.length - 1) + "/" + fileBytes.length);
+		}
 		return new HttpEntity<byte[]>(fileBytes, headers);
 	}
 

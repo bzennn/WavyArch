@@ -88,7 +88,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.csrf()
 				.disable()
 			.authorizeRequests()
-				.antMatchers("/signup", "/resources/**", "/error").permitAll()
+				.antMatchers("/signup", "/resources/**", "/error", "/files/**").permitAll()
 				.antMatchers("/audios/deleteFromServer/**").hasAuthority("admin")
 			.anyRequest()
 				.authenticated()
