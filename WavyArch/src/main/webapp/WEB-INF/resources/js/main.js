@@ -60,6 +60,24 @@ function updateDateInputRange() {
     jQuery('#inputCreationDate').attr('max', today);
 };
 
+function updateDateInputRange() {
+    let today = new Date().toISOString().split('T')[0];
+    jQuery('#inputCreationDate').attr('max', today);
+};
+
+function updateRangeGradient(slider, rangeValue) {
+    const percentage = (rangeValue - slider.attr('min')) / (slider.attr('max') - slider.attr('min')) * 100;
+    slider.css('background-image', `linear-gradient(90deg, #00990d ${percentage}%, transparent ${percentage}%)`);
+  }
+
+function updateRangeBackground(id) {
+    var slider = jQuery('#' + id);
+    updateRangeGradient(slider, slider.val());
+    slider.on('input', (e) => {
+         updateRangeGradient(slider, slider.val());
+    });
+}
+
 jQuery('#sidebar-toggle-btn').on('click', () => {
     toggleSidebar();
 });
@@ -68,6 +86,7 @@ jQuery((e) => {
     removeHorizontalScrollbar();
     handleAudioPlayerTimelineClick();
     updateDateInputRange();
-    //fixEncoding();
+    updateRangeBackground('volumeRange');
+    updateRangeBackground('progressRange');
 });
 
