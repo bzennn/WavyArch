@@ -203,50 +203,40 @@
 
 	<!-- Audio player -->
 	<div class="audio-player fixed-bottom">
+        <audio src="" id="audioContainer" ></audio>
 
-		<div class="row">
-			<div class="col">
-				<div class="audio-player-info">
-					<div class="audio-player-title">Bohemian Rhapsody</div>
-					<div class="audio-player-performer">Queen</div>
-				</div>
-			</div>
-			<div class="col-6">
-				<div class="audio-player-controls d-flex justify-content-center">
-					<div class="audio-control-btn mr-1">
-						<i class="fas fa-step-backward fa-fw"></i>
-					</div>
-					<div class="audio-control-btn mr-1">
-						<i class="fas fa-play fa-fw"></i>
-					</div>
-					<div class="audio-control-btn mr-1 d-none">
-						<i class="fas fa-pause fa-fw"></i>
-					</div>
-					<div class="audio-control-btn">
-						<i class="fas fa-step-forward fa-fw"></i>
-					</div>
-				</div>
-			</div>
-			<div class="col">
-				<div class="audio-player-time d-flex justify-content-end">
-					<input type="range" min="0" max="100" value="100"
-						class="slider volume-range mr-2" id="volumeRange">
-					<span class="fas fa-volume-up volume-icon mr-4"></span>
-					<span class="audio-player-current mr-1">0:36</span>
-					<span class="delimiter mr-1">:</span>
-					<span class="audio-player-whole">5:55</span>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				<div class="audio-player-timeline">
-					<input type="range" min="0" max="10000" value="0" class="slider"
-						id="progressRange">
-				</div>
-			</div>
-		</div>
-	</div>
-
+        <div class="row">
+            <div class="col">
+                <div class="audio-player-info">
+                    <div class="audio-player-title">Bohemian Rhapsody</div>
+                    <div class="audio-player-performer">Queen</div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="audio-player-controls d-flex justify-content-center">
+                    <div class="audio-control-btn mr-1"><i class="fas fa-step-backward fa-fw"></i></div>
+                    <div class="audio-control-btn mr-1" id="playButton"><i class="fas fa-play fa-fw"></i></div>
+                    <div class="audio-control-btn mr-1 d-none" id="pauseButton"><i class="fas fa-pause fa-fw"></i></div>
+                    <div class="audio-control-btn"><i class="fas fa-step-forward fa-fw"></i></div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="audio-player-time d-flex justify-content-end">
+                    <input type="range" min="0" max="1" value="1" step="0.01" class="slider volume-range mr-2" id="volumeRange">
+                    <span class="fas fa-volume-up volume-icon mr-4"></span>
+                    <span class="audio-player-current mr-1" id="currentTime">00:00</span>
+                    <span class="delimiter mr-1">:</span>
+                    <span class="audio-player-whole" id="duration">00:00</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="audio-player-timeline">
+                    <input type="range" min="0" max="10000" value="0" class="slider" id="progressRange">
+                </div>
+            </div>
+        </div>
+    </div>
 	<!-- Audio player end -->
 </t:skeleton_page>

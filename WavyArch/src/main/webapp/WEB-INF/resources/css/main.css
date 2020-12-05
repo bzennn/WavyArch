@@ -608,6 +608,7 @@ th+th, td+td {
 	background: #1d1d1d;
 	outline: none;
 	z-index: 0;
+	pointer-events: none;
 }
 
 .slider:hover {
@@ -622,6 +623,7 @@ th+th, td+td {
 	border-radius: 50%;
 	background: #fff;
 	cursor: pointer;
+	pointer-events: auto;
 }
 
 .slider::-moz-range-thumb {
@@ -630,6 +632,7 @@ th+th, td+td {
 	border-radius: 50%;
 	background: #fff;
 	cursor: pointer;
+	pointer-events: auto;
 }
 /* Audio player end */
 
