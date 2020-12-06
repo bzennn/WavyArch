@@ -20,21 +20,60 @@
 					aria-expanded="false">SORT LIST</button>
 				<div class="dropdown-menu dropdown-menu-right"
 					aria-labelledby="sortMenu">
-					<a href="#" class="dropdown-item">
-						CRITERIA 1
+					<!-- Sort by name -->
+					<c:url var="byNameAsc" value="">
+						<c:param name="sort" value="name" />
+						<c:param name="order" value="asc" />
+					</c:url>
+					<a href="${byNameAsc}" class="dropdown-item">
+						NAME
 						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
-					</a>
-					<a href="#" class="dropdown-item">
-						CRITERIA 1
-						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
 					</a>
 
-					<a href="#" class="dropdown-item">
-						CRITERIA 2
+					<c:url var="byNameDesc" value="">
+						<c:param name="sort" value="name" />
+						<c:param name="order" value="desc" />
+					</c:url>
+					<a href="${byNameDesc}" class="dropdown-item">
+						NAME
+						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
+					</a>
+					
+					<!-- Sort by date -->
+					<c:url var="byDateAsc" value="">
+						<c:param name="sort" value="date" />
+						<c:param name="order" value="asc" />
+					</c:url>
+					<a href="${byDateAsc}" class="dropdown-item">
+						DATE
 						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
 					</a>
-					<a href="#" class="dropdown-item">
-						CRITERIA 2
+
+					<c:url var="byDateDesc" value="">
+						<c:param name="sort" value="date" />
+						<c:param name="order" value="desc" />
+					</c:url>
+					<a href="${byDateDesc}" class="dropdown-item">
+						DATE
+						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
+					</a>
+					
+					<!-- Sort by author -->
+					<c:url var="byAuthorAsc" value="">
+						<c:param name="sort" value="author" />
+						<c:param name="order" value="asc" />
+					</c:url>
+					<a href="${byAuthorAsc}" class="dropdown-item">
+						AUTHOR
+						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
+					</a>
+
+					<c:url var="byAuthorDesc" value="">
+						<c:param name="sort" value="author" />
+						<c:param name="order" value="desc" />
+					</c:url>
+					<a href="${byAuthorDesc}" class="dropdown-item">
+						AUTHOR
 						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
 					</a>
 				</div>

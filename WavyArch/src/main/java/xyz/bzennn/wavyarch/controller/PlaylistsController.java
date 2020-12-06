@@ -31,6 +31,7 @@ import xyz.bzennn.wavyarch.form.PlaylistEditForm;
 import xyz.bzennn.wavyarch.service.AudioService;
 import xyz.bzennn.wavyarch.service.AudioSortingService;
 import xyz.bzennn.wavyarch.service.PlaylistService;
+import xyz.bzennn.wavyarch.service.PlaylistSortingService;
 import xyz.bzennn.wavyarch.util.FileUtils;
 import xyz.bzennn.wavyarch.util.ImageUtils;
 import xyz.bzennn.wavyarch.util.StringUtils;
@@ -59,12 +60,17 @@ public class PlaylistsController {
 	AudioService audioService;
 	
 	@Autowired
-	AudioSortingService sortingService;
+	AudioSortingService audioSortingService;
+	
+	@Autowired
+	PlaylistSortingService playlistSortingService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String showPlaylistsPage(Model model) {
+	public String showPlaylistsPage(@RequestParam Map<String, String> params, Model model) {
 		Account account = (Account) model.getAttribute("user");
 		List<AccountPlaylist> playlists = playlistService.findByAccount(account);
+		
+		playlistSortingService.sort(playlists, params);
 		
 		model.addAttribute("accountPlaylists", playlists);
 		
@@ -132,7 +138,7 @@ public class PlaylistsController {
 			}
 		}
 		
-		sortingService.sort(playlistAudios, params);
+		audioSortingService.sort(playlistAudios, params);
 		
 		model.addAttribute("playlist", playlist);
 		model.addAttribute("playlistAudios", playlistAudios);
