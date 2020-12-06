@@ -529,7 +529,8 @@ th+th, td+td {
 
 .audio-list-table .audio-record .playChoosedButton {
     display: none;
-    margin-left: 18px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 
 .audio-list-table .audio-record .audio-id {
