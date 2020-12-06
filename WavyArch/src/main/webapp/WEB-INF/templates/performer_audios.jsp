@@ -251,7 +251,7 @@
 								</c:forEach>
 							</td>
 							<td>
-								<div class="row">
+								<div class="row mr-2">
 									<div class="col-3">
 										<a
 											href="<c:url value="/recommendations/${audio.getName()}" />"
