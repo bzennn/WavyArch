@@ -154,7 +154,6 @@ function loadAudio(url) {
 var audioList = [];
 function initAudioPlaylist() {
     var tracksCount = Number(jQuery('.audio-list-size').html().replace('tracks', '').trim());
-    console.log(tracksCount);
 
     for (var i = 1; i <= tracksCount; i++) {
         var id = 'audio-record-' + i;
@@ -163,7 +162,6 @@ function initAudioPlaylist() {
             info: getAudioInfoById(id)
         });
     }
-    console.log(audioList);
 }
 
 function findLoadedAudioInfoById(id) {
