@@ -136,6 +136,7 @@ public class PlaylistsController {
 		
 		model.addAttribute("playlist", playlist);
 		model.addAttribute("playlistAudios", playlistAudios);
+		model.addAttribute("playerAvailable", true);
 		
 		return "playlist_audios";
 	}

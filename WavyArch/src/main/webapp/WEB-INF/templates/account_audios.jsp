@@ -29,7 +29,7 @@
 						NAME
 						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
 					</a>
-					
+
 					<c:url var="byNameDesc" value="">
 						<c:param name="sort" value="name" />
 						<c:param name="order" value="desc" />
@@ -38,7 +38,7 @@
 						NAME
 						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
 					</a>
-					
+
 					<!-- Sort by duration -->
 					<c:url var="byDurationAsc" value="">
 						<c:param name="sort" value="duration" />
@@ -48,7 +48,7 @@
 						DURATION
 						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
 					</a>
-					
+
 					<c:url var="byDurationDesc" value="">
 						<c:param name="sort" value="duration" />
 						<c:param name="order" value="desc" />
@@ -57,7 +57,7 @@
 						DURATION
 						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
 					</a>
-					
+
 					<!-- Sort by performers -->
 					<c:url var="byPerformersAsc" value="">
 						<c:param name="sort" value="performers" />
@@ -67,7 +67,7 @@
 						PERFORMERS
 						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
 					</a>
-					
+
 					<c:url var="byPerformersDesc" value="">
 						<c:param name="sort" value="performers" />
 						<c:param name="order" value="desc" />
@@ -76,7 +76,7 @@
 						PERFORMERS
 						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
 					</a>
-					
+
 					<!-- Sort by authors -->
 					<c:url var="byAuthorsAsc" value="">
 						<c:param name="sort" value="authors" />
@@ -86,7 +86,7 @@
 						AUTHORS
 						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
 					</a>
-					
+
 					<c:url var="byAuthorsDesc" value="">
 						<c:param name="sort" value="authors" />
 						<c:param name="order" value="desc" />
@@ -95,7 +95,7 @@
 						AUTHORS
 						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
 					</a>
-					
+
 					<!-- Sort by album -->
 					<c:url var="byAlbumAsc" value="">
 						<c:param name="sort" value="album" />
@@ -105,7 +105,7 @@
 						ALBUM
 						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
 					</a>
-					
+
 					<c:url var="byAlbumDesc" value="">
 						<c:param name="sort" value="album" />
 						<c:param name="order" value="desc" />
@@ -114,7 +114,7 @@
 						ALBUM
 						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
 					</a>
-					
+
 					<!-- Sort by genre -->
 					<c:url var="byGenreAsc" value="">
 						<c:param name="sort" value="genre" />
@@ -124,7 +124,7 @@
 						GENRE
 						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
 					</a>
-					
+
 					<c:url var="byGenreDesc" value="">
 						<c:param name="sort" value="genre" />
 						<c:param name="order" value="desc" />
@@ -133,7 +133,7 @@
 						GENRE
 						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
 					</a>
-					
+
 					<!-- Sort by tags -->
 					<c:url var="byTagsAsc" value="">
 						<c:param name="sort" value="tags" />
@@ -143,7 +143,7 @@
 						TAGS
 						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
 					</a>
-					
+
 					<c:url var="byTagsDesc" value="">
 						<c:param name="sort" value="tags" />
 						<c:param name="order" value="desc" />
@@ -152,7 +152,7 @@
 						TAGS
 						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
 					</a>
-					
+
 				</div>
 			</div>
 
@@ -167,13 +167,13 @@
 			<table class="table table-striped audio-list-table">
 				<thead class="audio-list-table-head">
 					<tr>
-						<th scope="col" style="width: 2%;">#</th>
+						<th scope="col" style="width: 5%;">#</th>
 						<th scope="col" style="width: 23%;">NAME</th>
-						<th scope="col" style="width: 5%;">
+						<th scope="col" style="width: 3%;">
 							<i class="far fa-clock"></i>
 						</th>
 						<th scope="col" style="width: 15%;">PERFORMERS</th>
-						<th scope="col" style="width: 15%;">AUTHORS</th>
+						<th scope="col" style="width: 14%;">AUTHORS</th>
 						<th scope="col" style="width: 15%;">ALBUM</th>
 						<th scope="col" style="width: 5%;">GENRE</th>
 						<th scope="col" style="width: 10%;">TAGS</th>
@@ -194,15 +194,21 @@
 						<c:set var="authors" scope="page" value="${audio.getAuthors()}" />
 						<c:set var="tags" scope="page" value="${audio.getTags()}" />
 
-						<tr>
-							<td>${index}</td>
-							<td>${audio.getName()}</td>
+						<tr class="audio-record" id="audio-record-${index}">
+							<td style="min-width:80px">
+								<div class="audio-id">${index}</div>
+								<div class="fas fa-play fa-fw mt-1 playChoosedButton">
+									<i class="d-none">audio-record-${index}</i>
+								</div>
+							</td>
+							<td id="audio-name">${audio.getName()}</td>
 							<td>${audio.formatDuration()}</td>
-							<td>
+							<td id="audio-performers">
 								<c:forEach var="audioPerformer" items="${performers}">
 									<c:set var="performer" scope="page"
 										value="${audioPerformer.getAudioMaker().getName()}" />
-									<a href="<c:url value="/performers/performer/${performer}"/>">${performer}</a>
+									<a href="<c:url value="/performers/performer/${performer}"/>"
+										id="audio-performer">${performer}</a>
 								</c:forEach>
 							</td>
 							<td>
@@ -237,7 +243,8 @@
 										</a>
 									</div>
 									<div class="col-3">
-										<a href="<c:url value="/files/audios/${filePath}"/>" class="" download>
+										<a href="<c:url value="/files/audios/${filePath}"/>" class=""
+											id="audio-link" download>
 											<i class="fas fa-download"></i>
 										</a>
 									</div>

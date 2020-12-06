@@ -520,12 +520,34 @@ th+th, td+td {
 }
 
 .audio-list-table a:hover {
-	color: #c2c2c2;
+    color: #c2c2c2;
 }
 
 .audio-list-table .emptyRow {
-	height: 50px;
+    height: 50px;
 }
+
+.audio-list-table .audio-record .playChoosedButton {
+    display: none;
+    margin-left: 18px !important;
+}
+
+.audio-list-table .audio-record .audio-id {
+    display: block;
+}
+
+.audio-list-table .audio-record:hover .playChoosedButton {
+    display: block;
+}
+
+.audio-list-table .audio-record:hover .audio-id {
+    display: none;
+}
+
+.audio-list-table .playChoosedButton:hover {
+    color: #00cf11;
+}
+
 /* Audio list end */
 
 /* Audio player */

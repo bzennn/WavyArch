@@ -84,8 +84,6 @@ function addEventHandlerForAudioActionButton(id, idOther) {
     var audioElement = getAudioContainer();
     var button = jQuery('#' + id);
     var buttonOther = jQuery('#' + idOther);
-    var url = 'http://localhost:8080/WavyArch/files/audios/audio-mpeg_a5ed2246-8cec-4366-92c1-1731777882f5';
-    loadAudio(url);
     button.on('click', (e) => {
         handleAudioActionButton(audioElement);
         button.toggleClass('d-none');
@@ -109,6 +107,11 @@ function addEventListenerForAudioTimeUpdate() {
             audioElement.pause();
             jQuery('#playButton').removeClass('d-none');
             jQuery('#pauseButton').addClass('d-none');
+
+            var currentIndex = Number(jQuery('.audio-current-id').html().replace('audio-record-', ''));
+            if (currentIndex != audioList.length) {
+                jQuery('#nextButton').trigger('click');
+            }
         }
 
         currentTimeElement.html(formatTime(Math.floor(audioElement.currentTime)));
@@ -148,6 +151,133 @@ function loadAudio(url) {
     };
 }
 
+var audioList = [];
+function initAudioPlaylist() {
+    var tracksCount = Number(jQuery('.audio-list-size').html().replace('tracks', '').trim());
+    console.log(tracksCount);
+
+    for (var i = 1; i <= tracksCount; i++) {
+        var id = 'audio-record-' + i;
+        audioList.push({
+            id: id,
+            info: getAudioInfoById(id)
+        });
+    }
+    console.log(audioList);
+}
+
+function findLoadedAudioInfoById(id) {
+    for (var infoObj of audioList) {
+        if (infoObj.id === id) {
+            return infoObj;
+        }
+    }
+    return null;
+}
+
+function addEventListenerForPlayChoosedButton() {
+    var playChoosedButtons = jQuery('.playChoosedButton');
+    var audioElement = getAudioContainer(); 
+    playChoosedButtons.on('click', (e) =>{
+        var id = e.target.children[0].innerHTML;
+        
+        var playerBlock = jQuery('.audio-player');
+        if (playerBlock.hasClass('d-none')) {
+            playerBlock.removeClass('d-none');
+        }
+
+        if (!audioElement.paused) {
+            audioElement.pause();
+        }
+
+        var infoObj = findLoadedAudioInfoById(id);
+        loadAudio(infoObj.info.link);
+        audioElement.play();
+        
+        jQuery('.audio-player-title').html(infoObj.info.name);
+        jQuery('.audio-player-performer').html(infoObj.info.performers);
+        jQuery('.audio-current-id').html(infoObj.id);
+        jQuery('#playButton').addClass('d-none');
+        jQuery('#pauseButton').removeClass('d-none');
+    });
+}
+
+function addEventHandlerForNextButton() {
+    var button = jQuery('#nextButton');
+    var audioElement = getAudioContainer(); 
+    
+    button.on('click', (e) => {
+        var currentId = jQuery('.audio-current-id').html();
+        var currentIndex = Number(currentId.replace('audio-record-', ''));
+    
+        var newIndex = currentIndex + 1;
+        if (newIndex > audioList.length) {
+            newIndex = 1;
+        }
+    
+        if (!audioElement.paused) {
+            audioElement.pause();
+        }
+
+        var infoObj = findLoadedAudioInfoById('audio-record-' + newIndex);
+        loadAudio(infoObj.info.link);
+        audioElement.play();
+        
+        jQuery('.audio-player-title').html(infoObj.info.name);
+        jQuery('.audio-player-performer').html(infoObj.info.performers);
+        jQuery('.audio-current-id').html(infoObj.id);
+        jQuery('#playButton').addClass('d-none');
+        jQuery('#pauseButton').removeClass('d-none');
+    });  
+}
+
+function addEventHandlerForPreviousButton() {
+    var button = jQuery('#previousButton');
+    var audioElement = getAudioContainer(); 
+    
+    button.on('click', (e) => {
+        var currentId = jQuery('.audio-current-id').html();
+        var currentIndex = Number(currentId.replace('audio-record-', ''));
+    
+        var newIndex = currentIndex - 1;
+        if (newIndex < 1) {
+            newIndex = audioList.length;
+        }
+    
+        if (!audioElement.paused) {
+            audioElement.pause();
+        }
+
+        var infoObj = findLoadedAudioInfoById('audio-record-' + newIndex);
+        loadAudio(infoObj.info.link);
+        audioElement.play();
+        
+        jQuery('.audio-player-title').html(infoObj.info.name);
+        jQuery('.audio-player-performer').html(infoObj.info.performers);
+        jQuery('.audio-current-id').html(infoObj.id);
+        jQuery('#playButton').addClass('d-none');
+        jQuery('#pauseButton').removeClass('d-none');
+    });  
+}
+
+function getAudioInfoById(id) {
+    var rowSelector = '#' + id;
+    var audioName = jQuery(rowSelector + ' > ' + '#audio-name').html().trim();
+    var audioPerformers = jQuery(rowSelector + ' > ' + '#audio-performers' + ' > ' + '#audio-performer');
+    var audioPerformersStr = jQuery.map(audioPerformers, (performer) =>{
+        return performer.innerHTML;
+    }).join(', ');
+    var audioLink = jQuery(rowSelector).find('#audio-link').attr('href');
+
+    var infoObj = {
+        name: audioName,
+        performers: audioPerformersStr,
+        link: audioLink
+    };
+
+    return infoObj;
+}
+
 jQuery('#sidebar-toggle-btn').on('click', () => {
     toggleSidebar();
 });
@@ -155,11 +285,19 @@ jQuery('#sidebar-toggle-btn').on('click', () => {
 jQuery((e) => {
     removeHorizontalScrollbar();
     updateDateInputRange();
-    updateRangeBackground('volumeRange');
-    updateRangeBackground('progressRange');
-    addEventHandlerForAudioActionButton('playButton', 'pauseButton');
-    addEventHandlerForAudioActionButton('pauseButton', 'playButton');
-    addEventListenerForAudioTimeUpdate();
-    addEventListenerForVolumeChange();
-    addEventListenerForAudioTimelineChange();
+
+    if (jQuery('.audio-player')[0]) {
+        updateRangeBackground('volumeRange');
+        updateRangeBackground('progressRange');
+        addEventHandlerForAudioActionButton('playButton', 'pauseButton');
+        addEventHandlerForAudioActionButton('pauseButton', 'playButton');
+        addEventListenerForAudioTimeUpdate();
+        addEventListenerForVolumeChange();
+        addEventListenerForAudioTimelineChange();
+        addEventListenerForPlayChoosedButton();
+        addEventHandlerForNextButton();
+        addEventHandlerForPreviousButton();
+
+        initAudioPlaylist();
+    }
 });

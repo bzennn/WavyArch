@@ -10,7 +10,7 @@
 		<div class="col">
 			<span class="audio-list-title">SEARCH</span>
 			<span>:</span>
-			<span class="audio-list-size">found ${searchAudios.size()} tracks</span>
+			<span class="audio-list-size">${searchAudios.size()} tracks</span>
 			
 			<div class="search-request">Request: "<span class="search-request-text text-wrap">${searchRequest}</span>"</div>
 		</div>
@@ -23,13 +23,13 @@
 			<table class="table table-striped audio-list-table">
 				<thead class="audio-list-table-head">
 					<tr>
-						<th scope="col" style="width: 2%;">#</th>
+						<th scope="col" style="width: 5%;">#</th>
 						<th scope="col" style="width: 23%;">NAME</th>
-						<th scope="col" style="width: 5%;">
+						<th scope="col" style="width: 3%;">
 							<i class="far fa-clock"></i>
 						</th>
 						<th scope="col" style="width: 15%;">PERFORMERS</th>
-						<th scope="col" style="width: 15%;">AUTHORS</th>
+						<th scope="col" style="width: 14%;">AUTHORS</th>
 						<th scope="col" style="width: 15%;">ALBUM</th>
 						<th scope="col" style="width: 5%;">GENRE</th>
 						<th scope="col" style="width: 10%;">TAGS</th>
@@ -50,15 +50,21 @@
 						<c:set var="authors" scope="page" value="${audio.getAuthors()}" />
 						<c:set var="tags" scope="page" value="${audio.getTags()}" />
 
-						<tr>
-							<td>${index}</td>
-							<td>${audio.getName()}</td>
+						<tr class="audio-record" id="audio-record-${index}">
+							<td style="min-width:80px">
+								<div class="audio-id">${index}</div>
+								<div class="fas fa-play fa-fw mt-1 playChoosedButton">
+									<i class="d-none">audio-record-${index}</i>
+								</div>
+							</td>
+							<td id="audio-name">${audio.getName()}</td>
 							<td>${audio.formatDuration()}</td>
-							<td>
+							<td id="audio-performers">
 								<c:forEach var="audioPerformer" items="${performers}">
 									<c:set var="performer" scope="page"
 										value="${audioPerformer.getAudioMaker().getName()}" />
-									<a href="<c:url value="/performers/performer/${performer}"/>">${performer}</a>
+									<a href="<c:url value="/performers/performer/${performer}"/>"
+										id="audio-performer">${performer}</a>
 								</c:forEach>
 							</td>
 							<td>
@@ -72,11 +78,13 @@
 								<a href="<c:url value="/albums/album/${album}" />">${album}</a>
 							</td>
 							<td>
-								<a href="<c:url value="/search?request=${genre}&category=genres"/>">${genre}</a>
+								<a
+									href="<c:url value="/search?request=${genre}&category=genres"/>">${genre}</a>
 							</td>
 							<td>
 								<c:forEach var="tag" items="${tags}">
-									<a href="<c:url value="/search?request=${tag.getName()}&category=tags"/>">
+									<a
+										href="<c:url value="/search?request=${tag.getName()}&category=tags"/>">
 										<span class="badge">${tag.getName()}</span>
 									</a>
 								</c:forEach>
@@ -84,12 +92,15 @@
 							<td>
 								<div class="row">
 									<div class="col-3">
-										<a href="<c:url value="/recommendations/${audio.getName()}" />" class="">
+										<a
+											href="<c:url value="/recommendations/${audio.getName()}" />"
+											class="">
 											<i class="fas fa-star"></i>
 										</a>
 									</div>
 									<div class="col-3">
-										<a href="<c:url value="/files/audios/${filePath}" />" class="" download>
+										<a href="<c:url value="/files/audios/${filePath}"/>" class=""
+											id="audio-link" download>
 											<i class="fas fa-download"></i>
 										</a>
 									</div>

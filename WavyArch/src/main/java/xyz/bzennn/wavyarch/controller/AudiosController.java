@@ -69,6 +69,7 @@ public class AudiosController {
 		sortingService.sort(audios, params);
 		
 		model.addAttribute("accountAudios", audios);
+		model.addAttribute("playerAvailable", true);
 		
 		return "account_audios";
 	}

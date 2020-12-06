@@ -53,6 +53,7 @@ public class SearchController {
 		model.addAttribute("audiosNotInAccount", audiosNotInAccount);
 		model.addAttribute("searchRequest", request);
 		model.addAttribute("searchAudios", foundAudios);
+		model.addAttribute("playerAvailable", true);
 		
 		return "search_audios";
 	}

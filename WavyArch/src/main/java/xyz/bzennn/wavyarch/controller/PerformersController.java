@@ -99,6 +99,7 @@ public class PerformersController {
 		model.addAttribute("audiosNotInAccount", audiosNotInAccount);
 		model.addAttribute("performer", performer);
 		model.addAttribute("performerAudios", performerAudios);
+		model.addAttribute("playerAvailable", true);
 		
 		return "performer_audios";
 	}

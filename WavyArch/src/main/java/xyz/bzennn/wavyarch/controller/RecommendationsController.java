@@ -55,6 +55,7 @@ public class RecommendationsController {
 		model.addAttribute("audiosNotInAccount", audiosNotInAccount);
 		model.addAttribute("audioName", audioName);
 		model.addAttribute("recommendationsAudios", recommendationsAudios);
+		model.addAttribute("playerAvailable", true);
 		
 		return "recommendations_audios";
 	}

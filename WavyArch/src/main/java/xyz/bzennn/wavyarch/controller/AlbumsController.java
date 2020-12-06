@@ -102,6 +102,7 @@ public class AlbumsController {
 		model.addAttribute("audiosNotInAccount", audiosNotInAccount);
 		model.addAttribute("album", album);
 		model.addAttribute("albumAudios", albumAudios);
+		model.addAttribute("playerAvailable", true);
 		
 		return "album_audios";
 	}
