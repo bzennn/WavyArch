@@ -32,6 +32,7 @@ import xyz.bzennn.wavyarch.data.model.Author;
 import xyz.bzennn.wavyarch.data.model.Performer;
 import xyz.bzennn.wavyarch.form.AudioEditForm;
 import xyz.bzennn.wavyarch.form.AudioUploadForm;
+import xyz.bzennn.wavyarch.service.AudioFilterService;
 import xyz.bzennn.wavyarch.service.AudioService;
 import xyz.bzennn.wavyarch.service.AudioSortingService;
 import xyz.bzennn.wavyarch.util.AudioUtils;
@@ -59,14 +60,18 @@ public class AudiosController {
 	private AudioService audioService;
 	
 	@Autowired
-	private AudioSortingService sortingService;
+	private AudioSortingService audioSortingService;
+	
+	@Autowired
+	private AudioFilterService audioFilterService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String showAccountAudiosPage(@RequestParam Map<String, String> params, Model model) {
 		Account account = (Account) model.getAttribute("user");
 		List<Audio> audios = audioService.findByAccount(account);
 		
-		sortingService.sort(audios, params);
+		audioFilterService.filter(audios, params);
+		audioSortingService.sort(audios, params);
 		
 		model.addAttribute("accountAudios", audios);
 		model.addAttribute("playerAvailable", true);

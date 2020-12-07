@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Service class for sorting audios 
+ * Service class for sorting entities 
  *
  * @author bzennn
  * @version 1.0

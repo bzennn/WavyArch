@@ -447,23 +447,42 @@ th+th, td+td {
 }
 
 .dropdown-menu {
-	width: 12em;
-	border-radius: 0;
-	/* border: 1px solid #f3da00; */
-	background-color: #252525;
+    border-radius: 0;
+    border: 1px solid #424242;
+    background-color: #252525;
+}
+
+.dropdown-menu-form {
+    width: 250%;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 .dropdown-item {
-	color: #ffffff;
-}
-
-.dropdown-item i {
-	float: right;
+    color: #ffffff;
 }
 
 .dropdown-item:hover {
-	color: #ffffff;
-	background-color: #636363;
+    color: #ffffff;
+    background-color: #636363;
+}
+
+.dropdown-item .form-submit {
+    width: inherit;
+    height: inherit;
+}
+
+.dropdown-form {
+    color: #fff;
+}
+
+.dropdown-form-control {
+    margin-top: 0.75rem;
+}
+
+.dropdown-form-control .btn {
+    width: 100%;
+    margin-top: 1rem;
 }
 
 .audio-list-table {

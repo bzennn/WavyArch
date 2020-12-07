@@ -28,6 +28,7 @@ import xyz.bzennn.wavyarch.data.model.Account;
 import xyz.bzennn.wavyarch.data.model.Audio;
 import xyz.bzennn.wavyarch.data.model.AudioMaker;
 import xyz.bzennn.wavyarch.form.PerformerEditForm;
+import xyz.bzennn.wavyarch.service.AudioFilterService;
 import xyz.bzennn.wavyarch.service.AudioService;
 import xyz.bzennn.wavyarch.service.AudioSortingService;
 import xyz.bzennn.wavyarch.service.PerformerService;
@@ -65,6 +66,9 @@ public class PerformersController {
 	@Autowired
 	PerformerSortingService performerSortingService;
 	
+	@Autowired
+	private AudioFilterService audioFilterService;
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public String showPerformersPage(@RequestParam Map<String, String> params, Model model) {
 		Account account = (Account) model.getAttribute("user");
@@ -100,6 +104,7 @@ public class PerformersController {
 			}
 		}
 		
+		audioFilterService.filter(performerAudios, params);
 		audioSortingService.sort(performerAudios, params);
 		
 		model.addAttribute("audiosNotInAccount", audiosNotInAccount);

@@ -28,6 +28,7 @@ import xyz.bzennn.wavyarch.data.model.PlaylistAudio;
 import xyz.bzennn.wavyarch.form.PlaylistAddAudioForm;
 import xyz.bzennn.wavyarch.form.PlaylistCreateForm;
 import xyz.bzennn.wavyarch.form.PlaylistEditForm;
+import xyz.bzennn.wavyarch.service.AudioFilterService;
 import xyz.bzennn.wavyarch.service.AudioService;
 import xyz.bzennn.wavyarch.service.AudioSortingService;
 import xyz.bzennn.wavyarch.service.PlaylistService;
@@ -64,6 +65,9 @@ public class PlaylistsController {
 	
 	@Autowired
 	PlaylistSortingService playlistSortingService;
+	
+	@Autowired
+	private AudioFilterService audioFilterService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String showPlaylistsPage(@RequestParam Map<String, String> params, Model model) {
@@ -138,6 +142,7 @@ public class PlaylistsController {
 			}
 		}
 		
+		audioFilterService.filter(playlistAudios, params);
 		audioSortingService.sort(playlistAudios, params);
 		
 		model.addAttribute("playlist", playlist);

@@ -32,142 +32,520 @@
 		<div class="col d-flex justify-content-end">
 
 			<div class="btn-group mr-4">
-				<button href="#" class="btn dropdown-toggle" type="button"
-					id="sortMenu" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false">SORT LIST</button>
-				<div class="dropdown-menu" aria-labelledby="sortMenu">
-					<!-- Sort by name -->
-					<c:url var="byNameAsc" value="">
-						<c:param name="sort" value="name" />
-						<c:param name="order" value="asc" />
-					</c:url>
-					<a href="${byNameAsc}" class="dropdown-item">
-						NAME
-						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
-					</a>
-					
-					<c:url var="byNameDesc" value="">
-						<c:param name="sort" value="name" />
-						<c:param name="order" value="desc" />
-					</c:url>
-					<a href="${byNameDesc}" class="dropdown-item">
-						NAME
-						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
-					</a>
-					
-					<!-- Sort by duration -->
-					<c:url var="byDurationAsc" value="">
-						<c:param name="sort" value="duration" />
-						<c:param name="order" value="asc" />
-					</c:url>
-					<a href="${byDurationAsc}" class="dropdown-item">
-						DURATION
-						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
-					</a>
-					
-					<c:url var="byDurationDesc" value="">
-						<c:param name="sort" value="duration" />
-						<c:param name="order" value="desc" />
-					</c:url>
-					<a href="${byDurationDesc}" class="dropdown-item">
-						DURATION
-						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
-					</a>
-					
-					<!-- Sort by performers -->
-					<c:url var="byPerformersAsc" value="">
-						<c:param name="sort" value="performers" />
-						<c:param name="order" value="asc" />
-					</c:url>
-					<a href="${byPerformersAsc}" class="dropdown-item">
-						PERFORMERS
-						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
-					</a>
-					
-					<c:url var="byPerformersDesc" value="">
-						<c:param name="sort" value="performers" />
-						<c:param name="order" value="desc" />
-					</c:url>
-					<a href="${byPerformersDesc}" class="dropdown-item">
-						PERFORMERS
-						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
-					</a>
-					
-					<!-- Sort by authors -->
-					<c:url var="byAuthorsAsc" value="">
-						<c:param name="sort" value="authors" />
-						<c:param name="order" value="asc" />
-					</c:url>
-					<a href="${byAuthorsAsc}" class="dropdown-item">
-						AUTHORS
-						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
-					</a>
-					
-					<c:url var="byAuthorsDesc" value="">
-						<c:param name="sort" value="authors" />
-						<c:param name="order" value="desc" />
-					</c:url>
-					<a href="${byAuthorsDesc}" class="dropdown-item">
-						AUTHORS
-						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
-					</a>
-					
-					<!-- Sort by album -->
-					<c:url var="byAlbumAsc" value="">
-						<c:param name="sort" value="album" />
-						<c:param name="order" value="asc" />
-					</c:url>
-					<a href="${byAlbumAsc}" class="dropdown-item">
-						ALBUM
-						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
-					</a>
-					
-					<c:url var="byAlbumDesc" value="">
-						<c:param name="sort" value="album" />
-						<c:param name="order" value="desc" />
-					</c:url>
-					<a href="${byAlbumDesc}" class="dropdown-item">
-						ALBUM
-						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
-					</a>
-					
-					<!-- Sort by genre -->
-					<c:url var="byGenreAsc" value="">
-						<c:param name="sort" value="genre" />
-						<c:param name="order" value="asc" />
-					</c:url>
-					<a href="${byGenreAsc}" class="dropdown-item">
-						GENRE
-						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
-					</a>
-					
-					<c:url var="byGenreDesc" value="">
-						<c:param name="sort" value="genre" />
-						<c:param name="order" value="desc" />
-					</c:url>
-					<a href="${byGenreDesc}" class="dropdown-item">
-						GENRE
-						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
-					</a>
-					
-					<!-- Sort by tags -->
-					<c:url var="byTagsAsc" value="">
-						<c:param name="sort" value="tags" />
-						<c:param name="order" value="asc" />
-					</c:url>
-					<a href="${byTagsAsc}" class="dropdown-item">
-						TAGS
-						<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
-					</a>
-					
-					<c:url var="byTagsDesc" value="">
-						<c:param name="sort" value="tags" />
-						<c:param name="order" value="desc" />
-					</c:url>
-					<a href="${byTagsDesc}" class="dropdown-item">
-						TAGS
-						<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
-					</a>
+				<div class="dropdown mr-4">
+					<button class="btn dropdown-toggle" type="button" id="filterMenu"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">FILTER
+						LIST</button>
+					<div class="dropdown-menu dropdown-menu-right dropdown-menu-form"
+						aria-labelledby="filterMenu">
+						<form method="get" action="" class="dropdown-form">
+							<c:if test="${ not empty param.sort }">
+								<input type="hidden" maxlength="100" name="sort" value="${param.sort}">
+							</c:if>
+							<c:if test="${ not empty param.order }">
+								<input type="hidden" maxlength="100" name="order" value="${param.order}">
+							</c:if>
+							
+							<div class="dropdown-form-control">
+								<label>Performers</label>
+								<input type="text" class="form-control" id="inputName"
+									placeholder="Performers semicolon separated" maxlength="1000"
+									name="performers">
+								<div class="invalid-feedback" id="inputNameFeedback"></div>
+							</div>
+							<div class="dropdown-form-control">
+								<label>Authors</label>
+								<input type="text" class="form-control" id="inputName"
+									placeholder="Authors semicolon separated" maxlength="1000"
+									name="authors">
+								<div class="invalid-feedback" id="inputNameFeedback"></div>
+							</div>
+							<div class="dropdown-form-control">
+								<label>Albums</label>
+								<input type="text" class="form-control" id="inputName"
+									placeholder="Albums semicolon separated" maxlength="1000"
+									name="albums">
+								<div class="invalid-feedback" id="inputNameFeedback"></div>
+							</div>
+							<div class="dropdown-form-control">
+								<label>Genres</label>
+								<input type="text" class="form-control" id="inputName"
+									placeholder="Genres semicolon separated" maxlength="1000"
+									name="genres">
+								<div class="invalid-feedback" id="inputNameFeedback"></div>
+							</div>
+							<div class="dropdown-form-control">
+								<label>Tags</label>
+								<input type="text" class="form-control" id="inputName"
+									placeholder="Tags semicolon separated" maxlength="1000"
+									name="tags">
+								<div class="invalid-feedback" id="inputNameFeedback"></div>
+							</div>
+							<div class="dropdown-form-control">
+								<label>Creation year from</label>
+								<input type="text" class="form-control" id="inputName"
+									placeholder="Creation year from" maxlength="5" name="yearFrom">
+								<div class="invalid-feedback" id="inputNameFeedback"></div>
+							</div>
+							<div class="dropdown-form-control">
+								<label>Creation year to</label>
+								<input type="text" class="form-control" id="inputName"
+									placeholder="Creation year to" maxlength="5" name="yearTo">
+								<div class="invalid-feedback" id="inputNameFeedback"></div>
+							</div>
+							<div class="dropdown-form-control">
+								<button class="btn save-btn" type="submit">FILTER</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="dropdown">
+					<button class="btn dropdown-toggle" type="button" id="sortMenu"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SORT
+						LIST</button>
+					<div class="dropdown-menu" aria-labelledby="sortMenu">
+						<!-- Sort by name -->
+						<c:url var="byNameAsc" value="">
+							<c:if test="${ not empty param.performers }">
+								<c:param name="performers" value="${ param.performers }" />
+							</c:if>
+							<c:if test="${ not empty param.authors }">
+								<c:param name="authors" value="${ param.authors }" />
+							</c:if>
+							<c:if test="${ not empty param.albums }">
+								<c:param name="albums" value="${ param.albums }" />
+							</c:if>
+							<c:if test="${ not empty param.genres }">
+								<c:param name="genres" value="${ param.genres }" />
+							</c:if>
+							<c:if test="${ not empty param.tags }">
+								<c:param name="tags" value="${ param.tags }" />
+							</c:if>
+							<c:if test="${ not empty param.yearFrom }">
+								<c:param name="yearFrom" value="${ param.yearFrom }" />
+							</c:if>
+							<c:if test="${ not empty param.yearTo }">
+								<c:param name="yearTo" value="${ param.yearTo }" />
+							</c:if>
+							
+							<c:param name="sort" value="name" />
+							<c:param name="order" value="asc" />
+						</c:url>
+						<a href="${byNameAsc}" class="dropdown-item">
+							NAME
+							<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
+						</a>
+
+						<c:url var="byNameDesc" value="">
+							<c:if test="${ not empty param.performers }">
+								<c:param name="performers" value="${ param.performers }" />
+							</c:if>
+							<c:if test="${ not empty param.authors }">
+								<c:param name="authors" value="${ param.authors }" />
+							</c:if>
+							<c:if test="${ not empty param.albums }">
+								<c:param name="albums" value="${ param.albums }" />
+							</c:if>
+							<c:if test="${ not empty param.genres }">
+								<c:param name="genres" value="${ param.genres }" />
+							</c:if>
+							<c:if test="${ not empty param.tags }">
+								<c:param name="tags" value="${ param.tags }" />
+							</c:if>
+							<c:if test="${ not empty param.yearFrom }">
+								<c:param name="yearFrom" value="${ param.yearFrom }" />
+							</c:if>
+							<c:if test="${ not empty param.yearTo }">
+								<c:param name="yearTo" value="${ param.yearTo }" />
+							</c:if>
+						
+							<c:param name="sort" value="name" />
+							<c:param name="order" value="desc" />
+						</c:url>
+						<a href="${byNameDesc}" class="dropdown-item">
+							NAME
+							<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
+						</a>
+
+						<!-- Sort by duration -->
+						<c:url var="byDurationAsc" value="">
+							<c:if test="${ not empty param.performers }">
+								<c:param name="performers" value="${ param.performers }" />
+							</c:if>
+							<c:if test="${ not empty param.authors }">
+								<c:param name="authors" value="${ param.authors }" />
+							</c:if>
+							<c:if test="${ not empty param.albums }">
+								<c:param name="albums" value="${ param.albums }" />
+							</c:if>
+							<c:if test="${ not empty param.genres }">
+								<c:param name="genres" value="${ param.genres }" />
+							</c:if>
+							<c:if test="${ not empty param.tags }">
+								<c:param name="tags" value="${ param.tags }" />
+							</c:if>
+							<c:if test="${ not empty param.yearFrom }">
+								<c:param name="yearFrom" value="${ param.yearFrom }" />
+							</c:if>
+							<c:if test="${ not empty param.yearTo }">
+								<c:param name="yearTo" value="${ param.yearTo }" />
+							</c:if>
+						
+							<c:param name="sort" value="duration" />
+							<c:param name="order" value="asc" />
+						</c:url>
+						<a href="${byDurationAsc}" class="dropdown-item">
+							DURATION
+							<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
+						</a>
+
+						<c:url var="byDurationDesc" value="">
+							<c:if test="${ not empty param.performers }">
+								<c:param name="performers" value="${ param.performers }" />
+							</c:if>
+							<c:if test="${ not empty param.authors }">
+								<c:param name="authors" value="${ param.authors }" />
+							</c:if>
+							<c:if test="${ not empty param.albums }">
+								<c:param name="albums" value="${ param.albums }" />
+							</c:if>
+							<c:if test="${ not empty param.genres }">
+								<c:param name="genres" value="${ param.genres }" />
+							</c:if>
+							<c:if test="${ not empty param.tags }">
+								<c:param name="tags" value="${ param.tags }" />
+							</c:if>
+							<c:if test="${ not empty param.yearFrom }">
+								<c:param name="yearFrom" value="${ param.yearFrom }" />
+							</c:if>
+							<c:if test="${ not empty param.yearTo }">
+								<c:param name="yearTo" value="${ param.yearTo }" />
+							</c:if>
+							
+							<c:param name="sort" value="duration" />
+							<c:param name="order" value="desc" />
+						</c:url>
+						<a href="${byDurationDesc}" class="dropdown-item">
+							DURATION
+							<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
+						</a>
+
+						<!-- Sort by performers -->
+						<c:url var="byPerformersAsc" value="">
+							<c:if test="${ not empty param.performers }">
+								<c:param name="performers" value="${ param.performers }" />
+							</c:if>
+							<c:if test="${ not empty param.authors }">
+								<c:param name="authors" value="${ param.authors }" />
+							</c:if>
+							<c:if test="${ not empty param.albums }">
+								<c:param name="albums" value="${ param.albums }" />
+							</c:if>
+							<c:if test="${ not empty param.genres }">
+								<c:param name="genres" value="${ param.genres }" />
+							</c:if>
+							<c:if test="${ not empty param.tags }">
+								<c:param name="tags" value="${ param.tags }" />
+							</c:if>
+							<c:if test="${ not empty param.yearFrom }">
+								<c:param name="yearFrom" value="${ param.yearFrom }" />
+							</c:if>
+							<c:if test="${ not empty param.yearTo }">
+								<c:param name="yearTo" value="${ param.yearTo }" />
+							</c:if>
+						
+							<c:param name="sort" value="performers" />
+							<c:param name="order" value="asc" />
+						</c:url>
+						<a href="${byPerformersAsc}" class="dropdown-item">
+							PERFORMERS
+							<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
+						</a>
+
+						<c:url var="byPerformersDesc" value="">
+							<c:if test="${ not empty param.performers }">
+								<c:param name="performers" value="${ param.performers }" />
+							</c:if>
+							<c:if test="${ not empty param.authors }">
+								<c:param name="authors" value="${ param.authors }" />
+							</c:if>
+							<c:if test="${ not empty param.albums }">
+								<c:param name="albums" value="${ param.albums }" />
+							</c:if>
+							<c:if test="${ not empty param.genres }">
+								<c:param name="genres" value="${ param.genres }" />
+							</c:if>
+							<c:if test="${ not empty param.tags }">
+								<c:param name="tags" value="${ param.tags }" />
+							</c:if>
+							<c:if test="${ not empty param.yearFrom }">
+								<c:param name="yearFrom" value="${ param.yearFrom }" />
+							</c:if>
+							<c:if test="${ not empty param.yearTo }">
+								<c:param name="yearTo" value="${ param.yearTo }" />
+							</c:if>
+						
+							<c:param name="sort" value="performers" />
+							<c:param name="order" value="desc" />
+						</c:url>
+						<a href="${byPerformersDesc}" class="dropdown-item">
+							PERFORMERS
+							<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
+						</a>
+
+						<!-- Sort by authors -->
+						<c:url var="byAuthorsAsc" value="">
+							<c:if test="${ not empty param.performers }">
+								<c:param name="performers" value="${ param.performers }" />
+							</c:if>
+							<c:if test="${ not empty param.authors }">
+								<c:param name="authors" value="${ param.authors }" />
+							</c:if>
+							<c:if test="${ not empty param.albums }">
+								<c:param name="albums" value="${ param.albums }" />
+							</c:if>
+							<c:if test="${ not empty param.genres }">
+								<c:param name="genres" value="${ param.genres }" />
+							</c:if>
+							<c:if test="${ not empty param.tags }">
+								<c:param name="tags" value="${ param.tags }" />
+							</c:if>
+							<c:if test="${ not empty param.yearFrom }">
+								<c:param name="yearFrom" value="${ param.yearFrom }" />
+							</c:if>
+							<c:if test="${ not empty param.yearTo }">
+								<c:param name="yearTo" value="${ param.yearTo }" />
+							</c:if>
+						
+							<c:param name="sort" value="authors" />
+							<c:param name="order" value="asc" />
+						</c:url>
+						<a href="${byAuthorsAsc}" class="dropdown-item">
+							AUTHORS
+							<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
+						</a>
+
+						<c:url var="byAuthorsDesc" value="">
+							<c:if test="${ not empty param.performers }">
+								<c:param name="performers" value="${ param.performers }" />
+							</c:if>
+							<c:if test="${ not empty param.authors }">
+								<c:param name="authors" value="${ param.authors }" />
+							</c:if>
+							<c:if test="${ not empty param.albums }">
+								<c:param name="albums" value="${ param.albums }" />
+							</c:if>
+							<c:if test="${ not empty param.genres }">
+								<c:param name="genres" value="${ param.genres }" />
+							</c:if>
+							<c:if test="${ not empty param.tags }">
+								<c:param name="tags" value="${ param.tags }" />
+							</c:if>
+							<c:if test="${ not empty param.yearFrom }">
+								<c:param name="yearFrom" value="${ param.yearFrom }" />
+							</c:if>
+							<c:if test="${ not empty param.yearTo }">
+								<c:param name="yearTo" value="${ param.yearTo }" />
+							</c:if>
+						
+							<c:param name="sort" value="authors" />
+							<c:param name="order" value="desc" />
+						</c:url>
+						<a href="${byAuthorsDesc}" class="dropdown-item">
+							AUTHORS
+							<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
+						</a>
+
+						<!-- Sort by album -->
+						<c:url var="byAlbumAsc" value="">
+							<c:if test="${ not empty param.performers }">
+								<c:param name="performers" value="${ param.performers }" />
+							</c:if>
+							<c:if test="${ not empty param.authors }">
+								<c:param name="authors" value="${ param.authors }" />
+							</c:if>
+							<c:if test="${ not empty param.albums }">
+								<c:param name="albums" value="${ param.albums }" />
+							</c:if>
+							<c:if test="${ not empty param.genres }">
+								<c:param name="genres" value="${ param.genres }" />
+							</c:if>
+							<c:if test="${ not empty param.tags }">
+								<c:param name="tags" value="${ param.tags }" />
+							</c:if>
+							<c:if test="${ not empty param.yearFrom }">
+								<c:param name="yearFrom" value="${ param.yearFrom }" />
+							</c:if>
+							<c:if test="${ not empty param.yearTo }">
+								<c:param name="yearTo" value="${ param.yearTo }" />
+							</c:if>
+						
+							<c:param name="sort" value="album" />
+							<c:param name="order" value="asc" />
+						</c:url>
+						<a href="${byAlbumAsc}" class="dropdown-item">
+							ALBUM
+							<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
+						</a>
+
+						<c:url var="byAlbumDesc" value="">
+							<c:if test="${ not empty param.performers }">
+								<c:param name="performers" value="${ param.performers }" />
+							</c:if>
+							<c:if test="${ not empty param.authors }">
+								<c:param name="authors" value="${ param.authors }" />
+							</c:if>
+							<c:if test="${ not empty param.albums }">
+								<c:param name="albums" value="${ param.albums }" />
+							</c:if>
+							<c:if test="${ not empty param.genres }">
+								<c:param name="genres" value="${ param.genres }" />
+							</c:if>
+							<c:if test="${ not empty param.tags }">
+								<c:param name="tags" value="${ param.tags }" />
+							</c:if>
+							<c:if test="${ not empty param.yearFrom }">
+								<c:param name="yearFrom" value="${ param.yearFrom }" />
+							</c:if>
+							<c:if test="${ not empty param.yearTo }">
+								<c:param name="yearTo" value="${ param.yearTo }" />
+							</c:if>
+						
+							<c:param name="sort" value="album" />
+							<c:param name="order" value="desc" />
+						</c:url>
+						<a href="${byAlbumDesc}" class="dropdown-item">
+							ALBUM
+							<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
+						</a>
+
+						<!-- Sort by genre -->
+						<c:url var="byGenreAsc" value="">
+							<c:if test="${ not empty param.performers }">
+								<c:param name="performers" value="${ param.performers }" />
+							</c:if>
+							<c:if test="${ not empty param.authors }">
+								<c:param name="authors" value="${ param.authors }" />
+							</c:if>
+							<c:if test="${ not empty param.albums }">
+								<c:param name="albums" value="${ param.albums }" />
+							</c:if>
+							<c:if test="${ not empty param.genres }">
+								<c:param name="genres" value="${ param.genres }" />
+							</c:if>
+							<c:if test="${ not empty param.tags }">
+								<c:param name="tags" value="${ param.tags }" />
+							</c:if>
+							<c:if test="${ not empty param.yearFrom }">
+								<c:param name="yearFrom" value="${ param.yearFrom }" />
+							</c:if>
+							<c:if test="${ not empty param.yearTo }">
+								<c:param name="yearTo" value="${ param.yearTo }" />
+							</c:if>
+						
+							<c:param name="sort" value="genre" />
+							<c:param name="order" value="asc" />
+						</c:url>
+						<a href="${byGenreAsc}" class="dropdown-item">
+							GENRE
+							<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
+						</a>
+
+						<c:url var="byGenreDesc" value="">
+							<c:if test="${ not empty param.performers }">
+								<c:param name="performers" value="${ param.performers }" />
+							</c:if>
+							<c:if test="${ not empty param.authors }">
+								<c:param name="authors" value="${ param.authors }" />
+							</c:if>
+							<c:if test="${ not empty param.albums }">
+								<c:param name="albums" value="${ param.albums }" />
+							</c:if>
+							<c:if test="${ not empty param.genres }">
+								<c:param name="genres" value="${ param.genres }" />
+							</c:if>
+							<c:if test="${ not empty param.tags }">
+								<c:param name="tags" value="${ param.tags }" />
+							</c:if>
+							<c:if test="${ not empty param.yearFrom }">
+								<c:param name="yearFrom" value="${ param.yearFrom }" />
+							</c:if>
+							<c:if test="${ not empty param.yearTo }">
+								<c:param name="yearTo" value="${ param.yearTo }" />
+							</c:if>
+						
+							<c:param name="sort" value="genre" />
+							<c:param name="order" value="desc" />
+						</c:url>
+						<a href="${byGenreDesc}" class="dropdown-item">
+							GENRE
+							<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
+						</a>
+
+						<!-- Sort by tags -->
+						<c:url var="byTagsAsc" value="">
+							<c:if test="${ not empty param.performers }">
+								<c:param name="performers" value="${ param.performers }" />
+							</c:if>
+							<c:if test="${ not empty param.authors }">
+								<c:param name="authors" value="${ param.authors }" />
+							</c:if>
+							<c:if test="${ not empty param.albums }">
+								<c:param name="albums" value="${ param.albums }" />
+							</c:if>
+							<c:if test="${ not empty param.genres }">
+								<c:param name="genres" value="${ param.genres }" />
+							</c:if>
+							<c:if test="${ not empty param.tags }">
+								<c:param name="tags" value="${ param.tags }" />
+							</c:if>
+							<c:if test="${ not empty param.yearFrom }">
+								<c:param name="yearFrom" value="${ param.yearFrom }" />
+							</c:if>
+							<c:if test="${ not empty param.yearTo }">
+								<c:param name="yearTo" value="${ param.yearTo }" />
+							</c:if>
+						
+							<c:param name="sort" value="tags" />
+							<c:param name="order" value="asc" />
+						</c:url>
+						<a href="${byTagsAsc}" class="dropdown-item">
+							TAGS
+							<i class="fas fa-sort-amount-down fa-fw pl-1"></i>
+						</a>
+
+						<c:url var="byTagsDesc" value="">
+							<c:if test="${ not empty param.performers }">
+								<c:param name="performers" value="${ param.performers }" />
+							</c:if>
+							<c:if test="${ not empty param.authors }">
+								<c:param name="authors" value="${ param.authors }" />
+							</c:if>
+							<c:if test="${ not empty param.albums }">
+								<c:param name="albums" value="${ param.albums }" />
+							</c:if>
+							<c:if test="${ not empty param.genres }">
+								<c:param name="genres" value="${ param.genres }" />
+							</c:if>
+							<c:if test="${ not empty param.tags }">
+								<c:param name="tags" value="${ param.tags }" />
+							</c:if>
+							<c:if test="${ not empty param.yearFrom }">
+								<c:param name="yearFrom" value="${ param.yearFrom }" />
+							</c:if>
+							<c:if test="${ not empty param.yearTo }">
+								<c:param name="yearTo" value="${ param.yearTo }" />
+							</c:if>
+						
+							<c:param name="sort" value="tags" />
+							<c:param name="order" value="desc" />
+						</c:url>
+						<a href="${byTagsDesc}" class="dropdown-item">
+							TAGS
+							<i class="fas fa-sort-amount-up fa-fw pl-1"></i>
+						</a>
+
+					</div>
 				</div>
 			</div>
 

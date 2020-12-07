@@ -32,6 +32,7 @@ import xyz.bzennn.wavyarch.data.model.AudioMaker;
 import xyz.bzennn.wavyarch.form.AlbumEditForm;
 import xyz.bzennn.wavyarch.service.AlbumService;
 import xyz.bzennn.wavyarch.service.AlbumSortingService;
+import xyz.bzennn.wavyarch.service.AudioFilterService;
 import xyz.bzennn.wavyarch.service.AudioService;
 import xyz.bzennn.wavyarch.service.AudioSortingService;
 import xyz.bzennn.wavyarch.util.FileUtils;
@@ -66,6 +67,9 @@ public class AlbumsController {
 	
 	@Autowired
 	AlbumSortingService albumSortingService;
+	
+	@Autowired
+	private AudioFilterService audioFilterService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String showAlbumsPage(@RequestParam Map<String, String> params, Model model) {
@@ -103,6 +107,7 @@ public class AlbumsController {
 			}
 		}
 		
+		audioFilterService.filter(albumAudios, params);
 		audioSortingService.sort(albumAudios, params);
 		
 		model.addAttribute("audiosNotInAccount", audiosNotInAccount);
