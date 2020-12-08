@@ -454,6 +454,12 @@ th+th, td+td {
     background-color: #252525;
 }
 
+.dropdown {
+	position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 .dropdown-menu-form {
     width: 250%;
     padding-left: 1rem;
@@ -479,12 +485,18 @@ th+th, td+td {
 }
 
 .dropdown-form-control {
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
 }
 
 .dropdown-form-control .btn {
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
+    
+}
+
+.dropdown-form-control .form-control {
+	
+    font-size: 14px;
 }
 
 .audio-list-table {
