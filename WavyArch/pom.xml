@@ -7,11 +7,11 @@
 
 	<groupId>xyz.bzennn</groupId>
 	<artifactId>WavyArch</artifactId>
-	<version>0.0.1-PRE-ALPHA</version>
+	<version>1.0.1-RELEASE</version>
 	<packaging>war</packaging>
 
 	<name>WavyArch</name>
-	<url>http://www.bzennn.xyz</url>
+	<url>http://www.bzennn.xyz/WavyArch</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
