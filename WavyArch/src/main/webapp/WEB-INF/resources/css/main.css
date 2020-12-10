@@ -367,6 +367,7 @@ th+th, td+td {
 	border-radius: 2px;
 	font-size: 20px;
 	font-weight: bold;
+	border: 1px solid #424242;
 }
 
 .base-form-control {
@@ -705,7 +706,7 @@ th+th, td+td {
 .collection-cards .card {
 	position: relative;
 	background-color: #000;
-	border: 1px solid #000000;
+	border: 1px solid #424242;
 }
 
 .collection-cards .card:hover .overlay {
