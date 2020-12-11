@@ -81,7 +81,7 @@ public class PerformersController {
 		return "performers";
 	}
 	
-	@RequestMapping(path = "/performer/{performerName}", method = RequestMethod.GET)
+	@RequestMapping(path = "/performer/{performerName:.+}", method = RequestMethod.GET)
 	public String showPerformerPage(@PathVariable String performerName, @RequestParam Map<String, String> params, Model model) {
 		if (performerName == null) {
 			model.asMap().clear();
@@ -115,7 +115,7 @@ public class PerformersController {
 		return "performer_audios";
 	}
 	
-	@RequestMapping(path = "/performer/edit/{performerName}", method = RequestMethod.GET)
+	@RequestMapping(path = "/performer/edit/{performerName:.+}", method = RequestMethod.GET)
 	public String showEditPerformerPage(@PathVariable String performerName, Model model) {
 		if (performerName == null) {
 			model.asMap().clear();
@@ -142,7 +142,7 @@ public class PerformersController {
 		return "performer_edit";
 	}
 
-	@RequestMapping(path = "/performer/edit/{performerName}", method = RequestMethod.POST)
+	@RequestMapping(path = "/performer/edit/{performerName:.+}", method = RequestMethod.POST)
 	public String handleEditPerformer(@Valid PerformerEditForm form, BindingResult result, @RequestParam("image") MultipartFile file, @PathVariable String performerName, Model model) throws UnsupportedEncodingException {
 		if (result.hasErrors()) {
 			model.addAttribute("errors", result.getAllErrors());

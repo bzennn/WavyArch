@@ -121,7 +121,7 @@ public class PlaylistsController {
 		return "redirect:/playlists";
 	}
 	
-	@RequestMapping(path = "/playlist/{playlistName}", method = RequestMethod.GET)
+	@RequestMapping(path = "/playlist/{playlistName:.+}", method = RequestMethod.GET)
 	public String showPlaylistPage(@PathVariable String playlistName, @RequestParam Map<String, String> params, Model model) {
 		if (playlistName == null) {
 			model.asMap().clear();
@@ -152,7 +152,7 @@ public class PlaylistsController {
 		return "playlist_audios";
 	}
 	
-	@RequestMapping(path = "/playlist/edit/{playlistName}", method = RequestMethod.GET)
+	@RequestMapping(path = "/playlist/edit/{playlistName:.+}", method = RequestMethod.GET)
 	public String showEditPlaylistPage(@PathVariable String playlistName, Model model) {
 		if (playlistName == null) {
 			model.asMap().clear();
@@ -171,7 +171,7 @@ public class PlaylistsController {
 		return "playlist_edit";
 	}
 	
-	@RequestMapping(path = "/playlist/edit/{playlistName}", method = RequestMethod.POST)
+	@RequestMapping(path = "/playlist/edit/{playlistName:.+}", method = RequestMethod.POST)
 	public String handleEditPlaylist(@Valid PlaylistEditForm form, BindingResult result, @RequestParam("cover") MultipartFile file, @PathVariable String playlistName, Model model) throws UnsupportedEncodingException {
 		if (result.hasErrors()) {
 			model.addAttribute("errors", result.getAllErrors());
@@ -219,7 +219,7 @@ public class PlaylistsController {
 		return "redirect:/playlists/playlist/edit/" + encodedPlaylistName;
 	}
 	
-	@RequestMapping(path = "/playlist/add/{playlistName}", method = RequestMethod.GET)
+	@RequestMapping(path = "/playlist/add/{playlistName:.+}", method = RequestMethod.GET)
 	public String showAddAudioPage(@PathVariable String playlistName, Model model) {
 		if (playlistName == null) {
 			model.asMap().clear();
@@ -238,7 +238,7 @@ public class PlaylistsController {
 		return "playlist_add_audio";
 	}
 	
-	@RequestMapping(path = "/playlist/add/{playlistNameUri}", method = RequestMethod.POST)
+	@RequestMapping(path = "/playlist/add/{playlistNameUri:.+}", method = RequestMethod.POST)
 	public String handleAddAudio(@Valid PlaylistAddAudioForm form, BindingResult result, @PathVariable String playlistNameUri, Model model) throws UnsupportedEncodingException {
 		if (result.hasErrors()) {
 			model.addAttribute("errors", result.getAllErrors());
@@ -263,7 +263,7 @@ public class PlaylistsController {
 		return "redirect:/playlists/playlist/" + encodedPlaylistName;
 	}
 	
-	@RequestMapping(path = "/playlist/removeAudio/{playlistName}/audio/{audioName}", method = RequestMethod.GET)
+	@RequestMapping(path = "/playlist/removeAudio/{playlistName:.+}/audio/{audioName:.+}", method = RequestMethod.GET)
 	public String handleDeleteAudioFromPlaylist(@PathVariable String playlistName, @PathVariable String audioName, Model model) throws UnsupportedEncodingException {
 		if (playlistName == null) {
 			model.asMap().clear();
@@ -294,7 +294,7 @@ public class PlaylistsController {
 		return "redirect:/playlists/playlist/" + encodedPlaylistName;
 	}
 	
-	@RequestMapping(path = "/playlist/delete/{playlistName}", method = RequestMethod.GET)
+	@RequestMapping(path = "/playlist/delete/{playlistName:.+}", method = RequestMethod.GET)
 	public String handleDeletePlaylist(@PathVariable String playlistName, Model model) {
 		if (playlistName == null) {
 			model.asMap().clear();

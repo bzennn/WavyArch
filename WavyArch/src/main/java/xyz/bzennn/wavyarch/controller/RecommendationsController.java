@@ -28,7 +28,7 @@ public class RecommendationsController {
 	@Autowired
 	AudioService audioService;
 	
-	@RequestMapping(path = "/{audioName}", method = RequestMethod.GET)
+	@RequestMapping(path = "/{audioName:.+}", method = RequestMethod.GET)
 	public String showRecommendationsResult(@PathVariable String audioName, Model model) {
 		if (audioName == null || audioName.isEmpty()) {
 			model.asMap().clear();

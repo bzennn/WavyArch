@@ -83,7 +83,7 @@ public class AlbumsController {
 		return "albums";
 	}
 
-	@RequestMapping(path = "/album/{albumName}", method = RequestMethod.GET)
+	@RequestMapping(path = "/album/{albumName:.+}", method = RequestMethod.GET)
 	public String showAlbumPage(@PathVariable String albumName, @RequestParam Map<String, String> params, Model model) {
 		if (albumName == null) {
 			model.asMap().clear();
@@ -118,7 +118,7 @@ public class AlbumsController {
 		return "album_audios";
 	}
 	
-	@RequestMapping(path = "/album/edit/{albumName}", method = RequestMethod.GET)
+	@RequestMapping(path = "/album/edit/{albumName:.+}", method = RequestMethod.GET)
 	public String showEditAlbumPage(@PathVariable String albumName, Model model) {
 		if (albumName == null) {
 			model.asMap().clear();
@@ -146,7 +146,7 @@ public class AlbumsController {
 		return "album_edit";
 	}
 	
-	@RequestMapping(path = "/album/edit/{albumName}", method = RequestMethod.POST)
+	@RequestMapping(path = "/album/edit/{albumName:.+}", method = RequestMethod.POST)
 	public String handleEditAlbum(@Valid AlbumEditForm form, BindingResult result, @RequestParam("cover") MultipartFile file, @PathVariable String albumName, Model model) throws UnsupportedEncodingException {
 		if (result.hasErrors()) {
 			model.addAttribute("errors", result.getAllErrors());

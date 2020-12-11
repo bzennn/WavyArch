@@ -131,7 +131,7 @@ public class AudiosController {
 		return "redirect:/audios";
 	}
 	
-	@RequestMapping(path = "/edit/{audioName}", method = RequestMethod.GET)
+	@RequestMapping(path = "/edit/{audioName:.+}", method = RequestMethod.GET)
 	public String showEditAudioPage(@PathVariable String audioName, Model model) {
 		Account account = (Account) model.getAttribute("user");
 		Audio audio = audioService.findByName(audioName);
@@ -207,7 +207,7 @@ public class AudiosController {
 		return "audio_edit";
 	}
 	
-	@RequestMapping(path = "/edit/{audioName}", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
+	@RequestMapping(path = "/edit/{audioName:.+}", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
 	public String handleEditAudio(@Valid AudioEditForm form, BindingResult result, @RequestParam("audio") MultipartFile file, @PathVariable String audioName, Model model) throws UnsupportedEncodingException {
 		if (result.hasErrors()) {
 			model.addAttribute("errors", result.getAllErrors());
@@ -257,7 +257,7 @@ public class AudiosController {
 		return "redirect:/audios/edit/" + encodedAudioName;
 	}
 	
-	@RequestMapping(path = "/delete/{audioName}", method = RequestMethod.GET)
+	@RequestMapping(path = "/delete/{audioName:.+}", method = RequestMethod.GET)
 	public String handleDeleteAudio(@PathVariable String audioName, Model model) {
 		Audio audio = audioService.findByName(audioName);
 		Account account = (Account) model.getAttribute("user");
@@ -270,7 +270,7 @@ public class AudiosController {
 		return "redirect:/audios";
 	}
 	
-	@RequestMapping(path = "/deleteFromServer/{audioName}", method = RequestMethod.GET)
+	@RequestMapping(path = "/deleteFromServer/{audioName:.+}", method = RequestMethod.GET)
 	public String handleDeleteAudioFromServer(@PathVariable String audioName, Model model) {
 		Audio audio = audioService.findByName(audioName);
 		
@@ -283,7 +283,7 @@ public class AudiosController {
 		return "redirect:/audios";
 	}
 	
-	@RequestMapping(path = "/addToAccount/{audioName}", method = RequestMethod.GET)
+	@RequestMapping(path = "/addToAccount/{audioName:.+}", method = RequestMethod.GET)
 	public String handleAddAudioToAccount(@PathVariable String audioName, Model model) throws UnsupportedEncodingException {
 		Audio audio = audioService.findByName(audioName);
 		Account account = (Account) model.getAttribute("user");
